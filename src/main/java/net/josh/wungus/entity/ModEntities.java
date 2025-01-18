@@ -15,7 +15,7 @@ public class ModEntities {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, WungusMod.MOD_ID);
 
     public static final RegistryObject<EntityType<WungusEntity>> WUNGUS =
-            ENTITY_TYPES.register("wungus", () -> EntityType.Builder.of(WungusEntity::new, MobCategory.CREATURE).sized(2.5f, 2.5f).build("wungus"));
+            ENTITY_TYPES.register("wungus", () -> EntityType.Builder.of(WungusEntity::new, MobCategory.CREATURE).sized(1.4f, 1.65f).build("wungus"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

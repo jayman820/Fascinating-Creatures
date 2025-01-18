@@ -3,6 +3,8 @@ package net.josh.wungus;
 import com.mojang.logging.LogUtils;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.client.WungusRenderer;
+import net.josh.wungus.item.ModCreativeModeTabs;
+import net.josh.wungus.item.ModItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,6 +34,10 @@ public class WungusMod
         ModEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
+
+        ModCreativeModeTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         //modEventBus.addListener(this::addCreative);

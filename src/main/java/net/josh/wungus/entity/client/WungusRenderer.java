@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class WungusRenderer extends MobRenderer<WungusEntity, WungusModel<WungusEntity>> {
     public WungusRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 2f);
+        super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
     }
 
     @Override
