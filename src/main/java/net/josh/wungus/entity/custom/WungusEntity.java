@@ -1,7 +1,11 @@
 package net.josh.wungus.entity.custom;
 
 import net.josh.wungus.entity.ModEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -12,6 +16,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags.Items;
 import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
@@ -58,13 +65,14 @@ public class WungusEntity extends Animal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SEEDS), false));
-        this.goalSelector.addGoal(3, new WungusEntity.WungusAvoidEntityGoal<>(this, Player.class, 16.0F, 0.8D, 1.33D));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this,1.2D));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8f));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.4D));
+        this.goalSelector.addGoal(2, new WungusEntity.WungusAvoidEntityGoal<>(this, Player.class, 16.0F, 0.8D, 1.33D));
+        this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.of(Items.SEEDS), false));
+        this.goalSelector.addGoal(5, new FollowParentGoal(this,1.2D));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.1D));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8f));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -89,6 +97,46 @@ public class WungusEntity extends Animal {
         return false;
     }
 
+    protected boolean teleport() {
+        if (!this.level().isClientSide() && this.isAlive()) {
+            double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            double d1 = this.getY() + (double)(this.random.nextInt(64) - 32);
+            double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            return this.teleport(d0, d1, d2);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean teleport(double pX, double pY, double pZ) {
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(pX, pY, pZ);
+
+        while(blockpos$mutableblockpos.getY() > this.level().getMinBuildHeight() && !this.level().getBlockState(blockpos$mutableblockpos).blocksMotion()) {
+            blockpos$mutableblockpos.move(Direction.DOWN);
+        }
+
+        BlockState blockstate = this.level().getBlockState(blockpos$mutableblockpos);
+        boolean flag = blockstate.blocksMotion();
+        boolean flag1 = blockstate.getFluidState().is(FluidTags.WATER);
+        if (flag && !flag1) {
+            net.minecraftforge.event.entity.EntityTeleportEvent.EnderEntity event = net.minecraftforge.event.ForgeEventFactory.onEnderTeleport(this, pX, pY, pZ);
+            if (event.isCanceled()) return false;
+            Vec3 vec3 = this.position();
+            boolean flag2 = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
+            if (flag2) {
+                this.level().gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(this));
+                if (!this.isSilent()) {
+                    this.level().playSound((Player)null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                    this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                }
+            }
+
+            return flag2;
+        } else {
+            return false;
+        }
+    }
+
     static class WungusAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
         private final WungusEntity wungus;
 
@@ -107,13 +155,17 @@ public class WungusEntity extends Animal {
 
         public void tick() {
             if (super.mob.distanceToSqr(this.toAvoid) < 49.0D) {
-                this.wungus.runningAnimationState.animateWhen(!this.wungus.walkAnimation.isMoving(), super.mob.tickCount);
+                this.wungus.runningAnimationState.start(super.mob.tickCount);
                 super.tick();
             } else {
                 this.wungus.runningAnimationState.stop();
                 super.tick();
             }
+        }
 
+        public void stop() {
+            this.wungus.teleport();
+            super.stop();
         }
     }
 }
