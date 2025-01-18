@@ -65,8 +65,8 @@ public class WungusEntity extends Animal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.4D));
-        this.goalSelector.addGoal(2, new WungusEntity.WungusAvoidEntityGoal<>(this, Player.class, 16.0F, 0.8D, 1.33D));
+        this.goalSelector.addGoal(1, new WungusPanicGoal(this, 1.4D));
+        this.goalSelector.addGoal(2, new WungusAvoidEntityGoal<>(this, Player.class, 16.0F, 0.8D, 1.33D));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.of(Items.SEEDS), false));
         this.goalSelector.addGoal(5, new FollowParentGoal(this,1.2D));
@@ -137,6 +137,25 @@ public class WungusEntity extends Animal {
         }
     }
 
+    static class WungusPanicGoal extends PanicGoal {
+        private final WungusEntity wungus;
+        public WungusPanicGoal(PathfinderMob pMob, double pSpeedModifier) {
+            super(pMob, pSpeedModifier);
+            this.wungus = (WungusEntity) pMob;
+        }
+
+        public void start() {
+            // TODO: PUT RUNNING ANIMATION HERE
+            super.start();
+        }
+
+        public void stop() {
+            // TODO: PUT RUNNING ANIMATION HERE
+            this.wungus.teleport();
+            super.stop();
+        }
+    }
+
     static class WungusAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
         private final WungusEntity wungus;
 
@@ -153,17 +172,13 @@ public class WungusEntity extends Animal {
             return !this.wungus.isTrusting() && super.canContinueToUse();
         }
 
-        public void tick() {
-            if (super.mob.distanceToSqr(this.toAvoid) < 49.0D) {
-                this.wungus.runningAnimationState.start(super.mob.tickCount);
-                super.tick();
-            } else {
-                this.wungus.runningAnimationState.stop();
-                super.tick();
-            }
+        public void start() {
+            this.wungus.runningAnimationState.start(super.mob.tickCount);
+            super.start();
         }
 
         public void stop() {
+            this.wungus.runningAnimationState.stop();
             this.wungus.teleport();
             super.stop();
         }
