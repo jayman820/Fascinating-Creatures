@@ -138,6 +138,6 @@ public class WungusModel<T extends Entity> extends HierarchicalModel<T> {
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
 		this.animateWalk(ModAnimationDefinitions.WUNGUS_WALK, limbSwing, limbSwingAmount, 1f, 2.5f);
-		this.animate(((WungusEntity) entity).runningAnimationState, ModAnimationDefinitions.WUNGUS_RUN, ageInTicks, 1f);
+		this.animate(((WungusEntity)entity).runningAnimationState, ModAnimationDefinitions.WUNGUS_RUN, ageInTicks, 1f);
 	}
 }

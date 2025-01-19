@@ -18,6 +18,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.wungus_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.WUNGUS_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.WUNGUS_MILK.get());
                     })
                     .build());
 

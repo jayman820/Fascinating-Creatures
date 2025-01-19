@@ -1,11 +1,14 @@
 package net.josh.wungus.entity.custom;
 
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -95,6 +99,18 @@ public class WungusEntity extends Animal {
 
     public boolean isTrusting() {
         return false;
+    }
+
+    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        if (itemstack.is(net.minecraft.world.item.Items.BUCKET) && !this.isBaby()) {
+            pPlayer.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+            ItemStack itemstack1 = ItemUtils.createFilledResult(itemstack, pPlayer, new ItemStack(ModItems.WUNGUS_MILK.get()));
+            pPlayer.setItemInHand(pHand, itemstack1);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        } else {
+            return super.mobInteract(pPlayer, pHand);
+        }
     }
 
     protected boolean teleport() {
