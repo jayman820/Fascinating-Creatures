@@ -27,19 +27,21 @@ import net.minecraftforge.common.Tags.Items;
 import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
 
-public class WungusEntity extends Animal {
-    public WungusEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
+public class WungusEntity extends TamableAnimal {
+    public WungusEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     public final AnimationState runningAnimationState = new AnimationState();
+    private boolean isBeingChased = false;
     public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
+    private int idleAnimationTimeout = 1;
+
+    private boolean isFromEgg;
 
     @Override
     public void tick() {
         super.tick();
-
         if(this.level().isClientSide()) {
             setupAnimationStates();
         }
@@ -50,8 +52,9 @@ public class WungusEntity extends Animal {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
-            --this.idleAnimationTimeout;
+            //--this.idleAnimationTimeout;
         }
+        this.runningAnimationState.animateWhen(this.isBeingChased, this.tickCount);
     }
 
     @Override
@@ -99,6 +102,24 @@ public class WungusEntity extends Animal {
 
     public boolean isTrusting() {
         return false;
+    }
+
+    public void setFromEgg() {
+        this.isFromEgg = true;
+    }
+
+    public boolean isFromEgg() {
+        return this.isFromEgg;
+    }
+
+    public void setTame(boolean pTamed) {
+        super.setTame(pTamed);
+        if (pTamed) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
+            this.setHealth(50.0F);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
+        }
     }
 
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
@@ -161,12 +182,12 @@ public class WungusEntity extends Animal {
         }
 
         public void start() {
-            // TODO: PUT RUNNING ANIMATION HERE
+            this.wungus.isBeingChased = true;
             super.start();
         }
 
         public void stop() {
-            // TODO: PUT RUNNING ANIMATION HERE
+            this.wungus.isBeingChased = false;
             this.wungus.teleport();
             super.stop();
         }
@@ -189,12 +210,12 @@ public class WungusEntity extends Animal {
         }
 
         public void start() {
-            this.wungus.runningAnimationState.start(super.mob.tickCount);
+            this.wungus.isBeingChased = true;
             super.start();
         }
 
         public void stop() {
-            this.wungus.runningAnimationState.stop();
+            this.wungus.isBeingChased = false;
             this.wungus.teleport();
             super.stop();
         }

@@ -1,0 +1,6 @@
+{
+  "parent": "wungus:block/template_three_wungus_eggs",
+  "textures": {
+    "all": "wungus:block/wungus_egg"
+  }
+}
