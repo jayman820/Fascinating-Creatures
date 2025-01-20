@@ -4,6 +4,7 @@ import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -36,6 +37,7 @@ public class WungusEntity extends TamableAnimal {
     private boolean isBeingChased = false;
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 1;
+    private boolean orderedToSit;
 
     private boolean isFromEgg;
 
@@ -74,12 +76,10 @@ public class WungusEntity extends TamableAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new WungusPanicGoal(this, 1.4D));
         this.goalSelector.addGoal(2, new WungusAvoidEntityGoal<>(this, Player.class, 16.0F, 0.8D, 1.33D));
-        this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.of(Items.SEEDS), false));
-        this.goalSelector.addGoal(5, new FollowParentGoal(this,1.2D));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.1D));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8f));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new FollowParentGoal(this,1.2D));
+        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.1D));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -115,6 +115,12 @@ public class WungusEntity extends TamableAnimal {
     public void setTame(boolean pTamed) {
         super.setTame(pTamed);
         if (pTamed) {
+            this.orderedToSit = false;
+            this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+            this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
+            this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+            this.goalSelector.removeGoal(new FollowParentGoal(this,1.2D));
+            this.goalSelector.removeGoal(new WungusAvoidEntityGoal<>(this, Player.class, 16.0F, 0.8D, 1.33D));
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
             this.setHealth(50.0F);
         } else {
@@ -131,6 +137,18 @@ public class WungusEntity extends TamableAnimal {
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(pPlayer, pHand);
+            /*boolean sit = this.isOrderedToSit();
+            System.out.println(sit);
+            if (sit) {
+                this.setOrderedToSit(false);
+                pPlayer.displayClientMessage(Component.translatable(this.getName() + " is now following"), true);
+                return super.mobInteract(pPlayer, pHand);
+            } else {
+                this.setOrderedToSit(true);
+                pPlayer.displayClientMessage(Component.translatable(this.getName() + " is now sitting"), true);
+                return super.mobInteract(pPlayer, pHand);
+            }*/
+
         }
     }
 
@@ -219,5 +237,13 @@ public class WungusEntity extends TamableAnimal {
             this.wungus.teleport();
             super.stop();
         }
+    }
+
+    public boolean isOrderedToSit() {
+        return this.orderedToSit;
+    }
+
+    public void setOrderedToSit(boolean pOrderedToSit) {
+        this.orderedToSit = pOrderedToSit;
     }
 }

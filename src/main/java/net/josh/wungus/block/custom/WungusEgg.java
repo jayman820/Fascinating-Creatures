@@ -71,7 +71,7 @@ public class WungusEgg extends Block {
 
     private void destroyEgg(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, int pChance) {
         if (this.canDestroyEgg(pLevel, pEntity)) {
-            if (!pLevel.isClientSide && pLevel.random.nextInt(pChance) == 0 && pState.is(Blocks.TURTLE_EGG)) {
+            if (!pLevel.isClientSide && pLevel.random.nextInt(pChance) == 0) {
                 this.decreaseEggs(pLevel, pPos, pState);
             }
 
@@ -96,11 +96,14 @@ public class WungusEgg extends Block {
      */
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (this.shouldUpdateHatchLevel(pLevel) && onPodzol(pLevel, pPos)) {
+            System.out.println("2");
             int i = pState.getValue(HATCH);
             if (i < 2) {
+                System.out.println("changing hatch state");
                 pLevel.playSound((Player)null, pPos, SoundEvents.TURTLE_EGG_CRACK, SoundSource.BLOCKS, 0.7F, 0.9F + pRandom.nextFloat() * 0.2F);
                 pLevel.setBlock(pPos, pState.setValue(HATCH, Integer.valueOf(i + 1)), 2);
             } else {
+                System.out.println("hatching");
                 pLevel.playSound((Player)null, pPos, SoundEvents.TURTLE_EGG_HATCH, SoundSource.BLOCKS, 0.7F, 0.9F + pRandom.nextFloat() * 0.2F);
                 pLevel.removeBlock(pPos, false);
 
@@ -139,12 +142,16 @@ public class WungusEgg extends Block {
     }
 
     private boolean shouldUpdateHatchLevel(Level pLevel) {
+        System.out.println("hi");
         float f = pLevel.getTimeOfDay(1.0F);
+        return true;
+        /*
         if ((double)f < 0.69D && (double)f > 0.65D) {
             return true;
         } else {
             return pLevel.random.nextInt(500) == 0;
         }
+         */
     }
 
     /**
