@@ -1,6 +1,8 @@
 {
   "item.wungus.wungus_spawn_egg": "Wungus Spawn Egg",
   "item.wungus.wungus_milk": "Wungus Milk",
+  "item.wungus.wungus_hide": "Wungus Hide",
   "block.wungus.wungus_egg": "Wungus Egg",
+  "entity.wungus.wunugs": "Wungus",
   "creativetab.wungus_tab": "Wungus Tab"
 }

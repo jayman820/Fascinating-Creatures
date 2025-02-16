@@ -20,6 +20,7 @@ public class ModCreativeModeTabs {
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.WUNGUS_SPAWN_EGG.get());
                         pOutput.accept(ModItems.WUNGUS_MILK.get());
+                        pOutput.accept(ModItems.WUNGUS_HIDE.get());
                         pOutput.accept(ModBlocks.WUNGUS_EGG.get());
                     })
                     .build());

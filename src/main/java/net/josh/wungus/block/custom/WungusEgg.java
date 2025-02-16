@@ -96,14 +96,11 @@ public class WungusEgg extends Block {
      */
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (this.shouldUpdateHatchLevel(pLevel) && onPodzol(pLevel, pPos)) {
-            System.out.println("2");
             int i = pState.getValue(HATCH);
             if (i < 2) {
-                System.out.println("changing hatch state");
                 pLevel.playSound((Player)null, pPos, SoundEvents.TURTLE_EGG_CRACK, SoundSource.BLOCKS, 0.7F, 0.9F + pRandom.nextFloat() * 0.2F);
                 pLevel.setBlock(pPos, pState.setValue(HATCH, Integer.valueOf(i + 1)), 2);
             } else {
-                System.out.println("hatching");
                 pLevel.playSound((Player)null, pPos, SoundEvents.TURTLE_EGG_HATCH, SoundSource.BLOCKS, 0.7F, 0.9F + pRandom.nextFloat() * 0.2F);
                 pLevel.removeBlock(pPos, false);
 
@@ -117,7 +114,6 @@ public class WungusEgg extends Block {
                     }
                     Player closest = pLevel.getNearestPlayer(pPos.getX() + 0.5F, pPos.getY() + 0.5F, pPos.getZ() + 0.5F, 20, EntitySelector.NO_SPECTATORS);
                     if (closest != null) {
-                        wungus.setTame(true);
                         wungus.tame(closest);
                     }
                 }
@@ -142,7 +138,6 @@ public class WungusEgg extends Block {
     }
 
     private boolean shouldUpdateHatchLevel(Level pLevel) {
-        System.out.println("hi");
         float f = pLevel.getTimeOfDay(1.0F);
         return true;
         /*

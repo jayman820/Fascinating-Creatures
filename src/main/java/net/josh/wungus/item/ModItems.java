@@ -23,6 +23,9 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_MILK = ITEMS.register("wungus_milk",
             () -> new WungusMilk(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.2F).alwaysEat().build())));
 
+    public static final RegistryObject<Item> WUNGUS_HIDE = ITEMS.register("wungus_hide",
+            () -> new Item(new Item.Properties()));
+
     //public static final RegistryObject<Item> WUNGUS_EGG = ITEMS.register("wungus_egg",
     //        () -> new ItemNameBlockItem())
 
