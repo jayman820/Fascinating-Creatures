@@ -39,7 +39,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.WUNGUS_SPAWN_EGG);
         simpleItem(ModItems.WUNGUS_MILK);
         simpleItem(ModItems.WUNGUS_HIDE);
-        withExistingParent(ModItems.WUNGUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        simpleItem(ModItems.WUNGUS_BOOTS);
+        //withExistingParent(ModItems.WUNGUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

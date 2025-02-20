@@ -2,8 +2,10 @@ package net.josh.wungus.item;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.item.custom.WungusBoots;
 import net.josh.wungus.item.custom.WungusMilk;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Items;
@@ -26,8 +28,8 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_HIDE = ITEMS.register("wungus_hide",
             () -> new Item(new Item.Properties()));
 
-    //public static final RegistryObject<Item> WUNGUS_EGG = ITEMS.register("wungus_egg",
-    //        () -> new ItemNameBlockItem())
+    public static final RegistryObject<Item> WUNGUS_BOOTS = ITEMS.register("wungus_boots",
+            () -> new WungusBoots(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
