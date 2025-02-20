@@ -4,7 +4,11 @@ import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -33,12 +37,19 @@ public class WungusEntity extends TamableAnimal {
         super(pEntityType, pLevel);
     }
 
+    private static final EntityDataAccessor<Boolean> SITTING =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
+
+    private static final EntityDataAccessor<Boolean> TRUSTING =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
+
     public final AnimationState runningAnimationState = new AnimationState();
-    private boolean isBeingChased = false;
     public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState sittingAnimation = new AnimationState();
+    public final AnimationState standingAnimation = new AnimationState();
+    private boolean isBeingChased = false;
     private int idleAnimationTimeout = 1;
     private boolean orderedToSit = false;
-    private boolean isTrusting = false;
     private WungusAvoidEntityGoal avoidEntityGoal;
     private FollowParentGoal followParentGoal;
 
@@ -52,12 +63,20 @@ public class WungusEntity extends TamableAnimal {
     }
 
     private void setupAnimationStates() {
-        this.runningAnimationState.animateWhen(this.isBeingChased, this.tickCount);
+        if(this.isBeingChased) {
+            this.runningAnimationState.startIfStopped(this.tickCount);
+        }
+        if(this.entityData.get(SITTING)) {
+            this.sittingAnimation.startIfStopped(this.tickCount);
+        } else {
+            this.sittingAnimation.stop();
+        }
+
         if(this.idleAnimationTimeout <= 0 && !this.isBeingChased) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
-            //--this.idleAnimationTimeout;
+            --this.idleAnimationTimeout;
         }
     }
 
@@ -105,11 +124,11 @@ public class WungusEntity extends TamableAnimal {
     }
 
     public boolean isTrusting() {
-        return this.isTrusting;
+        return this.entityData.get(TRUSTING);
     }
 
-    public void setTrusting() {
-        this.isTrusting = true;
+    public void setTrusting(boolean pTrusting) {
+        this.entityData.set(TRUSTING, pTrusting);
     }
 
 
@@ -118,7 +137,7 @@ public class WungusEntity extends TamableAnimal {
         if (pTamed) {
             System.out.println("line 114");
             this.orderedToSit = false;
-            this.setTrusting();
+            this.setTrusting(true);
             this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
             this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
             this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
@@ -250,10 +269,29 @@ public class WungusEntity extends TamableAnimal {
     }
 
     public boolean isOrderedToSit() {
-        return this.orderedToSit;
+        return this.entityData.get(SITTING);
     }
 
     public void setOrderedToSit(boolean pOrderedToSit) {
-        this.orderedToSit = pOrderedToSit;
+        this.entityData.set(SITTING, pOrderedToSit);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(SITTING, false);
+        this.entityData.define(TRUSTING, false);
+    }
+
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putBoolean("Sitting", this.isOrderedToSit());
+        compound.putBoolean("Trusting", this.isTrusting());
+    }
+
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.setOrderedToSit(compound.getBoolean("Sitting"));
+        this.setTrusting(compound.getBoolean("Trusting"));
     }
 }
