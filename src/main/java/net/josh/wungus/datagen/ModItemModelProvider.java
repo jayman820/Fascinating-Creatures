@@ -36,7 +36,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleItem(ModItems.WUNGUS_SPAWN_EGG);
+        //simpleItem(ModItems.WUNGUS_SPAWN_EGG);
         simpleItem(ModItems.WUNGUS_MILK);
         simpleItem(ModItems.WUNGUS_HIDE);
         simpleItem(ModItems.WUNGUS_BOOTS);
