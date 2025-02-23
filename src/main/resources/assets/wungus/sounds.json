@@ -1,0 +1,14 @@
+{
+  "burp": {
+    "subtitle": "sounds.wungus.burp",
+    "sounds": [
+      "wungus:burp-01",
+      "wungus:burp-02",
+      "wungus:burp-03",
+      "wungus:burp-04",
+      "wungus:burp-05",
+      "wungus:burp-06",
+      "wungus:burp-07"
+    ]
+  }
+}

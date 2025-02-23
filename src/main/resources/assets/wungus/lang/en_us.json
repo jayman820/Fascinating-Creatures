@@ -8,5 +8,6 @@
   "creativetab.wungus_tab": "Wungus Tab",
   "effect.wungus.wungdigestion": "Wungdigestion",
   "item.wungus.raw_wungus_flesh": "Raw Wungus Flesh",
-  "item.wungus.cooked_wungus_flesh": "Dried Wungus Flesh"
+  "item.wungus.cooked_wungus_flesh": "Dried Wungus Flesh",
+  "sounds.wungus.burp": "Wungdigestion Burp Effect Noise"
 }
