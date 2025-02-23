@@ -6,5 +6,7 @@
   "block.wungus.wungus_egg": "Wungus Egg",
   "entity.wungus.wungus": "Wungus",
   "creativetab.wungus_tab": "Wungus Tab",
-  "effect.wungus.wungdigestion": "Wungdigestion"
+  "effect.wungus.wungdigestion": "Wungdigestion",
+  "item.wungus.raw_wungus_flesh": "Raw Wungus Flesh",
+  "item.wungus.cooked_wungus_flesh": "Dried Wungus Flesh"
 }

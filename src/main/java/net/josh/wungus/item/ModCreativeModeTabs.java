@@ -23,6 +23,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.WUNGUS_HIDE.get());
                         pOutput.accept(ModBlocks.WUNGUS_EGG.get());
                         pOutput.accept(ModItems.WUNGUS_BOOTS.get());
+                        pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());
+                        pOutput.accept(ModItems.COOKED_WUNGUS_FLESH.get());
                     })
                     .build());
 

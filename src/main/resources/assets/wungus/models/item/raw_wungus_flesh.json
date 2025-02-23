@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wungus:item/raw_wungus_flesh"
+  }
+}

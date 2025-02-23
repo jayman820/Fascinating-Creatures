@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wungus:item/cooked_wungus_flesh"
+  }
+}

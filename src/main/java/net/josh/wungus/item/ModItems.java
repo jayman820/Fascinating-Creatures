@@ -3,6 +3,7 @@ package net.josh.wungus.item;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.custom.WungusBoots;
+import net.josh.wungus.item.custom.WungusCookedFlesh;
 import net.josh.wungus.item.custom.WungusMilk;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
@@ -23,13 +24,19 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.WUNGUS, 0xa6a079, 0xeee0d9, new Item.Properties()));
 
     public static final RegistryObject<Item> WUNGUS_MILK = ITEMS.register("wungus_milk",
-            () -> new WungusMilk(new Item.Properties().food(new FoodProperties.Builder().nutrition(4).saturationMod(0.2F).alwaysEat().build())));
+            () -> new WungusMilk(new Item.Properties().food(ModFoods.WUNGUS_MILK).stacksTo(1)));
 
     public static final RegistryObject<Item> WUNGUS_HIDE = ITEMS.register("wungus_hide",
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> WUNGUS_BOOTS = ITEMS.register("wungus_boots",
             () -> new WungusBoots(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> RAW_WUNGUS_FLESH = ITEMS.register("raw_wungus_flesh",
+            () -> new Item(new Item.Properties().food(ModFoods.RAW_WUNGUS_FLESH)));
+
+    public static final RegistryObject<Item> COOKED_WUNGUS_FLESH = ITEMS.register("cooked_wungus_flesh",
+            () -> new WungusCookedFlesh(new Item.Properties().food(ModFoods.COOKED_WUNGUS_FLESH)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
