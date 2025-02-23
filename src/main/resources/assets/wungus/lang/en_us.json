@@ -5,5 +5,6 @@
   "item.wungus.wungus_boots": "Wungus Shoes",
   "block.wungus.wungus_egg": "Wungus Egg",
   "entity.wungus.wungus": "Wungus",
-  "creativetab.wungus_tab": "Wungus Tab"
+  "creativetab.wungus_tab": "Wungus Tab",
+  "effect.wungus.wungdigestion": "Wungdigestion"
 }

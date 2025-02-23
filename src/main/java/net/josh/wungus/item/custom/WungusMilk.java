@@ -1,5 +1,7 @@
 package net.josh.wungus.item.custom;
 
+import net.josh.wungus.effect.ModEffects;
+import net.josh.wungus.effect.WungdigestionEffect;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -21,6 +23,7 @@ public class WungusMilk extends Item {
 
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
         pEntityLiving.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 450, 0)); // FORGE - move up so stack.shrink does not turn stack into air
+        pEntityLiving.addEffect(new MobEffectInstance(ModEffects.WUNGDIGESTION_EFFECT.get(), 450, 0));
         if (pEntityLiving instanceof ServerPlayer serverplayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, pStack);
             serverplayer.awardStat(Stats.ITEM_USED.get(this));

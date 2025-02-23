@@ -2,6 +2,7 @@ package net.josh.wungus;
 
 import com.mojang.logging.LogUtils;
 import net.josh.wungus.block.ModBlocks;
+import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModCreativeModeTabs;
@@ -40,6 +41,8 @@ public class WungusMod
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModEffects.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         //modEventBus.addListener(this::addCreative);
