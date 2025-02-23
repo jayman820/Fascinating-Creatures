@@ -1,7 +1,9 @@
 package net.josh.wungus.entity.custom;
 
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.entity.variant.WungusVariant;
 import net.josh.wungus.item.ModItems;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -12,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -25,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -42,6 +46,10 @@ public class WungusEntity extends TamableAnimal {
 
     private static final EntityDataAccessor<Boolean> TRUSTING =
             SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
+
+    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
 
     public final AnimationState runningAnimationState = new AnimationState();
     public final AnimationState idleAnimationState = new AnimationState();
@@ -281,17 +289,44 @@ public class WungusEntity extends TamableAnimal {
         super.defineSynchedData();
         this.entityData.define(SITTING, false);
         this.entityData.define(TRUSTING, false);
+        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("Sitting", this.isOrderedToSit());
         compound.putBoolean("Trusting", this.isTrusting());
+        compound.putInt("Variant", this.getTypeVariant());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setOrderedToSit(compound.getBoolean("Sitting"));
         this.setTrusting(compound.getBoolean("Trusting"));
+        this.setTypeVariant(compound.getInt("Variant"));
+    }
+
+    public WungusVariant getVariant() {
+        return WungusVariant.byId(this.getTypeVariant() & 255);
+    }
+
+    private int getTypeVariant() {
+        return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    private void setVariant(WungusVariant variant) {
+        this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    private void setTypeVariant(int variant) {
+        this.entityData.set(DATA_ID_TYPE_VARIANT, variant);
+    }
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+        WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
+        this.setVariant(variant);
+        //TODO: USE THIS TO GET VARIANT System.out.println(pLevel.getBiome(this.getOnPos()));
+        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
     }
 }

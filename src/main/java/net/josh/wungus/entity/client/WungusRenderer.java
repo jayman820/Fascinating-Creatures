@@ -1,22 +1,34 @@
 package net.josh.wungus.entity.client;
 
+import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.custom.WungusEntity;
+import net.josh.wungus.entity.variant.WungusVariant;
+import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.Map;
+
 public class WungusRenderer extends MobRenderer<WungusEntity, WungusModel<WungusEntity>> {
+    public static final Map<WungusVariant, ResourceLocation> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(WungusVariant.class), map -> {
+                map.put(WungusVariant.DEFAULT,
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/wungus.png"));
+                map.put(WungusVariant.WHITE,
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/nonegus.png"));
+            });
     public WungusRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
     }
 
     @Override
     public ResourceLocation getTextureLocation(WungusEntity wungusEntity) {
-        return new ResourceLocation(WungusMod.MOD_ID, "textures/entity/wungus.png");
+        return LOCATION_BY_VARIANT.get(wungusEntity.getVariant());
     }
 
     @Override
