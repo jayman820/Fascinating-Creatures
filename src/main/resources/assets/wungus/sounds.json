@@ -10,5 +10,46 @@
       "wungus:burp-06",
       "wungus:burp-07"
     ]
+  },
+  "wungus_ambient": {
+    "subtitle": "sounds.wungus.wungus_ambient",
+    "sounds": [
+      "wungus:wungchirp01",
+      "wungus:wungchirp02",
+      "wungus:wungchirp03",
+      "wungus:wungchirp04",
+      "wungus:wungsounds01",
+      "wungus:wungsounds02",
+      "wungus:wungsounds03",
+      "wungus:wungsounds04",
+      "wungus:wungsounds05",
+      "wungus:wungsounds06",
+      "wungus:wungsounds07",
+      "wungus:wungsounds08",
+      "wungus:wungsounds09",
+      "wungus:wungsounds10",
+      "wungus:wungsounds11",
+      "wungus:wungsounds12",
+      "wungus:wungsounds13"
+    ]
+  },
+  "wungus_hurt": {
+    "subtitle": "sounds.wungus.wungus_hurt",
+    "sounds": [
+      "wungus:wunghiss01",
+      "wungus:wunghiss02",
+      "wungus:wunghiss03",
+      "wungus:wunghurt01",
+      "wungus:wunghurt02",
+      "wungus:wunghurt03"
+    ]
+  },
+  "wungus_death": {
+    "subtitle": "sounds.wungus.wungus_death",
+    "sounds": [
+      "wungus:wungusdeath",
+      "wungus:wungusdeathrare-01",
+      "wungus:wungusdeathrare-02"
+    ]
   }
 }
