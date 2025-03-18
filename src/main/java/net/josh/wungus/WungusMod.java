@@ -7,6 +7,7 @@ import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModCreativeModeTabs;
 import net.josh.wungus.item.ModItems;
+import net.josh.wungus.loot.ModLootModifiers;
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,6 +43,8 @@ public class WungusMod
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModLootModifiers.register(modEventBus);
 
         ModEffects.register(modEventBus);
 

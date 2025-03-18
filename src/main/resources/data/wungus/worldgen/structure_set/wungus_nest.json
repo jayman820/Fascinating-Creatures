@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "wungus:wungus_nest",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+
+    "salt": 1694767080,
+
+    "spacing": 10,
+
+    "separation": 1
+  }
+}
