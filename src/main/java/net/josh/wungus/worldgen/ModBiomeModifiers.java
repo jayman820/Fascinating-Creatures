@@ -35,19 +35,19 @@ public class ModBiomeModifiers {
 
         context.register(SPAWN_WUNGUS, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(SPAWN_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 50000, 1, 10))));
+                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
 
         context.register(SPAWN_WUNGUS_WHITE, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(SPAWN_WHITE_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 50000, 1, 10))));
+                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
 
         context.register(SPAWN_WUNGUS_GREEN, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(SPAWN_GREEN_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 50000, 1, 10))));
+                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
 
         context.register(SPAWN_WUNGUS_BLUE, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(SPAWN_BLUE_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 50000, 1, 10))));
+                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
 
     }
 
