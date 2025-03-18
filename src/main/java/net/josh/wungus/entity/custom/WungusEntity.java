@@ -4,6 +4,7 @@ import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.variant.WungusVariant;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.sound.ModSounds;
+import net.josh.wungus.worldgen.ModBiomeModifiers;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -126,7 +127,26 @@ public class WungusEntity extends TamableAnimal {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        return ModEntities.WUNGUS.get().create(serverLevel);
+        WungusVariant baby;
+        if(serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(0);
+            baby = variant;
+        } else if (serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WHITE_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(1);
+            baby = variant;
+        } else if (serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_GREEN_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(2);
+            baby = variant;
+        } else if (serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_BLUE_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(3);
+            baby = variant;
+        } else {
+            WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
+            baby = variant;
+        }
+        WungusEntity wungus =  ModEntities.WUNGUS.get().create(serverLevel);
+        wungus.setVariant(baby);
+        return wungus;
     }
 
     @Override
@@ -317,7 +337,7 @@ public class WungusEntity extends TamableAnimal {
         return this.entityData.get(DATA_ID_TYPE_VARIANT);
     }
 
-    private void setVariant(WungusVariant variant) {
+    public void setVariant(WungusVariant variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
@@ -327,9 +347,22 @@ public class WungusEntity extends TamableAnimal {
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
-        this.setVariant(variant);
-        //TODO: USE THIS TO GET VARIANT System.out.println(pLevel.getBiome(this.getOnPos()));
+        if(pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(0);
+            this.setVariant(variant);
+        } else if (pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WHITE_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(1);
+            this.setVariant(variant);
+        } else if (pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_GREEN_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(2);
+            this.setVariant(variant);
+        } else if (pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_BLUE_WUNGUS_TAG)) {
+            WungusVariant variant = WungusVariant.byId(3);
+            this.setVariant(variant);
+        } else {
+            WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
+            this.setVariant(variant);
+        }
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
     }
 

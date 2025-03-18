@@ -2,8 +2,12 @@ package net.josh.wungus.block.custom;
 
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.custom.WungusEntity;
+import net.josh.wungus.entity.variant.WungusVariant;
+import net.josh.wungus.worldgen.ModBiomeModifiers;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -47,6 +51,7 @@ public class WungusEgg extends Block {
     private static final VoxelShape MULTIPLE_EGGS_AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 7.0D, 15.0D);
     public static final IntegerProperty HATCH = BlockStateProperties.HATCH;
     public static final IntegerProperty EGGS = BlockStateProperties.EGGS;
+    protected final RandomSource random = RandomSource.create();
 
     public WungusEgg(BlockBehaviour.Properties pProperties) {
         super(pProperties);
@@ -106,7 +111,26 @@ public class WungusEgg extends Block {
 
                 for(int j = 0; j < pState.getValue(EGGS); ++j) {
                     pLevel.levelEvent(2001, pPos, Block.getId(pState));
-                    WungusEntity wungus = ModEntities.WUNGUS.get().create(pLevel);
+                    WungusVariant baby;
+                    if(pLevel.getBiome(pPos).is(ModBiomeModifiers.SPAWN_WUNGUS_TAG)) {
+                        WungusVariant variant = WungusVariant.byId(0);
+                        baby = variant;
+                    } else if (pLevel.getBiome(pPos).is(ModBiomeModifiers.SPAWN_WHITE_WUNGUS_TAG)) {
+                        WungusVariant variant = WungusVariant.byId(1);
+                        baby = variant;
+                    } else if (pLevel.getBiome(pPos).is(ModBiomeModifiers.SPAWN_GREEN_WUNGUS_TAG)) {
+                        WungusVariant variant = WungusVariant.byId(2);
+                        baby = variant;
+                    } else if (pLevel.getBiome(pPos).is(ModBiomeModifiers.SPAWN_BLUE_WUNGUS_TAG)) {
+                        WungusVariant variant = WungusVariant.byId(3);
+                        baby = variant;
+                    } else {
+                        WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
+                        baby = variant;
+                    }
+                    WungusEntity wungus =  ModEntities.WUNGUS.get().create(pLevel);
+                    wungus.setVariant(baby);
+
                     if (wungus != null) {
                         wungus.setAge(-24000);
                         wungus.moveTo((double)pPos.getX() + 0.3D + (double)j * 0.2D, (double)pPos.getY(), (double)pPos.getZ() + 0.3D, 0.0F, 0.0F);

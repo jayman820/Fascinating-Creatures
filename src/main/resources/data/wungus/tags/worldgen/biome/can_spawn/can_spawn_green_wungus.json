@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_forest",
+    {
+      "id": "#forge:is_forest",
+      "required": false
+    },
+    {
+      "id": "#c:forest",
+      "required": false
+    },
+    "minecraft:bamboo_jungle",
+    "minecraft:jungle",
+    {
+      "id": "terralith:amethyst_rainforest",
+      "required": false
+    },
+    {
+      "id": "terralith:jungle_mountains",
+      "required": false
+    },
+    {
+      "id": "terralith:rocky_jungle",
+      "required": false
+    },
+    "#minecraft:is_jungle",
+    {
+      "id": "#forge:is_jungle",
+      "required": false
+    },
+    {
+      "id": "#c:in_jungle",
+      "required": false
+    }
+  ]
+}

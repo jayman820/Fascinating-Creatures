@@ -5,7 +5,10 @@ import java.util.Comparator;
 
 public enum WungusVariant {
     DEFAULT(0),
-    WHITE(1);
+    WHITE(1),
+    GREEN(2),
+    BLUE(3);
+
 
     private static final WungusVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.
             comparingInt(WungusVariant::getId)).toArray(WungusVariant[]::new);

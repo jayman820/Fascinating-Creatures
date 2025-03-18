@@ -21,6 +21,10 @@ public class WungusRenderer extends MobRenderer<WungusEntity, WungusModel<Wungus
                         new ResourceLocation(WungusMod.MOD_ID, "textures/entity/wungus.png"));
                 map.put(WungusVariant.WHITE,
                         new ResourceLocation(WungusMod.MOD_ID, "textures/entity/nonegus.png"));
+                map.put(WungusVariant.GREEN,
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/greengus.png"));
+                map.put(WungusVariant.BLUE,
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/bluegus.png"));
             });
     public WungusRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
