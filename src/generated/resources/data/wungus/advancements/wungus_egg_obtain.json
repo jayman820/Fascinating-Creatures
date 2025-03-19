@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "obtained_wungus_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wungus:wungus_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "wungus:textures/item/wungus_milk.png",
+    "description": {
+      "text": "Is this thing even alive?"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "wungus:wungus_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "text": "Legend of the Wungus"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_wungus_egg"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
