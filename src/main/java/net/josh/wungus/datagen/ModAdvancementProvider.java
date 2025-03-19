@@ -1,0 +1,51 @@
+package net.josh.wungus.datagen;
+
+import net.josh.wungus.WungusMod;
+import net.josh.wungus.block.ModBlocks;
+import net.josh.wungus.effect.ModEffects;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
+
+import net.josh.wungus.item.ModItems;
+
+import java.util.function.Consumer;
+
+public class ModAdvancementProvider implements ForgeAdvancementProvider.AdvancementGenerator {
+    @Override
+    public void generate(HolderLookup.Provider registries, Consumer<Advancement> saver, ExistingFileHelper existingFileHelper) {
+        Advancement obtainWungusEgg = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(ModBlocks.WUNGUS_EGG.get().asItem()),
+                        Component.literal("Legend of the Wungus"), Component.literal("Is this thing even alive?"),
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/item/wungus_milk.png"), FrameType.TASK,
+                        true, true, false))
+                .addCriterion("obtained_wungus_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.WUNGUS_EGG.get().asItem()))
+                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_egg_obtain"), existingFileHelper);
+
+        Advancement milkWungus = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(Items.BUCKET),
+                        Component.literal("Mmmm milk"), Component.literal("It's delicious!"),
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/item/wungus_milk.png"), FrameType.TASK,
+                        true, true, false))
+                .parent(obtainWungusEgg)
+                .addCriterion("obtained_wungus_milk", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.WUNGUS_MILK.get()))
+                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_milk_obtain"), existingFileHelper);
+
+        Advancement drinkWungusMilk = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(ModItems.WUNGUS_MILK.get()),
+                        Component.literal("Wung are we doing here?"), Component.literal("Why would you drink that?"),
+                        null, FrameType.TASK,
+                        true, true, false))
+                .addCriterion("drank_wungus_milk", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.WUNGUS_MILK.get()))
+                .parent(milkWungus)
+                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_milk_drink"), existingFileHelper);
+    }
+}

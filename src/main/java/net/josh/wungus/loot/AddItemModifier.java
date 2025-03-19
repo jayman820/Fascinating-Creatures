@@ -2,11 +2,13 @@ package net.josh.wungus.loot;
 
 import com.google.common.base.Suppliers;
 import com.google.gson.*;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
@@ -26,16 +28,16 @@ public class AddItemModifier extends LootModifier {
     public static final Supplier<Codec<AddItemModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(
                     inst.group(
                             ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item),
-                            Codec.STRING.fieldOf("pages").forGetter(m -> m.pages),
-                            Codec.STRING.fieldOf("author").forGetter(m -> m.author)
+                            Codec.STRING.fieldOf("nbtString").forGetter(m -> m.nbtString)
                     )).apply(inst, AddItemModifier::new)
     ));
     private final Item item;
     private final String pages;
     private final String author;
+    private final String nbtString;
     private final JsonElement parsedJson;
 
-    public AddItemModifier(LootItemCondition[] conditionsIn, Item item, String pages, String author) {
+    public AddItemModifier(LootItemCondition[] conditionsIn, Item item, String nbtString) {
         super(conditionsIn);
         this.item = item;
         Gson gson = new Gson();
@@ -43,8 +45,9 @@ public class AddItemModifier extends LootModifier {
         this.parsedJson = null;
         //String extractedJson = parsedJson.getAsJsonArray().get(0).getAsString();
         //System.out.println(extractedJson);
-        this.pages = pages;
-        this.author = author;
+        this.pages = null;
+        this.author = null;
+        this.nbtString = nbtString;
     }
 
     public AddItemModifier(LootItemCondition[] conditionsIn, Item item) {
@@ -53,6 +56,7 @@ public class AddItemModifier extends LootModifier {
         this.pages = null;
         this.author = null;
         this.parsedJson = null;
+        this.nbtString = null;
     }
 
     @Override
@@ -63,7 +67,16 @@ public class AddItemModifier extends LootModifier {
             }
         }
         ItemStack new_item = new ItemStack(this.item);
-        CompoundTag nbt = new CompoundTag();
+        try {
+            CompoundTag nbt = NbtUtils.snbtToStructure(this.nbtString);
+            new_item.setTag(nbt);
+            generatedLoot.add(new_item);
+            System.out.println(nbtString);
+            System.out.println(new_item.getTag());
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+        }
+        /*
         if(this.pages != null && !this.pages.equalsIgnoreCase("")) {
             nbt.putString("pages", this.pages);
             nbt.putString("pages", this.pages);
@@ -74,7 +87,7 @@ public class AddItemModifier extends LootModifier {
             nbt.putString("author", this.author);
             new_item.setTag(nbt);
         }
-        generatedLoot.add(new_item);
+        */
 
         return generatedLoot;
     }
