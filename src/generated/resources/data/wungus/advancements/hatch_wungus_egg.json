@@ -1,37 +1,39 @@
 {
   "parent": "wungus:wungus_egg_obtain",
   "criteria": {
-    "obtained_wungus_milk": {
+    "hatched_wungus_egg": {
       "conditions": {
-        "items": [
+        "entity": [
           {
-            "items": [
-              "wungus:wungus_milk"
-            ]
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wungus:wungus"
+            }
           }
         ]
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:tame_animal"
     }
   },
   "display": {
     "announce_to_chat": true,
     "description": {
-      "text": "It's delicious!"
+      "text": "It loves you!"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "minecraft:bucket"
+      "item": "wungus:wungus_egg"
     },
     "show_toast": true,
     "title": {
-      "text": "Mmmm milk"
+      "text": "Wung at first sight"
     }
   },
   "requirements": [
     [
-      "obtained_wungus_milk"
+      "hatched_wungus_egg"
     ]
   ],
   "sends_telemetry_event": true
