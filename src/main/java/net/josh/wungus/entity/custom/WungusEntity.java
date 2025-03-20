@@ -166,7 +166,6 @@ public class WungusEntity extends TamableAnimal {
     public void setTame(boolean pTamed) {
         super.setTame(pTamed);
         if (pTamed) {
-            System.out.println("line 114");
             this.orderedToSit = false;
             this.setTrusting(true);
             this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
@@ -190,21 +189,21 @@ public class WungusEntity extends TamableAnimal {
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             boolean sit = this.isOrderedToSit();
-            System.out.println(sit);
             super.mobInteract(pPlayer, pHand);
             InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
-            if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
+            if (interactionresult.consumesAction()) {
+                return interactionresult;
+            }
+            if (this.isOwnedBy(pPlayer)) {
                 if (sit) {
                     this.setOrderedToSit(false);
                     this.jumping = false;
                     this.navigation.stop();
-                    pPlayer.displayClientMessage(Component.translatable(this.getName() + " is now following"), true);
                     return InteractionResult.SUCCESS;
                 } else {
                     this.setOrderedToSit(true);
                     this.jumping = false;
                     this.navigation.stop();
-                    pPlayer.displayClientMessage(Component.translatable(this.getName() + " is now sitting"), true);
                     return InteractionResult.SUCCESS;
                 }
             }
