@@ -1,11 +1,12 @@
 {
+  "parent": "wungus:killed_wungus",
   "criteria": {
-    "obtained_wungus_egg": {
+    "obtained_wungus_boots": {
       "conditions": {
         "items": [
           {
             "items": [
-              "wungus:wungus_egg"
+              "wungus:wungus_boots"
             ]
           }
         ]
@@ -15,23 +16,23 @@
   },
   "display": {
     "announce_to_chat": true,
-    "background": "wungus:textures/advancements/wungusicon.png",
     "description": {
-      "text": "Is this thing even alive?"
+      "text": "Is this ok?"
     },
     "frame": "task",
-    "hidden": false,
+    "hidden": true,
     "icon": {
-      "item": "wungus:wungus_egg"
+      "item": "wungus:wungus_boots",
+      "nbt": "{Damage:0}"
     },
     "show_toast": true,
     "title": {
-      "text": "Legend of the Wungus"
+      "text": "This feels illegal"
     }
   },
   "requirements": [
     [
-      "obtained_wungus_egg"
+      "obtained_wungus_boots"
     ]
   ],
   "sends_telemetry_event": true

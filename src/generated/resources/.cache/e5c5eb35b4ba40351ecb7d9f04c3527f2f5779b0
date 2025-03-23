@@ -1,6 +1,9 @@
-// 1.20.1	2025-03-19T20:05:29.9996792	Advancements
-0933dbf359ef170ba63d3811d802cdf76dada64c data/wungus/advancements/breed_wungus.json
-56cbfed861f33ad56ac4311a334ab4a1d36be0a4 data/wungus/advancements/hatch_wungus_egg.json
-b9483090a1a752f063ed706142573689361941b3 data/wungus/advancements/wungus_egg_obtain.json
-690cf0e0e3ac0e8d0595cb71dcf1756713fbb83f data/wungus/advancements/wungus_milk_drink.json
-fb50e18245a398d20267ca288c1cc9fa92573352 data/wungus/advancements/wungus_milk_obtain.json
+// 1.20.1	2025-03-20T14:06:44.7448743	Advancements
+b171f2bcc70939c0f1d968f113ec56d1e3b9a2b1 data/wungus/advancements/breed_wungus.json
+3a107def332a6d4286205a5fefa11e372b1721a7 data/wungus/advancements/eat_wungus_flesh.json
+309c4e4787ec8f037230851254cffe939e3ba2c2 data/wungus/advancements/hatch_wungus_egg.json
+0e99493ce05b41c3e37bf9535ea3ef54f97a9470 data/wungus/advancements/killed_wungus.json
+475ea718c597e6a3806b406cdc6e4861d4d0d07e data/wungus/advancements/obtained_wungus_boots.json
+787834b256c034d10f59ce01046da30ed01f3dd8 data/wungus/advancements/wungus_egg_obtain.json
+a1f99a42497c008b3b83540b4ae1dda3d17ef86f data/wungus/advancements/wungus_milk_drink.json
+d75b841d45be4dc75036ba36d2906d8057be96ef data/wungus/advancements/wungus_milk_obtain.json

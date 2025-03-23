@@ -1,11 +1,11 @@
 {
-  "parent": "wungus:wungus_milk_obtain",
+  "parent": "wungus:killed_wungus",
   "criteria": {
-    "drank_wungus_milk": {
+    "eat_wungus_flesh": {
       "conditions": {
         "item": {
           "items": [
-            "wungus:wungus_milk"
+            "wungus:cooked_wungus_flesh"
           ]
         }
       },
@@ -15,21 +15,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "text": "Why would you drink that...?"
+      "text": "Where am I?"
     },
     "frame": "task",
     "hidden": true,
     "icon": {
-      "item": "wungus:wungus_milk"
+      "item": "wungus:cooked_wungus_flesh"
     },
     "show_toast": true,
     "title": {
-      "text": "Wung are we doing here?"
+      "text": "What the fuck?"
     }
   },
   "requirements": [
     [
-      "drank_wungus_milk"
+      "eat_wungus_flesh"
     ]
   ],
   "sends_telemetry_event": true

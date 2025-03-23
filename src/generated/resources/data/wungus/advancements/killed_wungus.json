@@ -1,7 +1,7 @@
 {
   "parent": "wungus:wungus_egg_obtain",
   "criteria": {
-    "hatched_wungus_egg": {
+    "killed_wungus": {
       "conditions": {
         "entity": [
           {
@@ -13,27 +13,27 @@
           }
         ]
       },
-      "trigger": "minecraft:tame_animal"
+      "trigger": "minecraft:player_killed_entity"
     }
   },
   "display": {
     "announce_to_chat": true,
     "description": {
-      "text": "It loves you!"
+      "text": "How could you?"
     },
     "frame": "task",
     "hidden": true,
     "icon": {
-      "item": "wungus:wungus_egg"
+      "item": "wungus:wungus_hide"
     },
     "show_toast": true,
     "title": {
-      "text": "Wung at first sight"
+      "text": "You monster"
     }
   },
   "requirements": [
     [
-      "hatched_wungus_egg"
+      "killed_wungus"
     ]
   ],
   "sends_telemetry_event": true

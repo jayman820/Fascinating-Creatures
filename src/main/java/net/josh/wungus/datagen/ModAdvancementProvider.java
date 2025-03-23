@@ -29,7 +29,7 @@ public class ModAdvancementProvider implements ForgeAdvancementProvider.Advancem
         Advancement obtainWungusEgg = Advancement.Builder.advancement()
                 .display(new DisplayInfo(new ItemStack(ModBlocks.WUNGUS_EGG.get().asItem()),
                         Component.literal("Legend of the Wungus"), Component.literal("Is this thing even alive?"),
-                        new ResourceLocation(WungusMod.MOD_ID, "textures/item/wungus_milk.png"), FrameType.TASK,
+                        new ResourceLocation(WungusMod.MOD_ID, "textures/advancements/wungusicon.png"), FrameType.TASK,
                         true, true, false))
                 .addCriterion("obtained_wungus_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.WUNGUS_EGG.get().asItem()))
                 .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_egg_obtain"), existingFileHelper);
@@ -71,5 +71,32 @@ public class ModAdvancementProvider implements ForgeAdvancementProvider.Advancem
                 .addCriterion("drank_wungus_milk", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.WUNGUS_MILK.get()))
                 .parent(milkWungus)
                 .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_milk_drink"), existingFileHelper);
+
+        Advancement killWungus = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(ModItems.WUNGUS_HIDE.get()),
+                        Component.literal("You monster"), Component.literal("How could you?"),
+                        null, FrameType.TASK,
+                        true, true, true))
+                .parent(obtainWungusEgg)
+                .addCriterion("killed_wungus", KilledTrigger.TriggerInstance.playerKilledEntity(wungus.build()))
+                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "killed_wungus"), existingFileHelper);
+
+        Advancement obtainWungusBoots = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(ModItems.WUNGUS_BOOTS.get()),
+                        Component.literal("This feels illegal"), Component.literal("Is this ok?"),
+                        null, FrameType.TASK,
+                        true, true, true))
+                .parent(killWungus)
+                .addCriterion("obtained_wungus_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.WUNGUS_BOOTS.get()))
+                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "obtained_wungus_boots"), existingFileHelper);
+
+        Advancement eatWungusFlesh = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(ModItems.COOKED_WUNGUS_FLESH.get()),
+                        Component.literal("What the fuck?"), Component.literal("Where am I?"),
+                        null, FrameType.TASK,
+                        true, true, true))
+                .parent(killWungus)
+                .addCriterion("eat_wungus_flesh", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.COOKED_WUNGUS_FLESH.get()))
+                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "eat_wungus_flesh"), existingFileHelper);
     }
 }

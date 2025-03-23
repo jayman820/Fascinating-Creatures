@@ -40,7 +40,7 @@
       "text": "Look away..."
     },
     "frame": "task",
-    "hidden": false,
+    "hidden": true,
     "icon": {
       "item": "wungus:wungus_egg"
     },

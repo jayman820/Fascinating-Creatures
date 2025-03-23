@@ -20,7 +20,7 @@
       "text": "It's delicious!"
     },
     "frame": "task",
-    "hidden": false,
+    "hidden": true,
     "icon": {
       "item": "minecraft:bucket"
     },
