@@ -19,8 +19,12 @@ public class WungdigestionEffect extends MobEffect {
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         Random rand = new Random();
         int hit = rand.nextInt(1000);
+        int hit2 = rand.nextInt(1000);
         if(hit < 10) {
             pLivingEntity.playSound(ModSounds.BURP.get());
+        }
+        if(hit2 < 6) {
+            pLivingEntity.playSound(ModSounds.FART.get());
         }
         super.applyEffectTick(pLivingEntity, pAmplifier);
     }

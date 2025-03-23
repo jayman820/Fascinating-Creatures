@@ -2,6 +2,7 @@ package net.josh.wungus.item;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.item.custom.PrattlingWungus;
 import net.josh.wungus.item.custom.WungusBoots;
 import net.josh.wungus.item.custom.WungusCookedFlesh;
 import net.josh.wungus.item.custom.WungusMilk;
@@ -37,6 +38,18 @@ public class ModItems {
 
     public static final RegistryObject<Item> COOKED_WUNGUS_FLESH = ITEMS.register("cooked_wungus_flesh",
             () -> new WungusCookedFlesh(new Item.Properties().food(ModFoods.COOKED_WUNGUS_FLESH)));
+
+    public static final RegistryObject<Item> PRATTLING_WUNGUS_1 = ITEMS.register("prattling_wungus_1",
+            () -> new PrattlingWungus(new Item.Properties(), 1));
+
+    public static final RegistryObject<Item> PRATTLING_WUNGUS_2 = ITEMS.register("prattling_wungus_2",
+            () -> new PrattlingWungus(new Item.Properties(), 2));
+
+    public static final RegistryObject<Item> PRATTLING_WUNGUS_3 = ITEMS.register("prattling_wungus_3",
+            () -> new PrattlingWungus(new Item.Properties(), 3));
+
+    public static final RegistryObject<Item> PRATTLING_WUNGUS_4 = ITEMS.register("prattling_wungus_4",
+            () -> new PrattlingWungus(new Item.Properties(), 4));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -13,9 +13,14 @@ public class ModSounds {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, WungusMod.MOD_ID);
 
     public static final RegistryObject<SoundEvent> BURP = registerSoundEvents("burp");
+    public static final RegistryObject<SoundEvent> FART = registerSoundEvents("fart");
     public static final RegistryObject<SoundEvent> WUNGUS_AMBIENT = registerSoundEvents("wungus_ambient");
     public static final RegistryObject<SoundEvent> WUNGUS_HURT = registerSoundEvents("wungus_hurt");
     public static final RegistryObject<SoundEvent> WUNGUS_DEATH = registerSoundEvents("wungus_death");
+    public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_1 = registerSoundEvents("prattling_wungus_1");
+    public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_2 = registerSoundEvents("prattling_wungus_2");
+    public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_3 = registerSoundEvents("prattling_wungus_3");
+    public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_4 = registerSoundEvents("prattling_wungus_4");
 
 
     public static RegistryObject<SoundEvent> registerSoundEvents(String name) {

@@ -2,54 +2,113 @@
   "burp": {
     "subtitle": "sounds.wungus.burp",
     "sounds": [
-      "wungus:burp-01",
-      "wungus:burp-02",
-      "wungus:burp-03",
-      "wungus:burp-04",
-      "wungus:burp-05",
-      "wungus:burp-06",
-      "wungus:burp-07"
+      "wungus:wungdigestion/burp-01",
+      "wungus:wungdigestion/burp-02",
+      "wungus:wungdigestion/burp-03",
+      "wungus:wungdigestion/burp-04",
+      "wungus:wungdigestion/burp-05",
+      "wungus:wungdigestion/burp-06",
+      "wungus:wungdigestion/burp-07"
+    ]
+  },
+  "fart": {
+    "subtitle": "sounds.wungus.fart",
+    "sounds": [
+      "wungus:wungdigestion/fart-01",
+      "wungus:wungdigestion/fart-02",
+      "wungus:wungdigestion/fart-03",
+      "wungus:wungdigestion/fart-04",
+      "wungus:wungdigestion/fart-05",
+      "wungus:wungdigestion/fart-06",
+      "wungus:wungdigestion/fart-07",
+      "wungus:wungdigestion/fart-08",
+      "wungus:wungdigestion/fart-09",
+      "wungus:wungdigestion/fart-10",
+      "wungus:wungdigestion/fart-11",
+      "wungus:wungdigestion/fart-12",
+      "wungus:wungdigestion/fart-13"
     ]
   },
   "wungus_ambient": {
     "subtitle": "sounds.wungus.wungus_ambient",
     "sounds": [
-      "wungus:wungchirp01",
-      "wungus:wungchirp02",
-      "wungus:wungchirp03",
-      "wungus:wungchirp04",
-      "wungus:wungsounds01",
-      "wungus:wungsounds02",
-      "wungus:wungsounds03",
-      "wungus:wungsounds04",
-      "wungus:wungsounds05",
-      "wungus:wungsounds06",
-      "wungus:wungsounds07",
-      "wungus:wungsounds08",
-      "wungus:wungsounds09",
-      "wungus:wungsounds10",
-      "wungus:wungsounds11",
-      "wungus:wungsounds12",
-      "wungus:wungsounds13"
+      "wungus:ambient/wungchirp01",
+      "wungus:ambient/wungchirp02",
+      "wungus:ambient/wungchirp03",
+      "wungus:ambient/wungchirp04",
+      "wungus:ambient/wungsounds01",
+      "wungus:ambient/wungsounds02",
+      "wungus:ambient/wungsounds03",
+      "wungus:ambient/wungsounds04",
+      "wungus:ambient/wungsounds05",
+      "wungus:ambient/wungsounds06",
+      "wungus:ambient/wungsounds07",
+      "wungus:ambient/wungsounds08",
+      "wungus:ambient/wungsounds09",
+      "wungus:ambient/wungsounds10",
+      "wungus:ambient/wungsounds11",
+      "wungus:ambient/wungsounds12",
+      "wungus:ambient/wungsounds13"
     ]
   },
   "wungus_hurt": {
     "subtitle": "sounds.wungus.wungus_hurt",
     "sounds": [
-      "wungus:wunghiss01",
-      "wungus:wunghiss02",
-      "wungus:wunghiss03",
-      "wungus:wunghurt01",
-      "wungus:wunghurt02",
-      "wungus:wunghurt03"
+      "wungus:hurt/wunghiss01",
+      "wungus:hurt/wunghiss02",
+      "wungus:hurt/wunghiss03",
+      "wungus:hurt/wunghurt01",
+      "wungus:hurt/wunghurt02",
+      "wungus:hurt/wunghurt03"
     ]
   },
   "wungus_death": {
     "subtitle": "sounds.wungus.wungus_death",
     "sounds": [
-      "wungus:wungusdeath",
-      "wungus:wungusdeathrare-01",
-      "wungus:wungusdeathrare-02"
+      "wungus:death/wungusdeath",
+      "wungus:death/wungusdeathrare-01",
+      "wungus:death/wungusdeathrare-02"
+    ]
+  },
+  "prattling_wungus_1": {
+    "subtitle": "sounds.wungus.prattling_wungus_1",
+    "sounds": [
+      "wungus:prattling/1/1-1",
+      "wungus:prattling/1/1-2",
+      "wungus:prattling/1/1-3",
+      "wungus:prattling/1/1-4",
+      "wungus:prattling/1/1-5",
+      "wungus:prattling/1/1-6",
+      "wungus:prattling/1/1-7",
+      "wungus:prattling/1/1-8",
+      "wungus:prattling/1/1-9"
+    ]
+  },
+  "prattling_wungus_2": {
+    "subtitle": "sounds.wungus.prattling_wungus_2",
+    "sounds": [
+      "wungus:prattling/2/2-1",
+      "wungus:prattling/2/2-2",
+      "wungus:prattling/2/2-3",
+      "wungus:prattling/2/2-4"
+    ]
+  },
+  "prattling_wungus_3": {
+    "subtitle": "sounds.wungus.prattling_wungus_3",
+    "sounds": [
+      "wungus:prattling/3/3-1",
+      "wungus:prattling/3/3-2",
+      "wungus:prattling/3/3-3",
+      "wungus:prattling/3/3-4"
+    ]
+  },
+  "prattling_wungus_4": {
+    "subtitle": "sounds.wungus.prattling_wungus_4",
+    "sounds": [
+      "wungus:prattling/4/4-1",
+      "wungus:prattling/4/4-2",
+      "wungus:prattling/4/4-3",
+      "wungus:prattling/4/4-4"
     ]
   }
 }
