@@ -67,6 +67,9 @@ public class AddItemModifier extends LootModifier {
             }
         }
         ItemStack new_item = new ItemStack(this.item);
+        if (this.nbtString != null) {
+            return generatedLoot;
+        }
         try {
             CompoundTag nbt = NbtUtils.snbtToStructure(this.nbtString);
             new_item.setTag(nbt);
