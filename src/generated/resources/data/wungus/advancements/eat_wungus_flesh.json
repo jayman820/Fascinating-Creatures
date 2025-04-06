@@ -1,0 +1,36 @@
+{
+  "parent": "wungus:killed_wungus",
+  "criteria": {
+    "eat_wungus_flesh": {
+      "conditions": {
+        "item": {
+          "items": [
+            "wungus:cooked_wungus_flesh"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "text": "Where am I?"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "wungus:cooked_wungus_flesh"
+    },
+    "show_toast": true,
+    "title": {
+      "text": "What the fuck?"
+    }
+  },
+  "requirements": [
+    [
+      "eat_wungus_flesh"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
