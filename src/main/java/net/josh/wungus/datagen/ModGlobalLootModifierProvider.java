@@ -57,122 +57,247 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         //}
         add("prattling1_jungle_temple", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/jungle_temple")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_1.get()));
 
         add("prattling1_mineshaft", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/abandoned_mineshaft")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_1.get()));
 
         add("prattling1_buried_treasure", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/buried_treasure")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_1.get()));
 
         add("prattling1_pillager_outpost", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/pillager_outpost")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_1.get()));
 
         add("prattling1_woodland_mansion", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/woodland_mansion")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_1.get()));
 
         add("prattling1_dungeon", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/simple_dungeon")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_desert_pyramid", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/desert_pyramid")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_stronghold_corridor", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_corridor")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_stronghold_crossing", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_crossing")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_stronghold_library", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_library")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_ancient_city", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ancient_city")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_ruined_portal", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ruined_portal")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_1.get()));
 
         add("prattling2_jungle_temple", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/jungle_temple")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling2_mineshaft", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/abandoned_mineshaft")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling2_buried_treasure", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/buried_treasure")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling2_pillager_outpost", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/pillager_outpost")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling2_woodland_mansion", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/woodland_mansion")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling2_dungeon", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/simple_dungeon")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_2.get()));
+
+        add("prattling2_ancient_city", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ancient_city")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_2.get()));
+
+        add("prattling2_desert_pyramid", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/desert_pyramid")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_2.get()));
+
+        add("prattling2_stronghold_corridor", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_corridor")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_2.get()));
+
+        add("prattling2_stronghold_crossing", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_crossing")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_2.get()));
+
+        add("prattling2_stronghold_library", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_library")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_1.get()));
+
+        add("prattling1_ancient_city", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ancient_city")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_2.get()));
+
+        add("prattling2_ruined_portal", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ruined_portal")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling3_jungle_temple", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/jungle_temple")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_3.get()));
 
         add("prattling3_mineshaft", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/abandoned_mineshaft")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_3.get()));
 
         add("prattling3_buried_treasure", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/buried_treasure")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_3.get()));
 
         add("prattling3_pillager_outpost", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/pillager_outpost")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_3.get()));
 
         add("prattling3_woodland_mansion", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/woodland_mansion")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_3.get()));
 
         add("prattling3_dungeon", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/simple_dungeon")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_3.get()));
+
+        add("prattling3_desert_pyramid", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/desert_pyramid")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_3.get()));
+
+        add("prattling3_stronghold_corridor", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_corridor")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_3.get()));
+
+        add("prattling3_stronghold_crossing", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_crossing")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_3.get()));
+
+        add("prattling3_stronghold_library", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_library")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_3.get()));
+
+        add("prattling3_ancient_city", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ancient_city")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_3.get()));
+
+        add("prattling3_ruined_portal", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ruined_portal")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_3.get()));
 
         add("prattling4_jungle_temple", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/jungle_temple")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_4.get()));
 
         add("prattling4_mineshaft", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/abandoned_mineshaft")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_4.get()));
 
         add("prattling4_buried_treasure", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/buried_treasure")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_4.get()));
 
         add("prattling4_pillager_outpost", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/pillager_outpost")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_4.get()));
 
         add("prattling4_woodland_mansion", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/woodland_mansion")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_4.get()));
 
         add("prattling4_dungeon", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/simple_dungeon")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03f).build()},
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_4.get()));
+
+        add("prattling4_desert_pyramid", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/desert_pyramid")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_4.get()));
+
+        add("prattling4_stronghold_corridor", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_corridor")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_4.get()));
+
+        add("prattling4_stronghold_crossing", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_crossing")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_4.get()));
+
+        add("prattling4_stronghold_library", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_library")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_4.get()));
+
+        add("prattling4_ancient_city", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ancient_city")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
+                ModItems.PRATTLING_WUNGUS_4.get()));
+
+        add("prattling4_ruined_portal", new AddSimpleItem(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("chests/ruined_portal")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_4.get()));
     }
 }
