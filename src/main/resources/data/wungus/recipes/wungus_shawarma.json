@@ -1,0 +1,25 @@
+{
+  "type": "farmersdelight:cooking",
+  "recipe_book_tab": "misc",
+  "ingredients": [
+     {
+       "item": "wungus:cooked_wungus_flesh"
+     },
+     {
+       "tag": "forge:dough"
+     },
+     {
+       "tag": "forge:crops/tomato"
+     },
+     {
+       "tag": "forge:crops/onion"
+     },
+     {
+       "tag": "forge:crops/cabbage"
+     }
+  ],
+  "result": {
+    "item": "wungus:wungus_shawarma"
+  },
+  "cookingtime": 200
+}

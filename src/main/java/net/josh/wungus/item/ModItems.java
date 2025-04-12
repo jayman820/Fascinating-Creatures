@@ -2,10 +2,7 @@ package net.josh.wungus.item;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
-import net.josh.wungus.item.custom.PrattlingWungus;
-import net.josh.wungus.item.custom.WungusBoots;
-import net.josh.wungus.item.custom.WungusCookedFlesh;
-import net.josh.wungus.item.custom.WungusMilk;
+import net.josh.wungus.item.custom.*;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -38,6 +35,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> COOKED_WUNGUS_FLESH = ITEMS.register("cooked_wungus_flesh",
             () -> new WungusCookedFlesh(new Item.Properties().food(ModFoods.COOKED_WUNGUS_FLESH)));
+
+    public static final RegistryObject<Item> WUNGUS_SHAWARMA = ITEMS.register("wungus_shawarma",
+            () -> new WungusShawarma(new Item.Properties().food(ModFoods.WUNGUS_SHAWARMA)));
 
     public static final RegistryObject<Item> PRATTLING_WUNGUS_1 = ITEMS.register("prattling_wungus_1",
             () -> new PrattlingWungus(new Item.Properties(), 1));

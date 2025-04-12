@@ -16,13 +16,17 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import java.util.Random;
 
-public class WungusCookedFlesh extends Item {
-    public WungusCookedFlesh(Item.Properties pProperties) {
+public class WungusShawarma extends Item {
+    public WungusShawarma(Item.Properties pProperties) {
         super(pProperties);
     }
 
@@ -30,6 +34,12 @@ public class WungusCookedFlesh extends Item {
         if (pEntityLiving instanceof ServerPlayer serverplayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, pStack);
             serverplayer.awardStat(Stats.ITEM_USED.get(this));
+        }
+        Random rand = new Random();
+        int hit = rand.nextInt(10);
+        if(hit <= 1) {
+            pEntityLiving.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 600, 0)); // FORGE - move up so stack.shrink does not turn stack into air
+            pEntityLiving.addEffect(new MobEffectInstance(ModEffects.WUNGDIGESTION_EFFECT.get(), 600, 0));
         }
 
         ItemStack itemstack = super.finishUsingItem(pStack, pLevel, pEntityLiving);
@@ -39,9 +49,9 @@ public class WungusCookedFlesh extends Item {
             double d2 = pEntityLiving.getZ();
 
             for (int i = 0; i < 16; ++i) {
-                double d3 = pEntityLiving.getX() + (pEntityLiving.getRandom().nextDouble() - 0.5D) * 40.0D;
-                double d4 = Mth.clamp(pEntityLiving.getY() + (double) (pEntityLiving.getRandom().nextInt(16) - 8), (double) pLevel.getMinBuildHeight(), (double) (pLevel.getMinBuildHeight() + ((ServerLevel) pLevel).getLogicalHeight() - 1));
-                double d5 = pEntityLiving.getZ() + (pEntityLiving.getRandom().nextDouble() - 0.5D) * 40.0D;
+                double d3 = pEntityLiving.getX() + (pEntityLiving.getRandom().nextDouble() - 0.5D) * 60.0D;
+                double d4 = Mth.clamp(pEntityLiving.getY() + (double) (pEntityLiving.getRandom().nextInt(24) - 8), (double) pLevel.getMinBuildHeight(), (double) (pLevel.getMinBuildHeight() + ((ServerLevel) pLevel).getLogicalHeight() - 1));
+                double d5 = pEntityLiving.getZ() + (pEntityLiving.getRandom().nextDouble() - 0.5D) * 60.0D;
                 if (pEntityLiving.isPassenger()) {
                     pEntityLiving.stopRiding();
                 }
