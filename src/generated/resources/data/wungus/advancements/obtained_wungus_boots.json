@@ -1,0 +1,39 @@
+{
+  "parent": "wungus:killed_wungus",
+  "criteria": {
+    "obtained_wungus_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wungus:wungus_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "text": "Is this ok?"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "wungus:wungus_boots",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "text": "This feels illegal"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_wungus_boots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
