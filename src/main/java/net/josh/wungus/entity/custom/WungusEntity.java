@@ -145,6 +145,10 @@ public class WungusEntity extends TamableAnimal {
             baby = variant;
         }
         WungusEntity wungus =  ModEntities.WUNGUS.get().create(serverLevel);
+        Player closest = serverLevel.getNearestPlayer(ageableMob.getX() + 0.5F, ageableMob.getY() + 0.5F, ageableMob.getZ() + 0.5F, 20, EntitySelector.NO_SPECTATORS);
+        if (closest != null) {
+            wungus.tame(closest);
+        }
         wungus.setVariant(baby);
         return wungus;
     }
