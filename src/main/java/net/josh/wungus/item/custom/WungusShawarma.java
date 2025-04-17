@@ -73,7 +73,7 @@ public class WungusShawarma extends Item {
             }
 
             if (pEntityLiving instanceof Player && !((Player) pEntityLiving).getAbilities().instabuild) {
-                pStack.shrink(1);
+                //pStack.shrink(1);
             }
         }
         return itemstack;
