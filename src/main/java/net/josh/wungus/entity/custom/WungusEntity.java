@@ -6,6 +6,7 @@ import net.josh.wungus.item.ModItems;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.worldgen.ModBiomeModifiers;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +18,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -28,6 +31,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -35,14 +39,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags.Items;
 import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
 
-public class WungusEntity extends TamableAnimal {
+import java.util.Random;
+
+public class WungusEntity extends TamableAnimal implements PlayerRideableJumping {
+    private boolean allowStandSliding;
+    private float playerJumpPendingScale;
+    private boolean isJumping = false;
+
     public WungusEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setMaxUpStep(1f);
     }
 
     private static final EntityDataAccessor<Boolean> SITTING =
@@ -198,17 +210,21 @@ public class WungusEntity extends TamableAnimal {
             if (interactionresult.consumesAction()) {
                 return interactionresult;
             }
-            if (this.isOwnedBy(pPlayer)) {
-                if (sit) {
-                    this.setOrderedToSit(false);
-                    this.jumping = false;
-                    this.navigation.stop();
-                    return InteractionResult.SUCCESS;
-                } else {
-                    this.setOrderedToSit(true);
-                    this.jumping = false;
-                    this.navigation.stop();
-                    return InteractionResult.SUCCESS;
+            if (!pPlayer.isCrouching() && !this.isBaby() && !this.isOrderedToSit()) {
+                setRiding(pPlayer);
+            } else {
+                if (this.isOwnedBy(pPlayer)) {
+                    if (sit) {
+                        this.setOrderedToSit(false);
+                        this.jumping = false;
+                        this.navigation.stop();
+                        return InteractionResult.SUCCESS;
+                    } else {
+                        this.setOrderedToSit(true);
+                        this.jumping = false;
+                        this.navigation.stop();
+                        return InteractionResult.SUCCESS;
+                    }
                 }
             }
             return interactionresult;
@@ -253,6 +269,138 @@ public class WungusEntity extends TamableAnimal {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onPlayerJump(int pJumpPower) {
+        if (pJumpPower < 0) {
+            pJumpPower = 0;
+        } else {
+            this.allowStandSliding = true;
+        }
+
+        if (pJumpPower >= 90) {
+            this.playerJumpPendingScale = 1.0F;
+        } else {
+            this.playerJumpPendingScale = 0.4F + 0.4F * (float)pJumpPower / 90.0F;
+        }
+    }
+
+    @Override
+    public boolean canJump() {
+        return this.isTrusting();
+    }
+
+    @Override
+    public void handleStartJump(int pJumpPower) {
+        this.allowStandSliding = true;
+    }
+
+    @Override
+    public void handleStopJump() {}
+
+    private void setRiding(Player pPlayer) {
+        this.setInSittingPose(false);
+
+        pPlayer.setYRot(this.getYRot());
+        pPlayer.setXRot(this.getXRot());
+        pPlayer.startRiding(this);
+    }
+
+    @Nullable
+    @Override
+    public LivingEntity getControllingPassenger() {
+        return ((LivingEntity) this.getFirstPassenger());
+    }
+
+    @Override
+    public void travel(Vec3 pTravelVector) {
+        if(this.isVehicle() && getControllingPassenger() instanceof Player) {
+            LivingEntity livingentity = this.getControllingPassenger();
+            this.setYRot(livingentity.getYRot());
+            this.yRotO = this.getYRot();
+            this.setXRot(livingentity.getXRot() * 0.5F);
+            this.setRot(this.getYRot(), this.getXRot());
+            this.yBodyRot = this.getYRot();
+            this.yHeadRot = this.yBodyRot;
+            float f = livingentity.xxa * 0.5F;
+            float f1 = livingentity.zza;
+
+            // Inside this if statement, we are on the client!
+            if (this.isControlledByLocalInstance()) {
+                if (this.onGround()) {
+                    this.setIsJumping(false);
+                    if (this.playerJumpPendingScale > 0.0F && !this.isJumping()) {
+                        this.executeRidersJump(this.playerJumpPendingScale, pTravelVector);
+                    }
+
+                    this.playerJumpPendingScale = 0.0F;
+                }
+
+                float newSpeed = (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED);
+                // increasing speed by 100% if the spring key is held down (number for testing purposes)
+                if(Minecraft.getInstance().options.keySprint.isDown()) {
+                    newSpeed *= 2f;
+                }
+
+                this.setSpeed(newSpeed);
+                super.travel(new Vec3(f, pTravelVector.y, f1));
+            }
+        } else {
+            super.travel(pTravelVector);
+        }
+    }
+
+    private boolean isJumping() {
+        return this.isJumping;
+    }
+
+    private void setIsJumping(boolean pJumping) {
+        this.isJumping = pJumping;
+    }
+
+    protected void executeRidersJump(float pPlayerJumpPendingScale, Vec3 pTravelVector) {
+        double d0 = 0.7D * (double)pPlayerJumpPendingScale * (double)this.getBlockJumpFactor();
+        double d1 = d0 + (double)this.getJumpBoostPower();
+        Vec3 vec3 = this.getDeltaMovement();
+        this.setDeltaMovement(vec3.x, d1, vec3.z);
+        this.setIsJumping(true);
+        this.hasImpulse = true;
+        net.minecraftforge.common.ForgeHooks.onLivingJump(this);
+        if (pTravelVector.z > 0.0D) {
+            float f = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
+            float f1 = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
+            this.setDeltaMovement(this.getDeltaMovement().add((double)(-0.4F * f * pPlayerJumpPendingScale), 0.0D, (double)(0.4F * f1 * pPlayerJumpPendingScale)));
+        }
+
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity pLivingEntity) {
+        Direction direction = this.getMotionDirection();
+        if (direction.getAxis() != Direction.Axis.Y) {
+            int[][] offsets = DismountHelper.offsetsForDirection(direction);
+            BlockPos blockpos = this.blockPosition();
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+
+            for (Pose pose : pLivingEntity.getDismountPoses()) {
+                AABB aabb = pLivingEntity.getLocalBoundsForPose(pose);
+
+                for (int[] offset : offsets) {
+                    blockpos$mutableblockpos.set(blockpos.getX() + offset[0], blockpos.getY(), blockpos.getZ() + offset[1]);
+                    double d0 = this.level().getBlockFloorHeight(blockpos$mutableblockpos);
+                    if (DismountHelper.isBlockFloorValid(d0)) {
+                        Vec3 vec3 = Vec3.upFromBottomCenterOf(blockpos$mutableblockpos, d0);
+                        if (DismountHelper.canDismountTo(this.level(), pLivingEntity, aabb.move(vec3))) {
+                            pLivingEntity.setPose(pose);
+                            return vec3;
+                        }
+                    }
+                }
+            }
+        }
+
+        return super.getDismountLocationForPassenger(pLivingEntity);
     }
 
     static class WungusPanicGoal extends PanicGoal {
