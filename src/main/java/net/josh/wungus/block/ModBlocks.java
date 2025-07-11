@@ -1,6 +1,7 @@
 package net.josh.wungus.block;
 
 import net.josh.wungus.WungusMod;
+import net.josh.wungus.block.custom.QuartzLandmine;
 import net.josh.wungus.block.custom.WungusEgg;
 import net.josh.wungus.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +25,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> WUNGUS_EGG = registerBlock("wungus_egg",
             () -> new WungusEgg(BlockBehaviour.Properties.copy(Blocks.SAND).sound(SoundType.METAL).randomTicks()));
+
+    public static final RegistryObject<Block> QUARTZ_LANDMINE = registerBlock("quartz_landmine",
+            () -> new QuartzLandmine(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).sound(SoundType.NETHER_ORE).randomTicks()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

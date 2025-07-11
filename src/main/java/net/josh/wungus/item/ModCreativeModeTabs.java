@@ -22,6 +22,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.WUNGUS_MILK.get());
                         pOutput.accept(ModItems.WUNGUS_HIDE.get());
                         pOutput.accept(ModBlocks.WUNGUS_EGG.get());
+                        pOutput.accept(ModBlocks.QUARTZ_LANDMINE.get());
                         pOutput.accept(ModItems.WUNGUS_BOOTS.get());
                         pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());
                         pOutput.accept(ModItems.COOKED_WUNGUS_FLESH.get());
