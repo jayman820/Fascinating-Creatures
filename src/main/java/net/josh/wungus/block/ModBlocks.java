@@ -1,7 +1,7 @@
 package net.josh.wungus.block;
 
 import net.josh.wungus.WungusMod;
-import net.josh.wungus.block.custom.QuartzLandmine;
+import net.josh.wungus.block.custom.BlockLandmine;
 import net.josh.wungus.block.custom.WungusEgg;
 import net.josh.wungus.block.custom.WungusStatue;
 import net.josh.wungus.item.ModItems;
@@ -28,7 +28,7 @@ public class ModBlocks {
             () -> new WungusEgg(BlockBehaviour.Properties.copy(Blocks.SAND).sound(SoundType.METAL).randomTicks()));
 
     public static final RegistryObject<Block> QUARTZ_LANDMINE = registerBlock("quartz_landmine",
-            () -> new QuartzLandmine(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).sound(SoundType.NETHER_ORE).randomTicks()));
+            () -> new BlockLandmine(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).sound(SoundType.NETHER_ORE).randomTicks()));
 
     public static final RegistryObject<Block> WUNGUS_STATUE = registerBlock("wungus_statue",
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
