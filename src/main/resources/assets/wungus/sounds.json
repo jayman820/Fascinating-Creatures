@@ -111,5 +111,19 @@
       "wungus:prattling/4/4-4",
       "wungus:prattling/4/4-5"
     ]
+  },
+  "landmine_trigger": {
+    "subtitle": "sounds.wungus.landmine_trigger",
+    "sounds": [
+      "wungus:wungus-game-2/mine-trigger"
+    ]
+  },
+  "wungus_statue": {
+    "subtitle": "sounds.wungus.wungus_statue",
+    "sounds": [
+      "wungus:wungus-game-2/tracy-miguel",
+      "wungus:wungus-game-2/miguel",
+      "wungus:wungus-game-2/gnarpy"
+    ]
   }
 }
