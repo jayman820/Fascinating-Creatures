@@ -66,6 +66,18 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT =
             SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
 
+    public static final EntityDataAccessor<Integer> TOTAL_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> HEALTH_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> SPEED_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> JUMP_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
 
     public final AnimationState runningAnimationState = new AnimationState();
     public final AnimationState idleAnimationState = new AnimationState();
@@ -464,6 +476,10 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         this.entityData.define(SITTING, false);
         this.entityData.define(TRUSTING, false);
         this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
+        this.entityData.define(TOTAL_STEROID_USES, 0);
+        this.entityData.define(HEALTH_STEROID_USES, 0);
+        this.entityData.define(SPEED_STEROID_USES, 0);
+        this.entityData.define(JUMP_STEROID_USES, 0);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -471,6 +487,10 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         compound.putBoolean("Sitting", this.isOrderedToSit());
         compound.putBoolean("Trusting", this.isTrusting());
         compound.putInt("Variant", this.getTypeVariant());
+        compound.putInt("TotalSteroids", this.getTotalSteroidUses());
+        compound.putInt("HealthSteroids", this.getHealthSteroidUses());
+        compound.putInt("SpeedSteroids", this.getSpeedSteroidUses());
+        compound.putInt("JumpSteroids", this.getJumpSteroidUses());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
@@ -478,6 +498,42 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         this.setOrderedToSit(compound.getBoolean("Sitting"));
         this.setTrusting(compound.getBoolean("Trusting"));
         this.setTypeVariant(compound.getInt("Variant"));
+        this.setTotalSteroidUses(compound.getInt("TotalSteroids"));
+        this.setHealthSteroidUses(compound.getInt("HealthSteroids"));
+        this.setSpeedSteroidUses(compound.getInt("SpeedSteroids"));
+        this.setJumpSteroidUses(compound.getInt("JumpSteroids"));
+    }
+
+    private int getTotalSteroidUses() {
+        return this.entityData.get(TOTAL_STEROID_USES);
+    }
+
+    public void setTotalSteroidUses(int uses) {
+        this.entityData.set(TOTAL_STEROID_USES, uses);
+    }
+
+    private int getHealthSteroidUses() {
+        return this.entityData.get(HEALTH_STEROID_USES);
+    }
+
+    public void setHealthSteroidUses(int uses) {
+        this.entityData.set(HEALTH_STEROID_USES, uses);
+    }
+
+    private int getSpeedSteroidUses() {
+        return this.entityData.get(SPEED_STEROID_USES);
+    }
+
+    public void setSpeedSteroidUses(int uses) {
+        this.entityData.set(SPEED_STEROID_USES, uses);
+    }
+
+    private int getJumpSteroidUses() {
+        return this.entityData.get(JUMP_STEROID_USES);
+    }
+
+    public void setJumpSteroidUses(int uses) {
+        this.entityData.set(JUMP_STEROID_USES, uses);
     }
 
     public WungusVariant getVariant() {
