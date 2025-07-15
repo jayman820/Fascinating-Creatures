@@ -39,6 +39,9 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_SHAWARMA = ITEMS.register("wungus_shawarma",
             () -> new WungusShawarma(new Item.Properties().food(ModFoods.WUNGUS_SHAWARMA)));
 
+    public static final RegistryObject<Item> SANTONIO_CASHEW = ITEMS.register("santonio_cashew",
+            () -> new SantonioCashew(new Item.Properties().food(ModFoods.SANTONIO_CASHEW)));
+
     public static final RegistryObject<Item> PRATTLING_WUNGUS_1 = ITEMS.register("prattling_wungus_1",
             () -> new PrattlingWungus(new Item.Properties(), 1));
 

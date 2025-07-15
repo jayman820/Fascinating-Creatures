@@ -100,7 +100,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
     private void setupAnimationStates() {
         if(this.isBeingChased) {
-            this.runningAnimationState.startIfStopped(this.tickCount);
+            this.runningAnimationState.start(this.tickCount);
         }
         if(this.entityData.get(SITTING)) {
             this.sittingAnimation.startIfStopped(this.tickCount);
@@ -452,12 +452,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
         public void start() {
             this.wungus.isBeingChased = true;
+            wungus.setupAnimationStates();
             super.start();
         }
 
         public void stop() {
             this.wungus.isBeingChased = false;
             this.wungus.teleport();
+            wungus.setupAnimationStates();
             super.stop();
         }
     }

@@ -35,8 +35,10 @@ public class BlockLandmine extends Block {
     }
 
     private static void interact(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        pLevel.playSound(null, pPos, ModSounds.LANDMINE_TRIGGER.get(), SoundSource.BLOCKS);
-        explode(pLevel, pPos, (LivingEntity) pEntity);
+        if(pEntity instanceof Player) {
+            pLevel.playSound(null, pPos, ModSounds.LANDMINE_TRIGGER.get(), SoundSource.BLOCKS);
+            explode(pLevel, pPos, (LivingEntity) pEntity);
+        }
     }
 
     private static void explode(Level pLevel, BlockPos pPos, @Nullable LivingEntity pEntity) {
