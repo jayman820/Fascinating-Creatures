@@ -125,5 +125,34 @@
       "wungus:wungus-game-2/miguel",
       "wungus:wungus-game-2/gnarpy"
     ]
+  },
+  "red_light": {
+    "subtitle": "sounds.wungus.red_light",
+    "sounds": [
+      "wungus:wungus-game-2/red-light"
+    ]
+  },
+  "green_light": {
+    "subtitle": "sounds.wungus.green_light",
+    "sounds": [
+      "wungus:wungus-game-2/green-light"
+    ]
+  },
+  "mingle": {
+    "subtitle": "sounds.wungus.mingle",
+    "sounds": [
+      "wungus:wungus-game-2/mingle/cow",
+      "wungus:wungus-game-2/mingle/enderman",
+      "wungus:wungus-game-2/mingle/horse",
+      "wungus:wungus-game-2/mingle/panda",
+      "wungus:wungus-game-2/mingle/phantom",
+      "wungus:wungus-game-2/mingle/pig",
+      "wungus:wungus-game-2/mingle/polar_bear",
+      "wungus:wungus-game-2/mingle/sheep",
+      "wungus:wungus-game-2/mingle/shulker",
+      "wungus:wungus-game-2/mingle/sniffer",
+      "wungus:wungus-game-2/mingle/wungus",
+      "wungus:wungus-game-2/mingle/zombie"
+    ]
   }
 }

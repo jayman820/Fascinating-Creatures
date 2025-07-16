@@ -23,6 +23,9 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_4 = registerSoundEvents("prattling_wungus_4");
     public static final RegistryObject<SoundEvent> LANDMINE_TRIGGER = registerSoundEvents("landmine_trigger");
     public static final RegistryObject<SoundEvent> WUNGUS_STATUE = registerSoundEvents("wungus_statue");
+    public static final RegistryObject<SoundEvent> RED_LIGHT = registerSoundEvents("red_light");
+    public static final RegistryObject<SoundEvent> GREEN_LIGHT = registerSoundEvents("green_light");
+    public static final RegistryObject<SoundEvent> MINGLE = registerSoundEvents("mingle");
 
 
     public static RegistryObject<SoundEvent> registerSoundEvents(String name) {

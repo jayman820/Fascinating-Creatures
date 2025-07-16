@@ -39,7 +39,9 @@ public class SantonioCashew extends Item {
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
+        pAttacker.setInvulnerable(true);
         explode(pTarget.level(), pTarget.getOnPos(), pTarget);
+        pAttacker.setInvulnerable(false);
         if (pAttacker instanceof Player && !((Player)pAttacker).getAbilities().instabuild) {
             pStack.shrink(1);
         }
