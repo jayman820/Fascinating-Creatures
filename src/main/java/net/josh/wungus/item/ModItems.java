@@ -30,6 +30,9 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_BOOTS = ITEMS.register("wungus_boots",
             () -> new WungusBoots(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.BOOTS, new Item.Properties()));
 
+    public static final RegistryObject<Item> WUNGUS_MASK = ITEMS.register("wungus_mask",
+            () -> new WungusMask(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.HELMET, new Item.Properties()));
+
     public static final RegistryObject<Item> RAW_WUNGUS_FLESH = ITEMS.register("raw_wungus_flesh",
             () -> new Item(new Item.Properties().food(ModFoods.RAW_WUNGUS_FLESH)));
 

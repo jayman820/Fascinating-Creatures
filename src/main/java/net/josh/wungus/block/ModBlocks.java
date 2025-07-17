@@ -30,6 +30,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> QUARTZ_LANDMINE = registerBlock("quartz_landmine",
             () -> new BlockLandmine(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).sound(SoundType.NETHER_ORE).randomTicks()));
 
+    public static final RegistryObject<Block> SAND_LANDMINE = registerBlock("sand_landmine",
+            () -> new BlockLandmine(BlockBehaviour.Properties.copy(Blocks.SAND).sound(SoundType.SAND).randomTicks()));
+
     public static final RegistryObject<Block> WUNGUS_STATUE = registerBlock("wungus_statue",
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
 

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "wungus:block/sand_landmine"
+      },
+      {
+        "model": "wungus:block/sand_landmine",
+        "y": 90
+      },
+      {
+        "model": "wungus:block/sand_landmine",
+        "y": 180
+      },
+      {
+        "model": "wungus:block/sand_landmine",
+        "y": 270
+      }
+    ]
+  }
+}
