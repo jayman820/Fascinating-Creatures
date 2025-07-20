@@ -22,9 +22,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class WungusStatue extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
     public WungusStatue(Properties pProperties) {
         super(pProperties);
     }

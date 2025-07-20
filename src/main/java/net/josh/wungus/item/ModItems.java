@@ -3,11 +3,9 @@ package net.josh.wungus.item;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.custom.*;
+import net.josh.wungus.sound.ModSounds;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -56,6 +54,15 @@ public class ModItems {
 
     public static final RegistryObject<Item> PRATTLING_WUNGUS_4 = ITEMS.register("prattling_wungus_4",
             () -> new PrattlingWungus(new Item.Properties(), 4));
+
+    public static final RegistryObject<Item> CONCERTO_DISC = ITEMS.register("concerto_disc",
+            () -> new RecordItem(6, ModSounds.CONCERTO, new Item.Properties().stacksTo(1), 5780));
+
+    public static final RegistryObject<Item> MINGLE_DISC = ITEMS.register("mingle_disc",
+            () -> new RecordItem(6, ModSounds.MINGLE_DISC, new Item.Properties().stacksTo(1), 1280));
+
+    public static final RegistryObject<Item> MOON_DISC = ITEMS.register("moon_disc",
+            () -> new RecordItem(6, ModSounds.MOON, new Item.Properties().stacksTo(1), 3660));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -28,6 +28,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.STONE_STATUE.get());
                         pOutput.accept(ModBlocks.GOLD_STATUE.get());
                         pOutput.accept(ModBlocks.GLOWSTONE_STATUE.get());
+                        pOutput.accept(ModBlocks.WUNGUS_HEDGE.get());
                         pOutput.accept(ModItems.WUNGUS_BOOTS.get());
                         pOutput.accept(ModItems.WUNGUS_MASK.get());
                         pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());
@@ -38,6 +39,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_2.get());
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_3.get());
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_4.get());
+                        pOutput.accept(ModItems.MOON_DISC.get());
+                        pOutput.accept(ModItems.CONCERTO_DISC.get());
+                        pOutput.accept(ModItems.MINGLE_DISC.get());
                     })
                     .build());
 
