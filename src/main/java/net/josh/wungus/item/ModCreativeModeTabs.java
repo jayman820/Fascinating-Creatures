@@ -25,6 +25,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.QUARTZ_LANDMINE.get());
                         pOutput.accept(ModBlocks.SAND_LANDMINE.get());
                         pOutput.accept(ModBlocks.WUNGUS_STATUE.get());
+                        pOutput.accept(ModBlocks.STONE_STATUE.get());
+                        pOutput.accept(ModBlocks.GOLD_STATUE.get());
+                        pOutput.accept(ModBlocks.GLOWSTONE_STATUE.get());
                         pOutput.accept(ModItems.WUNGUS_BOOTS.get());
                         pOutput.accept(ModItems.WUNGUS_MASK.get());
                         pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());

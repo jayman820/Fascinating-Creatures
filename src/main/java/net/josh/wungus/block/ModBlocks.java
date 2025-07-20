@@ -36,6 +36,15 @@ public class ModBlocks {
     public static final RegistryObject<Block> WUNGUS_STATUE = registerBlock("wungus_statue",
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
 
+    public static final RegistryObject<Block> STONE_STATUE = registerBlock("stone_statue",
+            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
+
+    public static final RegistryObject<Block> GLOWSTONE_STATUE = registerBlock("glowstone_statue",
+            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
+
+    public static final RegistryObject<Block> GOLD_STATUE = registerBlock("gold_statue",
+            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
