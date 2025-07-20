@@ -40,7 +40,7 @@ public class ModBlocks {
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
 
     public static final RegistryObject<Block> GLOWSTONE_STATUE = registerBlock("glowstone_statue",
-            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
+            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).lightLevel(s -> 15).sound(SoundType.STONE).randomTicks()));
 
     public static final RegistryObject<Block> GOLD_STATUE = registerBlock("gold_statue",
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).sound(SoundType.STONE).randomTicks()));
