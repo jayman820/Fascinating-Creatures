@@ -22,6 +22,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_3 = registerSoundEvents("prattling_wungus_3");
     public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_4 = registerSoundEvents("prattling_wungus_4");
     public static final RegistryObject<SoundEvent> WUNGUS_STATUE = registerSoundEvents("wungus_statue");
+    public static final RegistryObject<SoundEvent> HEARTBEAT = registerSoundEvents("heartbeat");
 
     // Wungus Game 2 sound events
     public static final RegistryObject<SoundEvent> LANDMINE_TRIGGER = registerSoundEvents("landmine_trigger");

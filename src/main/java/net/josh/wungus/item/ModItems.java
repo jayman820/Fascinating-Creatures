@@ -43,6 +43,15 @@ public class ModItems {
     public static final RegistryObject<Item> SANTONIO_CASHEW = ITEMS.register("santonio_cashew",
             () -> new SantonioCashew(new Item.Properties().food(ModFoods.SANTONIO_CASHEW)));
 
+    public static final RegistryObject<Item> HEALTH_STEROID = ITEMS.register("health_steroid",
+            () -> new WungusSteroid(new Item.Properties().food(ModFoods.STEROIDS), WungusSteroid.Type.HEALTH));
+
+    public static final RegistryObject<Item> SPEED_STEROID = ITEMS.register("speed_steroid",
+            () -> new WungusSteroid(new Item.Properties().food(ModFoods.STEROIDS), WungusSteroid.Type.SPEED));
+
+    public static final RegistryObject<Item> JUMP_STEROID = ITEMS.register("jump_steroid",
+            () -> new WungusSteroid(new Item.Properties().food(ModFoods.STEROIDS), WungusSteroid.Type.JUMP));
+
     public static final RegistryObject<Item> PRATTLING_WUNGUS_1 = ITEMS.register("prattling_wungus_1",
             () -> new PrattlingWungus(new Item.Properties(), 1));
 

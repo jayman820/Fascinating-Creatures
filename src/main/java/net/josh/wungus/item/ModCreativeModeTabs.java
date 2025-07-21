@@ -34,6 +34,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());
                         pOutput.accept(ModItems.COOKED_WUNGUS_FLESH.get());
                         pOutput.accept(ModItems.WUNGUS_SHAWARMA.get());
+                        pOutput.accept(ModItems.HEALTH_STEROID.get());
+                        pOutput.accept(ModItems.SPEED_STEROID.get());
+                        pOutput.accept(ModItems.JUMP_STEROID.get());
                         pOutput.accept(ModItems.SANTONIO_CASHEW.get());
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_1.get());
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_2.get());

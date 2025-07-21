@@ -10,6 +10,8 @@ public class ModFoods {
 
     public static final FoodProperties SANTONIO_CASHEW = new FoodProperties.Builder().nutrition(2).saturationMod(0.0F).alwaysEat().build();
 
+    public static final FoodProperties STEROIDS = new FoodProperties.Builder().nutrition(0).saturationMod(0.0F).alwaysEat().build();
+
     public static final FoodProperties RAW_WUNGUS_FLESH = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.5f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 300), 1f).build();
 

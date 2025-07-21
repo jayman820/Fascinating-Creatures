@@ -268,5 +268,11 @@
     "sounds": [
       "wungus:wungus-game-2/smile"
     ]
+  },
+  "heartbeat": {
+    "subtitle": "sounds.wungus.heartbeat",
+    "sounds": [
+      "wungus:steroids/heartbeat"
+    ]
   }
 }
