@@ -1,6 +1,7 @@
 package net.josh.wungus.item.custom;
 
 import net.josh.wungus.effect.ModEffects;
+import net.josh.wungus.misc.ModDamageTypes;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,6 +26,7 @@ public class SantonioCashew extends Item {
 
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
         if (pEntityLiving instanceof ServerPlayer serverplayer) {
+            pEntityLiving.hurt(ModDamageTypes.causeSantonioCashew(pLevel.registryAccess()), 10000);
             explode(pLevel, pEntityLiving.getOnPos(), pEntityLiving);
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, pStack);
             serverplayer.awardStat(Stats.ITEM_USED.get(this));
@@ -40,6 +42,7 @@ public class SantonioCashew extends Item {
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
         pAttacker.setInvulnerable(true);
+        pTarget.hurt(ModDamageTypes.causeSantonioCashew(pTarget.level().registryAccess()), 10000);
         explode(pTarget.level(), pTarget.getOnPos(), pTarget);
         pAttacker.setInvulnerable(false);
         if (pAttacker instanceof Player && !((Player)pAttacker).getAbilities().instabuild) {

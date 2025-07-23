@@ -10,6 +10,8 @@ import net.josh.wungus.item.ModItems;
 import net.josh.wungus.loot.ModLootModifiers;
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;

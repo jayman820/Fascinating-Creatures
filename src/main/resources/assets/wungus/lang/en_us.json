@@ -37,5 +37,14 @@
   "sounds.wungus.prattling_wungus_4": "Prattling Wungus (Misc)",
   "sounds.wungus.red_light": "Red Light",
   "sounds.wungus.green_light": "Green Light",
-  "sounds.wungus.mingle": "Mingle"
+  "sounds.wungus.mingle": "Mingle",
+
+  "death.attack.steroids_0": "%s ate something they shouldn't have",
+  "death.attack.steroids_1": "%s's heart exploded",
+  "death.attack.steroids_0.entity": "%s ate something they shouldn't have escaping from %s",
+  "death.attack.steroids_1.entity": "%s heart exploded running from %s",
+  "death.attack.cashew_0": "%s found Santonio",
+  "death.attack.cashew_1": "%s's went fishing for Santonio",
+  "death.attack.cashew_0.entity": "%s was shown Santonio by %s",
+  "death.attack.cashew_1.entity": "%s got sent fishing for Santonio by %s"
 }
