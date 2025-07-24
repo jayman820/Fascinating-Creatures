@@ -4,12 +4,16 @@ import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.variant.WungusVariant;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.item.custom.WungusSteroid;
+import net.josh.wungus.particle.ModParticles;
+import net.josh.wungus.particle.SparkleParticle;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.worldgen.ModBiomeModifiers;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -177,6 +181,24 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         }
         wungus.setVariant(baby);
         return wungus;
+    }
+
+    public void aiStep() {
+        if (this.level().isClientSide && this.getName().toString().contains("sakura")) {
+            for(int i = 0; i < 1; ++i) {
+                int rand_int = (int) Math.floor((Math.random() * 3));
+                SimpleParticleType sparkleParticle;
+                if (rand_int == 0) {
+                    sparkleParticle = ModParticles.BLUE_SPARKLE_PARTICLES.get();
+                } else if (rand_int == 1) {
+                    sparkleParticle = ModParticles.DARK_SPARKLE_PARTICLES.get();
+                } else {
+                    sparkleParticle = ModParticles.LIGHT_SPARKLE_PARTICLES.get();
+                }
+                this.level().addParticle(sparkleParticle, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 0.2D, -this.random.nextDouble() * 0.2D, (this.random.nextDouble() - 0.5D) * 0.2D);
+            }
+        }
+        super.aiStep();
     }
 
     @Override

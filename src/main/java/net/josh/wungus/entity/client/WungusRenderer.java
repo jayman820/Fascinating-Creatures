@@ -32,6 +32,9 @@ public class WungusRenderer extends MobRenderer<WungusEntity, WungusModel<Wungus
 
     @Override
     public ResourceLocation getTextureLocation(WungusEntity wungusEntity) {
+        if (wungusEntity.getName().toString().toLowerCase().contains("sakura")) {
+            return new ResourceLocation(WungusMod.MOD_ID, "textures/entity/pinkgus.png");
+        }
         return LOCATION_BY_VARIANT.get(wungusEntity.getVariant());
     }
 
