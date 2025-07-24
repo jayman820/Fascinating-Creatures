@@ -17,6 +17,7 @@ public class ModDamageTypes {
     public static final ResourceKey<DamageType> STEROIDS = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(WungusMod.MOD_ID, "steroids"));
     public static final ResourceKey<DamageType> CASHEW = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(WungusMod.MOD_ID, "cashew"));
     public static final ResourceKey<DamageType> NONEGUS = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(WungusMod.MOD_ID, "nonegus"));
+    public static final ResourceKey<DamageType> LANDMINE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(WungusMod.MOD_ID, "landmine"));
 
     public static DamageSource causeWungusSteroids(RegistryAccess registryAccess) {
         return new DamageSourceRandomMessages(registryAccess.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(STEROIDS), 1);
@@ -24,6 +25,10 @@ public class ModDamageTypes {
 
     public static DamageSource causeSantonioCashew(RegistryAccess registryAccess) {
         return new DamageSourceRandomMessages(registryAccess.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(CASHEW), 2);
+    }
+
+    public static DamageSource causeLandMine(RegistryAccess registryAccess) {
+        return new DamageSourceRandomMessages(registryAccess.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(LANDMINE), 2);
     }
 
     public static DamageSource causeNonegusBite(RegistryAccess registryAccess, Entity source) {

@@ -1,5 +1,6 @@
 package net.josh.wungus.block.custom;
 
+import net.josh.wungus.misc.ModDamageTypes;
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,6 +38,7 @@ public class BlockLandmine extends Block {
     private static void interact(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
         if(pEntity instanceof Player) {
             pLevel.playSound(null, pPos, ModSounds.LANDMINE_TRIGGER.get(), SoundSource.BLOCKS);
+            pEntity.hurt(ModDamageTypes.causeLandMine(pLevel.registryAccess()), 10000);
             explode(pLevel, pPos, (LivingEntity) pEntity);
         }
     }

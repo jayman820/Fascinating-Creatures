@@ -19,6 +19,9 @@
   "item.wungus.mingle_disc": "Mingle Disc",
   "item.wungus.mingle_disc.desc": "Mingle Disc for Wungus Game 2",
   "item.wungus.wungus_ambrosia": "Wungus Ambrosia",
+  "item.wungus.health_steroid": "Health Steroids",
+  "item.wungus.jump_steroid": "Jump Steroids",
+  "item.wungus.speed_steroid": "Speed Steroids",
   "block.wungus.wungus_egg": "Wungus Egg",
   "block.wungus.quartz_landmine": "Quartz Landmine",
   "block.wungus.sand_landmine": "Sand Landmine",
@@ -30,6 +33,7 @@
   "entity.wungus.wungus": "Wungus",
   "creativetab.wungus_tab": "Fascinating Creatures",
   "effect.wungus.wungdigestion": "Wungdigestion",
+  "effect.wungus.wungus_steroids": "Heart Failure",
   "sounds.wungus.burp": "Wungdigestion Burp Effect Noise",
   "sounds.wungus.fart": "Wungdigestion Fart Effect Noise",
   "sounds.wungus.prattling_wungus_1": "Prattling Wungus (Tracy)",
@@ -45,7 +49,11 @@
   "death.attack.steroids_0.entity": "%s ate something they shouldn't have escaping from %s",
   "death.attack.steroids_1.entity": "%s heart exploded running from %s",
   "death.attack.cashew_0": "%s found Santonio",
-  "death.attack.cashew_1": "%s's went fishing for Santonio",
+  "death.attack.cashew_1": "%s went fishing for Santonio",
   "death.attack.cashew_0.entity": "%s was shown Santonio by %s",
-  "death.attack.cashew_1.entity": "%s got sent fishing for Santonio by %s"
+  "death.attack.cashew_1.entity": "%s got sent fishing for Santonio by %s",
+  "death.attack.landmine_0": "%s didn't watch where they were stepping",
+  "death.attack.landmine_1": "%s took a wrong turn",
+  "death.attack.landmine_0.entity": "%s didn't watch where they were running while escaping %s",
+  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s"
 }
