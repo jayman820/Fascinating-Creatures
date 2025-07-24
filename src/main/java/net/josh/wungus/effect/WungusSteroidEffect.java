@@ -52,6 +52,17 @@ public class WungusSteroidEffect extends MobEffect {
 
         if(!LEVEL_ONE && CARDIAC_ARREST_LEVEL == 1) {
             pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 10));
+            switch (this.type) {
+                case HEALTH:
+                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, 10));
+                    break;
+                case SPEED:
+                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 5));
+                    break;
+                case JUMP:
+                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP, 500, 5));
+                    break;
+            }
             LEVEL_ONE = true;
         } else
         if(!LEVEL_TWO && CARDIAC_ARREST_LEVEL == 2) {

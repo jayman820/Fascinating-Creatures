@@ -48,6 +48,15 @@ public class ModBlocks {
     public static final RegistryObject<Block> WUNGUS_HEDGE = registerBlock("wungus_hedge",
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().sound(SoundType.AZALEA_LEAVES).randomTicks()));
 
+    public static final RegistryObject<Block> SANDSTONE_LAMP = registerBlock("sandstone_lamp",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SANDSTONE).noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)));
+
+    public static final RegistryObject<Block> QUARTZ_LAMP = registerBlock("quartz_lamp",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)));
+
+    public static final RegistryObject<Block> TERRACOTTA_LAMP = registerBlock("terracotta_lamp",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA).noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

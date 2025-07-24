@@ -49,6 +49,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags.Items;
 import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Attr;
 
 import java.util.Random;
 
@@ -251,6 +252,35 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             }
             if (this.isOwnedBy(pPlayer) && (itemstack.is(ModItems.HEALTH_STEROID.get()) || itemstack.is(ModItems.SPEED_STEROID.get()) || itemstack.is(ModItems.JUMP_STEROID.get()))) {
                 if (itemstack.is(ModItems.HEALTH_STEROID.get())) {
+                    if (this.getHealthSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
+                        this.setHealthSteroidUses(this.getHealthSteroidUses() + 1);
+                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+                        float health = (float) this.getAttributes().getBaseValue(Attributes.MAX_HEALTH);
+                        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + 1);
+                        this.setHealth(health + 1.0f);
+                        itemstack.shrink(1);
+                    }
+                    return interactionresult;
+
+                } else if (itemstack.is(ModItems.SPEED_STEROID.get())) {
+                    if (this.getSpeedSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
+                        this.setSpeedSteroidUses(this.getSpeedSteroidUses() + 1);
+                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+                        float speed = (float) this.getAttributes().getBaseValue(Attributes.MOVEMENT_SPEED);
+                        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed + 0.05);
+                        itemstack.shrink(1);
+                    }
+                    return interactionresult;
+
+                } else if (itemstack.is(ModItems.JUMP_STEROID.get())) {
+                    if (this.getJumpSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
+                        this.setJumpSteroidUses(this.getJumpSteroidUses() + 1);
+                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+                        float jump = (float) this.getAttributes().getBaseValue(Attributes.JUMP_STRENGTH);
+                        this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(jump + 0.075);
+                        itemstack.shrink(1);
+                    }
+                    return interactionresult;
 
                 }
             }
@@ -314,6 +344,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         } else {
             return false;
         }
+    }
+
+    @Override
+    protected int calculateFallDamage(float pFallDistance, float pDamageMultiplier) {
+        if (pFallDistance <= 10) {
+            return 0;
+        }
+        return super.calculateFallDamage(pFallDistance, pDamageMultiplier);
     }
 
     @Override

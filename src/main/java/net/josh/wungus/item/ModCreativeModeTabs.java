@@ -46,6 +46,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.CONCERTO_DISC.get());
                         pOutput.accept(ModItems.MINGLE_DISC.get());
                         pOutput.accept(ModItems.WUNGUS_AMBROSIA.get());
+                        pOutput.accept(ModBlocks.SANDSTONE_LAMP.get());
+                        pOutput.accept(ModBlocks.QUARTZ_LAMP.get());
+                        pOutput.accept(ModBlocks.TERRACOTTA_LAMP.get());
                     })
                     .build());
 

@@ -21,6 +21,15 @@ public class ModParticles {
     public static final RegistryObject<SimpleParticleType> BLUE_SPARKLE_PARTICLES =
             PARTICLE_TYPES.register("blue_sparkle_particles", () -> new SimpleParticleType(true));
 
+    public static final RegistryObject<SimpleParticleType> DIARRHEA_PARTICLE_1 =
+            PARTICLE_TYPES.register("diarrhea1", () -> new SimpleParticleType(true));
+
+    public static final RegistryObject<SimpleParticleType> DIARRHEA_PARTICLE_2 =
+            PARTICLE_TYPES.register("diarrhea2", () -> new SimpleParticleType(true));
+
+    public static final RegistryObject<SimpleParticleType> VOMIT_PARTICLE_1 =
+            PARTICLE_TYPES.register("vomit1", () -> new SimpleParticleType(true));
+
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }
