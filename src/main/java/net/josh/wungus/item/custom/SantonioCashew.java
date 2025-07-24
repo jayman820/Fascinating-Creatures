@@ -36,7 +36,7 @@ public class SantonioCashew extends Item {
             pStack.shrink(1);
         }
 
-        return pStack.isEmpty() ? new ItemStack(Items.BUCKET) : pStack;
+        return pStack;
     }
 
     @Override

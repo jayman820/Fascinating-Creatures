@@ -3,6 +3,7 @@ package net.josh.wungus.entity.custom;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.variant.WungusVariant;
 import net.josh.wungus.item.ModItems;
+import net.josh.wungus.item.custom.WungusSteroid;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.worldgen.ModBiomeModifiers;
 import net.minecraft.Util;
@@ -145,6 +146,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 100)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.JUMP_STRENGTH, 1.0F)
                 .add(Attributes.FOLLOW_RANGE, 240)
                 .add(Attributes.ARMOR_TOUGHNESS, .05f);
     }
@@ -216,15 +218,24 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             pPlayer.setItemInHand(pHand, itemstack1);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
-            boolean sit = this.isOrderedToSit();
-            super.mobInteract(pPlayer, pHand);
             InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
             if (interactionresult.consumesAction()) {
                 return interactionresult;
             }
-            if (!pPlayer.isCrouching() && !this.isBaby() && !this.isOrderedToSit()) {
+            if (!this.isOwnedBy(pPlayer) && itemstack.is(ModItems.WUNGUS_AMBROSIA.get())) {
+                itemstack.shrink(1);
+                this.tame(pPlayer);
+                return interactionresult;
+            }
+            if (this.isOwnedBy(pPlayer) && (itemstack.is(ModItems.HEALTH_STEROID.get()) || itemstack.is(ModItems.SPEED_STEROID.get()) || itemstack.is(ModItems.JUMP_STEROID.get()))) {
+                if (itemstack.is(ModItems.HEALTH_STEROID.get())) {
+
+                }
+            }
+            if (!pPlayer.isCrouching() && !this.isBaby() && !this.isOrderedToSit() && this.isOwnedBy(pPlayer)) {
                 setRiding(pPlayer);
             } else {
+                boolean sit = this.isOrderedToSit();
                 if (this.isOwnedBy(pPlayer)) {
                     if (sit) {
                         this.setOrderedToSit(false);
@@ -372,7 +383,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     protected void executeRidersJump(float pPlayerJumpPendingScale, Vec3 pTravelVector) {
-        double d0 = 0.7D * (double)pPlayerJumpPendingScale * (double)this.getBlockJumpFactor();
+        double d0 = this.getAttributeValue(Attributes.JUMP_STRENGTH) * (double)pPlayerJumpPendingScale * (double)this.getBlockJumpFactor();
         double d1 = d0 + (double)this.getJumpBoostPower();
         Vec3 vec3 = this.getDeltaMovement();
         this.setDeltaMovement(vec3.x, d1, vec3.z);

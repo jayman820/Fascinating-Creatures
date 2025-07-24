@@ -25,6 +25,9 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_HIDE = ITEMS.register("wungus_hide",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> WUNGUS_AMBROSIA = ITEMS.register("wungus_ambrosia",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> WUNGUS_BOOTS = ITEMS.register("wungus_boots",
             () -> new WungusBoots(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.BOOTS, new Item.Properties()));
 

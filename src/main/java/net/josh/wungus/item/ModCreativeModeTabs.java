@@ -45,6 +45,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.MOON_DISC.get());
                         pOutput.accept(ModItems.CONCERTO_DISC.get());
                         pOutput.accept(ModItems.MINGLE_DISC.get());
+                        pOutput.accept(ModItems.WUNGUS_AMBROSIA.get());
                     })
                     .build());
 
