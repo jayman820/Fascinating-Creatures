@@ -45,7 +45,6 @@ public class WungusSteroidEffect extends MobEffect {
         LEVEL_UP_COOLDOWN--;
         if(HEARTBEAT_INTERVAL <= 0) {
             pLivingEntity.playSound(ModSounds.HEARTBEAT.get());
-            System.out.println("played");
             HEARTBEAT_INTERVAL = (80 / HEARTBEAT_MODIFIER);
         }
         double rand = Math.floor(Math.random() * 10000) + 1;

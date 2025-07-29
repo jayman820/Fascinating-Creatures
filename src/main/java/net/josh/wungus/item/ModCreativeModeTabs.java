@@ -29,6 +29,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.GOLD_STATUE.get());
                         pOutput.accept(ModBlocks.GLOWSTONE_STATUE.get());
                         pOutput.accept(ModBlocks.WUNGUS_HEDGE.get());
+                        pOutput.accept(ModBlocks.MIDDLE_BOARD_1.get());
                         pOutput.accept(ModItems.WUNGUS_BOOTS.get());
                         pOutput.accept(ModItems.WUNGUS_MASK.get());
                         pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());

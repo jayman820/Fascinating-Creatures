@@ -185,7 +185,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     public void aiStep() {
-        if (this.level().isClientSide && this.getName().toString().contains("sakura")) {
+        if (this.level().isClientSide && this.getName().toString().toLowerCase().contains("sakura")) {
             for(int i = 0; i < 1; ++i) {
                 int rand_int = (int) Math.floor((Math.random() * 3));
                 SimpleParticleType sparkleParticle;

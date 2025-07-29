@@ -29,6 +29,14 @@ public class SparkleParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
+    public void set_baby(boolean isbaby) {
+        if (isbaby) {
+            this.quadSize *= 0.5;
+        } else {
+            this.quadSize *= 2;
+        }
+    }
+
     public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 

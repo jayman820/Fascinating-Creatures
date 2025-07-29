@@ -2,6 +2,7 @@ package net.josh.wungus.block;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.custom.BlockLandmine;
+import net.josh.wungus.block.custom.NumberBoard;
 import net.josh.wungus.block.custom.WungusEgg;
 import net.josh.wungus.block.custom.WungusStatue;
 import net.josh.wungus.item.ModItems;
@@ -56,6 +57,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> TERRACOTTA_LAMP = registerBlock("terracotta_lamp",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA).noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)));
+
+    public static final RegistryObject<Block> MIDDLE_BOARD_1 = registerBlock("middle_board_1",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
