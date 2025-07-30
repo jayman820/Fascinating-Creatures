@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "wungus:block/numbers/number/1",
+		"0": "wungus:block/numbers/number/9",
 		"9": "wungus:block/numbers/frame/middle",
 		"particle": "wungus:block/numbers/frame/middle"
 	},

@@ -60,6 +60,23 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> MIDDLE_BOARD_1 = registerBlock("middle_board_1",
             () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_2 = registerBlock("middle_board_2",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_3 = registerBlock("middle_board_3",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_4 = registerBlock("middle_board_4",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_5 = registerBlock("middle_board_5",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_6 = registerBlock("middle_board_6",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_7 = registerBlock("middle_board_7",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_8 = registerBlock("middle_board_8",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> MIDDLE_BOARD_9 = registerBlock("middle_board_9",
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
