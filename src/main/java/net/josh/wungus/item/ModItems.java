@@ -76,6 +76,12 @@ public class ModItems {
     public static final RegistryObject<Item> MOON_DISC = ITEMS.register("moon_disc",
             () -> new RecordItem(6, ModSounds.MOON, new Item.Properties().stacksTo(1), 3660));
 
+    public static final RegistryObject<Item> JUMP_ROPE_DISC = ITEMS.register("jump_rope_disc",
+            () -> new RecordItem(6, ModSounds.JUMP_ROPE_DISC, new Item.Properties().stacksTo(1), 1680));
+
+    public static final RegistryObject<Item> WUNGUS_RACING_DISC = ITEMS.register("wungus_racing_disc",
+            () -> new RecordItem(6, ModSounds.WUNGUS_RACING, new Item.Properties().stacksTo(1), 3240));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

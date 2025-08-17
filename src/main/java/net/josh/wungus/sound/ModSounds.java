@@ -23,6 +23,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> PRATTLING_WUNGUS_4 = registerSoundEvents("prattling_wungus_4");
     public static final RegistryObject<SoundEvent> WUNGUS_STATUE = registerSoundEvents("wungus_statue");
     public static final RegistryObject<SoundEvent> HEARTBEAT = registerSoundEvents("heartbeat");
+    public static final RegistryObject<SoundEvent> MANGUNGUS_AMBIENT = registerSoundEvents("mangungus_ambient");
 
     // Wungus Game 2 sound events
     public static final RegistryObject<SoundEvent> LANDMINE_TRIGGER = registerSoundEvents("landmine_trigger");
@@ -49,6 +50,11 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> CONCERTO = registerSoundEvents("concerto");
     public static final RegistryObject<SoundEvent> MINGLE_DISC = registerSoundEvents("mingle_disc");
     public static final RegistryObject<SoundEvent> MOON = registerSoundEvents("moon");
+    public static final RegistryObject<SoundEvent> WUNGUS_RACING = registerSoundEvents("wungus-racing");
+    public static final RegistryObject<SoundEvent> JUMP_ROPE_DISC = registerSoundEvents("jump-rope-disc");
+
+    public static final RegistryObject<SoundEvent> JUMP_ROPE_INSTRUCTIONS = registerSoundEvents("jump-rope");
+    public static final RegistryObject<SoundEvent> RED_LIGHT_GREEN_LIGHT_INSTRUCTIONS = registerSoundEvents("red-light-green-light");
 
 
 

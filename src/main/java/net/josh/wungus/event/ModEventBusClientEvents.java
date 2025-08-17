@@ -1,5 +1,8 @@
 package net.josh.wungus.event;
 import net.josh.wungus.WungusMod;
+import net.josh.wungus.block.entity.ModBlockEntities;
+import net.josh.wungus.block.entity.WungusStatueBlockEntity;
+import net.josh.wungus.block.entity.renderer.WungusStatueBlockEntityRender;
 import net.josh.wungus.entity.client.ModModelLayers;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.particle.DiarrheaParticle;
@@ -27,6 +30,12 @@ public class ModEventBusClientEvents {
         event.registerSpriteSet(ModParticles.DIARRHEA_PARTICLE_1.get(), DiarrheaParticle.Provider::new);
         event.registerSpriteSet(ModParticles.DIARRHEA_PARTICLE_2.get(), DiarrheaParticle.Provider::new);
         event.registerSpriteSet(ModParticles.VOMIT_PARTICLE_1.get(), VomitParticle.Provider::new);
+    }
+
+    @SubscribeEvent
+    public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.WUNGUS_STATUE.get(),
+                WungusStatueBlockEntityRender::new);
     }
 
 }

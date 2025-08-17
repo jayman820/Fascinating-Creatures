@@ -1,8 +1,0 @@
-{
-	"variants": {
-		"facing=north": { "model": "wungus:block/middle_board_3" },
-		"facing=east":  { "model": "wungus:block/middle_board_3", "y": 90 },
-		"facing=south": { "model": "wungus:block/middle_board_3", "y": 180 },
-		"facing=west":  { "model": "wungus:block/middle_board_3", "y": 270 }
-	}
-}

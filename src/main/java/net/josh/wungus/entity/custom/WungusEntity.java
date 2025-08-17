@@ -649,6 +649,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
+        if (this.getName().toString().toLowerCase().contains("papi")) { return ModSounds.MANGUNGUS_AMBIENT.get(); }
         return ModSounds.WUNGUS_AMBIENT.get();
     }
 

@@ -51,6 +51,21 @@
       "wungus:ambient/wungsounds13"
     ]
   },
+  "mangungus_ambient": {
+    "subtitle": "sounds.wungus.mangungus_ambient",
+    "sounds": [
+      "wungus:mangungus/cough",
+      "wungus:mangungus/klk-1",
+      "wungus:mangungus/klk-2",
+      "wungus:mangungus/klk-3",
+      "wungus:mangungus/mami-1",
+      "wungus:mangungus/mami-2",
+      "wungus:mangungus/mmg-1",
+      "wungus:mangungus/mmg-2",
+      "wungus:mangungus/papi-1",
+      "wungus:mangungus/papi-2"
+    ]
+  },
   "wungus_hurt": {
     "subtitle": "sounds.wungus.wungus_hurt",
     "sounds": [
@@ -263,6 +278,18 @@
       "wungus:wungus-game-2/discs/moon"
     ]
   },
+  "jump-rope-disc": {
+    "subtitle": "sounds.wungus.jump-rope-disc",
+    "sounds": [
+      "wungus:wungus-game-2/discs/jump_rope"
+    ]
+  },
+  "wungus-racing": {
+    "subtitle": "sounds.wungus.wungus-racing",
+    "sounds": [
+      "wungus:wungus-game-2/discs/wungusracing"
+    ]
+  },
   "smile": {
     "subtitle": "sounds.wungus.smile",
     "sounds": [
@@ -273,6 +300,18 @@
     "subtitle": "sounds.wungus.heartbeat",
     "sounds": [
       "wungus:steroids/heartbeat"
+    ]
+  },
+  "jump-rope": {
+    "subtitle": "sounds.wungus.jump-rope",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/jump-rope"
+    ]
+  },
+  "red-light-green-light":{
+    "subtitle": "sounds.wungus.rlgl",
+    "sounds":[
+      "wungus:wungus-game-2/instructions/red-light-green-light"
     ]
   }
 }
