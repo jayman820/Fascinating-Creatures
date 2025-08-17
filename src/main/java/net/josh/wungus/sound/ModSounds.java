@@ -55,6 +55,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> JUMP_ROPE_INSTRUCTIONS = registerSoundEvents("jump-rope");
     public static final RegistryObject<SoundEvent> RED_LIGHT_GREEN_LIGHT_INSTRUCTIONS = registerSoundEvents("red-light-green-light");
+    public static final RegistryObject<SoundEvent> MINGLE_INSTRUCTIONS = registerSoundEvents("mingle-instructions");
+    public static final RegistryObject<SoundEvent> TNT_STEPPING_STONES_INSTRUCTIONS = registerSoundEvents("tnt-stepping-stones");
 
 
 

@@ -73,23 +73,23 @@ public class ModBlocks {
             () -> new Frame(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
     
     public static final RegistryObject<Block> BOARD_1 = registerBlock("board_1",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 1));
     public static final RegistryObject<Block> BOARD_2 = registerBlock("board_2",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 2));
     public static final RegistryObject<Block> BOARD_3 = registerBlock("board_3",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 3));
     public static final RegistryObject<Block> BOARD_4 = registerBlock("board_4",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 4));
     public static final RegistryObject<Block> BOARD_5 = registerBlock("board_5",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 5));
     public static final RegistryObject<Block> BOARD_6 = registerBlock("board_6",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 6));
     public static final RegistryObject<Block> BOARD_7 = registerBlock("board_7",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 7));
     public static final RegistryObject<Block> BOARD_8 = registerBlock("board_8",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 8));
     public static final RegistryObject<Block> BOARD_9 = registerBlock("board_9",
-            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().sound(SoundType.STONE)));
+            () -> new NumberBoard(BlockBehaviour.Properties.copy(Blocks.DIRT).noOcclusion().sound(SoundType.STONE), 9));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

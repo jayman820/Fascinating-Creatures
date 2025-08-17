@@ -313,5 +313,17 @@
     "sounds":[
       "wungus:wungus-game-2/instructions/red-light-green-light"
     ]
+  },
+  "mingle-instructions": {
+    "subtitle": "sounds.wungus.mingle",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/mingle"
+    ]
+  },
+  "tnt-stepping-stones": {
+    "subtitle": "sounds.wungus.tnt-stepping-stones",
+    "sounds":[
+      "wungus:wungus-game-2/instructions/tnt-stepping-stones"
+    ]
   }
 }
