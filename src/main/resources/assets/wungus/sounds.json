@@ -325,5 +325,53 @@
     "sounds":[
       "wungus:wungus-game-2/instructions/tnt-stepping-stones"
     ]
+  },
+  "numbers": {
+    "subtitle": "sounds.wungus.numbers",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/numbers"
+    ]
+  },
+  "flowers": {
+    "subtitle": "sounds.wungus.flowers",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/flowers"
+    ]
+  },
+  "crafting": {
+    "subtitle": "sounds.wungus.crafting",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/crafting"
+    ]
+  },
+  "wunger-games": {
+    "subtitle": "sounds.wungus.wunger-games",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/wunger-games"
+    ]
+  },
+  "wungus-racing-instructions":{
+    "subtitle": "sounds.wungus.wungus-racing",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/wungus-racing"
+    ]
+  },
+  "sand-dalgona": {
+    "subtitle": "sounds.wungus.sand-dalgona",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/sand-dalgona"
+    ]
+  },
+  "congratulations-long": {
+    "subtitle": "sounds.wungus.congratulations-long",
+    "sounds": [
+      "wungus:wungus-game-2/congratulations-long"
+    ]
+  },
+  "congratulations-short": {
+    "subtitle": "sounds.wungus.congratulations-short",
+    "sounds": [
+      "wungus:wungus-game-2/congratulations-short"
+    ]
   }
 }

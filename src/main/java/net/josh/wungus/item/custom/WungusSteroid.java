@@ -36,7 +36,11 @@ public class WungusSteroid extends Item {
     }
 
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
-        pEntityLiving.addEffect(new MobEffectInstance(ModEffects.WUNGUS_STEROID_EFFECT.get(), 2000, 0)); // FORGE - move up so stack.shrink does not turn stack into air
+        switch (this.type) {
+            case HEALTH -> pEntityLiving.addEffect(new MobEffectInstance(ModEffects.WUNGUS_HEALTH_STEROID_EFFECT.get(), 2000, 0));
+            case SPEED -> pEntityLiving.addEffect(new MobEffectInstance(ModEffects.WUNGUS_SPEED_STEROID_EFFECT.get(), 2000, 0));
+            case JUMP -> pEntityLiving.addEffect(new MobEffectInstance(ModEffects.WUNGUS_JUMP_STEROID_EFFECT.get(), 2000, 0));
+        }
         if (pEntityLiving instanceof ServerPlayer serverplayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, pStack);
             serverplayer.awardStat(Stats.ITEM_USED.get(this));

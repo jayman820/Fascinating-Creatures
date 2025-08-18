@@ -26,14 +26,14 @@ public class WungusSteroidEffect extends MobEffect {
     private boolean LEVEL_ONE;
     private boolean LEVEL_TWO;
     private boolean LEVEL_THREE;
-    protected WungusSteroidEffect(MobEffectCategory pCategory, int pColor, WungusSteroid.Type type) {
+    public WungusSteroidEffect(MobEffectCategory pCategory, int pColor, WungusSteroid.Type type) {
         super(pCategory, pColor);
         this.type = type;
         this.HEARTBEAT_INTERVAL = 80;
         this.HEARTBEAT_MODIFIER = 1;
         this.CARDIAC_ARREST_LEVEL = 1;
         this.CARDIAC_ARREST_LEVEL_MODIFIER = 1;
-        this.LEVEL_UP_COOLDOWN = 60;
+        this.LEVEL_UP_COOLDOWN = 1000;
         this.LEVEL_ONE = false;
         this.LEVEL_TWO = false;
         this.LEVEL_THREE = false;
@@ -78,7 +78,7 @@ public class WungusSteroidEffect extends MobEffect {
             pLivingEntity.hurt(ModDamageTypes.causeWungusSteroids(pLivingEntity.level().registryAccess()), 10000);
         }
 
-        if(rand <= 500 * CARDIAC_ARREST_LEVEL_MODIFIER && LEVEL_UP_COOLDOWN <= 0) {
+        if(rand <= 750 * CARDIAC_ARREST_LEVEL_MODIFIER && LEVEL_UP_COOLDOWN <= 0) {
             CARDIAC_ARREST_LEVEL++;
             CARDIAC_ARREST_LEVEL_MODIFIER++;
             HEARTBEAT_MODIFIER *= 2;

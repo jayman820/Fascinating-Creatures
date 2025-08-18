@@ -57,6 +57,15 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> RED_LIGHT_GREEN_LIGHT_INSTRUCTIONS = registerSoundEvents("red-light-green-light");
     public static final RegistryObject<SoundEvent> MINGLE_INSTRUCTIONS = registerSoundEvents("mingle-instructions");
     public static final RegistryObject<SoundEvent> TNT_STEPPING_STONES_INSTRUCTIONS = registerSoundEvents("tnt-stepping-stones");
+    public static final RegistryObject<SoundEvent> NUMBERS_INSTRUCTIONS = registerSoundEvents("numbers");
+    public static final RegistryObject<SoundEvent> FLOWERS_INSTRUCTIONS = registerSoundEvents("flowers");
+    public static final RegistryObject<SoundEvent> CRAFTING_INSTRUCTIONS = registerSoundEvents("crafting");
+    public static final RegistryObject<SoundEvent> WUNGER_GAMES_INSTRUCTIONS = registerSoundEvents("wunger-games");
+    public static final RegistryObject<SoundEvent> WUNGUS_RACING_INSTRUCTIONS = registerSoundEvents("wungus-racing-instructions");
+    public static final RegistryObject<SoundEvent> SAND_DALGONA_INSTRUCTIONS = registerSoundEvents("sand-dalgona");
+
+    public static final RegistryObject<SoundEvent> CONGRATULATIONS_LONG = registerSoundEvents("congratulations-long");
+    public static final RegistryObject<SoundEvent> CONGRATULATIONS_SHORT = registerSoundEvents("congratulations-short");
 
 
 
