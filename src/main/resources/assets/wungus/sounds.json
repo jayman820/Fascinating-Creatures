@@ -373,5 +373,11 @@
     "sounds": [
       "wungus:wungus-game-2/congratulations-short"
     ]
+  },
+  "sdiybt": {
+    "subtitle": "sounds.wungus.sdiybt",
+    "sounds": [
+      "wungus:wungus-game-2/sdiybt"
+    ]
   }
 }

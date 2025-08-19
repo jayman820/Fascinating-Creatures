@@ -46,6 +46,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> PLAYER_14_ELIM = registerSoundEvents("player_14_elim");
     public static final RegistryObject<SoundEvent> PLAYER_15_ELIM = registerSoundEvents("player_15_elim");
     public static final RegistryObject<SoundEvent> SMILE = registerSoundEvents("smile");
+    public static final RegistryObject<SoundEvent> SDIYBT = registerSoundEvents("sdiybt");
 
     public static final RegistryObject<SoundEvent> CONCERTO = registerSoundEvents("concerto");
     public static final RegistryObject<SoundEvent> MINGLE_DISC = registerSoundEvents("mingle_disc");
