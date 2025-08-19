@@ -379,5 +379,11 @@
     "sounds": [
       "wungus:wungus-game-2/sdiybt"
     ]
+  },
+  "dr-song": {
+    "subtitle": "sounds.wungus.dr-song",
+    "sounds": [
+      "wungus:wungus-game-2/dr-song"
+    ]
   }
 }

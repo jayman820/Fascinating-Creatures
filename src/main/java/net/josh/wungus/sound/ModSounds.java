@@ -67,6 +67,7 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> CONGRATULATIONS_LONG = registerSoundEvents("congratulations-long");
     public static final RegistryObject<SoundEvent> CONGRATULATIONS_SHORT = registerSoundEvents("congratulations-short");
+    public static final RegistryObject<SoundEvent> DR_SONG = registerSoundEvents("dr-song");
 
 
 
