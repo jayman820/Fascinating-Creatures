@@ -67,21 +67,6 @@ public class ModItems {
     public static final RegistryObject<Item> PRATTLING_WUNGUS_4 = ITEMS.register("prattling_wungus_4",
             () -> new PrattlingWungus(new Item.Properties(), 4));
 
-    public static final RegistryObject<Item> CONCERTO_DISC = ITEMS.register("concerto_disc",
-            () -> new RecordItem(6, ModSounds.CONCERTO, new Item.Properties().stacksTo(1), 5780));
-
-    public static final RegistryObject<Item> MINGLE_DISC = ITEMS.register("mingle_disc",
-            () -> new RecordItem(6, ModSounds.MINGLE_DISC, new Item.Properties().stacksTo(1), 1280));
-
-    public static final RegistryObject<Item> MOON_DISC = ITEMS.register("moon_disc",
-            () -> new RecordItem(6, ModSounds.MOON, new Item.Properties().stacksTo(1), 3660));
-
-    public static final RegistryObject<Item> JUMP_ROPE_DISC = ITEMS.register("jump_rope_disc",
-            () -> new RecordItem(6, ModSounds.JUMP_ROPE_DISC, new Item.Properties().stacksTo(1), 1680));
-
-    public static final RegistryObject<Item> WUNGUS_RACING_DISC = ITEMS.register("wungus_racing_disc",
-            () -> new RecordItem(6, ModSounds.WUNGUS_RACING, new Item.Properties().stacksTo(1), 3240));
-
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
