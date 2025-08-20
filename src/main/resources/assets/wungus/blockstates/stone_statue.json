@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "wungus:block/stone_statue" },
+    "facing=east":  { "model": "wungus:block/stone_statue", "y": 90 },
+    "facing=south": { "model": "wungus:block/stone_statue", "y": 180 },
+    "facing=west":  { "model": "wungus:block/stone_statue", "y": 270 }
+  }
+}

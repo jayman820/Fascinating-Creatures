@@ -3,12 +3,17 @@ package net.josh.wungus.entity.custom;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.variant.WungusVariant;
 import net.josh.wungus.item.ModItems;
+import net.josh.wungus.item.custom.WungusSteroid;
+import net.josh.wungus.particle.ModParticles;
+import net.josh.wungus.particle.SparkleParticle;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.worldgen.ModBiomeModifiers;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -44,6 +49,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags.Items;
 import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Attr;
 
 import java.util.Random;
 
@@ -64,6 +70,18 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
 
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> TOTAL_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> HEALTH_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> SPEED_STEROID_USES =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
+
+    public static final EntityDataAccessor<Integer> JUMP_STEROID_USES =
             SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.INT);
 
 
@@ -88,7 +106,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
     private void setupAnimationStates() {
         if(this.isBeingChased) {
-            this.runningAnimationState.startIfStopped(this.tickCount);
+            this.runningAnimationState.start(this.tickCount);
         }
         if(this.entityData.get(SITTING)) {
             this.sittingAnimation.startIfStopped(this.tickCount);
@@ -133,6 +151,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 100)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.JUMP_STRENGTH, 1.0F)
                 .add(Attributes.FOLLOW_RANGE, 240)
                 .add(Attributes.ARMOR_TOUGHNESS, .05f);
     }
@@ -163,6 +182,24 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         }
         wungus.setVariant(baby);
         return wungus;
+    }
+
+    public void aiStep() {
+        if (this.level().isClientSide && this.getName().toString().toLowerCase().contains("sakura")) {
+            for(int i = 0; i < 1; ++i) {
+                int rand_int = (int) Math.floor((Math.random() * 3));
+                SimpleParticleType sparkleParticle;
+                if (rand_int == 0) {
+                    sparkleParticle = ModParticles.BLUE_SPARKLE_PARTICLES.get();
+                } else if (rand_int == 1) {
+                    sparkleParticle = ModParticles.DARK_SPARKLE_PARTICLES.get();
+                } else {
+                    sparkleParticle = ModParticles.LIGHT_SPARKLE_PARTICLES.get();
+                }
+                this.level().addParticle(sparkleParticle, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 0.2D, -this.random.nextDouble() * 0.2D, (this.random.nextDouble() - 0.5D) * 0.2D);
+            }
+        }
+        super.aiStep();
     }
 
     @Override
@@ -204,15 +241,53 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             pPlayer.setItemInHand(pHand, itemstack1);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
-            boolean sit = this.isOrderedToSit();
-            super.mobInteract(pPlayer, pHand);
             InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
             if (interactionresult.consumesAction()) {
                 return interactionresult;
             }
-            if (!pPlayer.isCrouching() && !this.isBaby() && !this.isOrderedToSit()) {
+            if (!this.isOwnedBy(pPlayer) && itemstack.is(ModItems.WUNGUS_AMBROSIA.get())) {
+                itemstack.shrink(1);
+                this.tame(pPlayer);
+                return interactionresult;
+            }
+            if (this.isOwnedBy(pPlayer) && (itemstack.is(ModItems.HEALTH_STEROID.get()) || itemstack.is(ModItems.SPEED_STEROID.get()) || itemstack.is(ModItems.JUMP_STEROID.get()))) {
+                if (itemstack.is(ModItems.HEALTH_STEROID.get())) {
+                    if (this.getHealthSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
+                        this.setHealthSteroidUses(this.getHealthSteroidUses() + 1);
+                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+                        float health = (float) this.getAttributes().getBaseValue(Attributes.MAX_HEALTH);
+                        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + 1);
+                        this.setHealth(health + 1.0f);
+                        itemstack.shrink(1);
+                    }
+                    return interactionresult;
+
+                } else if (itemstack.is(ModItems.SPEED_STEROID.get())) {
+                    if (this.getSpeedSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
+                        this.setSpeedSteroidUses(this.getSpeedSteroidUses() + 1);
+                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+                        float speed = (float) this.getAttributes().getBaseValue(Attributes.MOVEMENT_SPEED);
+                        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed + 0.05);
+                        itemstack.shrink(1);
+                    }
+                    return interactionresult;
+
+                } else if (itemstack.is(ModItems.JUMP_STEROID.get())) {
+                    if (this.getJumpSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
+                        this.setJumpSteroidUses(this.getJumpSteroidUses() + 1);
+                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+                        float jump = (float) this.getAttributes().getBaseValue(Attributes.JUMP_STRENGTH);
+                        this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(jump + 0.075);
+                        itemstack.shrink(1);
+                    }
+                    return interactionresult;
+
+                }
+            }
+            if (!pPlayer.isCrouching() && !this.isBaby() && !this.isOrderedToSit() && this.isOwnedBy(pPlayer)) {
                 setRiding(pPlayer);
             } else {
+                boolean sit = this.isOrderedToSit();
                 if (this.isOwnedBy(pPlayer)) {
                     if (sit) {
                         this.setOrderedToSit(false);
@@ -269,6 +344,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         } else {
             return false;
         }
+    }
+
+    @Override
+    protected int calculateFallDamage(float pFallDistance, float pDamageMultiplier) {
+        if (pFallDistance <= 10) {
+            return 0;
+        }
+        return super.calculateFallDamage(pFallDistance, pDamageMultiplier);
     }
 
     @Override
@@ -360,7 +443,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     protected void executeRidersJump(float pPlayerJumpPendingScale, Vec3 pTravelVector) {
-        double d0 = 0.7D * (double)pPlayerJumpPendingScale * (double)this.getBlockJumpFactor();
+        double d0 = this.getAttributeValue(Attributes.JUMP_STRENGTH) * (double)pPlayerJumpPendingScale * (double)this.getBlockJumpFactor();
         double d1 = d0 + (double)this.getJumpBoostPower();
         Vec3 vec3 = this.getDeltaMovement();
         this.setDeltaMovement(vec3.x, d1, vec3.z);
@@ -440,12 +523,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
         public void start() {
             this.wungus.isBeingChased = true;
+            wungus.setupAnimationStates();
             super.start();
         }
 
         public void stop() {
             this.wungus.isBeingChased = false;
             this.wungus.teleport();
+            wungus.setupAnimationStates();
             super.stop();
         }
     }
@@ -464,6 +549,10 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         this.entityData.define(SITTING, false);
         this.entityData.define(TRUSTING, false);
         this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
+        this.entityData.define(TOTAL_STEROID_USES, 0);
+        this.entityData.define(HEALTH_STEROID_USES, 0);
+        this.entityData.define(SPEED_STEROID_USES, 0);
+        this.entityData.define(JUMP_STEROID_USES, 0);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -471,6 +560,10 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         compound.putBoolean("Sitting", this.isOrderedToSit());
         compound.putBoolean("Trusting", this.isTrusting());
         compound.putInt("Variant", this.getTypeVariant());
+        compound.putInt("TotalSteroids", this.getTotalSteroidUses());
+        compound.putInt("HealthSteroids", this.getHealthSteroidUses());
+        compound.putInt("SpeedSteroids", this.getSpeedSteroidUses());
+        compound.putInt("JumpSteroids", this.getJumpSteroidUses());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
@@ -478,6 +571,42 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         this.setOrderedToSit(compound.getBoolean("Sitting"));
         this.setTrusting(compound.getBoolean("Trusting"));
         this.setTypeVariant(compound.getInt("Variant"));
+        this.setTotalSteroidUses(compound.getInt("TotalSteroids"));
+        this.setHealthSteroidUses(compound.getInt("HealthSteroids"));
+        this.setSpeedSteroidUses(compound.getInt("SpeedSteroids"));
+        this.setJumpSteroidUses(compound.getInt("JumpSteroids"));
+    }
+
+    private int getTotalSteroidUses() {
+        return this.entityData.get(TOTAL_STEROID_USES);
+    }
+
+    public void setTotalSteroidUses(int uses) {
+        this.entityData.set(TOTAL_STEROID_USES, uses);
+    }
+
+    private int getHealthSteroidUses() {
+        return this.entityData.get(HEALTH_STEROID_USES);
+    }
+
+    public void setHealthSteroidUses(int uses) {
+        this.entityData.set(HEALTH_STEROID_USES, uses);
+    }
+
+    private int getSpeedSteroidUses() {
+        return this.entityData.get(SPEED_STEROID_USES);
+    }
+
+    public void setSpeedSteroidUses(int uses) {
+        this.entityData.set(SPEED_STEROID_USES, uses);
+    }
+
+    private int getJumpSteroidUses() {
+        return this.entityData.get(JUMP_STEROID_USES);
+    }
+
+    public void setJumpSteroidUses(int uses) {
+        this.entityData.set(JUMP_STEROID_USES, uses);
     }
 
     public WungusVariant getVariant() {
@@ -520,6 +649,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
+        if (this.getName().toString().toLowerCase().contains("papi")) { return ModSounds.MANGUNGUS_AMBIENT.get(); }
         return ModSounds.WUNGUS_AMBIENT.get();
     }
 

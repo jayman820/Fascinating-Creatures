@@ -2,14 +2,18 @@ package net.josh.wungus;
 
 import com.mojang.logging.LogUtils;
 import net.josh.wungus.block.ModBlocks;
+import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModCreativeModeTabs;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.loot.ModLootModifiers;
+import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -49,6 +53,10 @@ public class WungusMod
         ModEffects.register(modEventBus);
 
         ModSounds.register(modEventBus);
+
+        ModParticles.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         //modEventBus.addListener(this::addCreative);

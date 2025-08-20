@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "wungus:block/wungus_hedge" },
+    "facing=east":  { "model": "wungus:block/wungus_hedge", "y": 90 },
+    "facing=south": { "model": "wungus:block/wungus_hedge", "y": 180 },
+    "facing=west":  { "model": "wungus:block/wungus_hedge", "y": 270 }
+  }
+}

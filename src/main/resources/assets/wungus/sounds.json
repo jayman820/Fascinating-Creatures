@@ -51,6 +51,21 @@
       "wungus:ambient/wungsounds13"
     ]
   },
+  "mangungus_ambient": {
+    "subtitle": "sounds.wungus.mangungus_ambient",
+    "sounds": [
+      "wungus:mangungus/cough",
+      "wungus:mangungus/klk-1",
+      "wungus:mangungus/klk-2",
+      "wungus:mangungus/klk-3",
+      "wungus:mangungus/mami-1",
+      "wungus:mangungus/mami-2",
+      "wungus:mangungus/mmg-1",
+      "wungus:mangungus/mmg-2",
+      "wungus:mangungus/papi-1",
+      "wungus:mangungus/papi-2"
+    ]
+  },
   "wungus_hurt": {
     "subtitle": "sounds.wungus.wungus_hurt",
     "sounds": [
@@ -110,6 +125,265 @@
       "wungus:prattling/4/4-3",
       "wungus:prattling/4/4-4",
       "wungus:prattling/4/4-5"
+    ]
+  },
+  "landmine_trigger": {
+    "subtitle": "sounds.wungus.landmine_trigger",
+    "sounds": [
+      "wungus:wungus-game-2/mine-trigger"
+    ]
+  },
+  "wungus_statue": {
+    "subtitle": "sounds.wungus.wungus_statue",
+    "sounds": [
+      "wungus:wungus-game-2/tracy-miguel",
+      "wungus:wungus-game-2/miguel",
+      "wungus:wungus-game-2/gnarpy"
+    ]
+  },
+  "red_light": {
+    "subtitle": "sounds.wungus.red_light",
+    "sounds": [
+      "wungus:wungus-game-2/red-light"
+    ]
+  },
+  "green_light": {
+    "subtitle": "sounds.wungus.green_light",
+    "sounds": [
+      "wungus:wungus-game-2/green-light"
+    ]
+  },
+  "mingle": {
+    "subtitle": "sounds.wungus.mingle",
+    "sounds": [
+      "wungus:wungus-game-2/mingle/cow",
+      "wungus:wungus-game-2/mingle/enderman",
+      "wungus:wungus-game-2/mingle/horse",
+      "wungus:wungus-game-2/mingle/panda",
+      "wungus:wungus-game-2/mingle/phantom",
+      "wungus:wungus-game-2/mingle/pig",
+      "wungus:wungus-game-2/mingle/polar_bear",
+      "wungus:wungus-game-2/mingle/sheep",
+      "wungus:wungus-game-2/mingle/shulker",
+      "wungus:wungus-game-2/mingle/sniffer",
+      "wungus:wungus-game-2/mingle/wungus",
+      "wungus:wungus-game-2/mingle/zombie"
+    ]
+  },
+  "player_1_elim": {
+    "subtitle": "sounds.wungus.player_1_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player1elim"
+    ]
+  },
+  "player_2_elim": {
+    "subtitle": "sounds.wungus.player_2_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player2elim"
+    ]
+  },
+  "player_3_elim": {
+    "subtitle": "sounds.wungus.player_3_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player3elim"
+    ]
+  },
+  "player_4_elim": {
+    "subtitle": "sounds.wungus.player_4_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player4elim"
+    ]
+  },
+  "player_5_elim": {
+    "subtitle": "sounds.wungus.player_5_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player5elim"
+    ]
+  },
+  "player_6_elim": {
+    "subtitle": "sounds.wungus.player_6_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player6elim"
+    ]
+  },
+  "player_7_elim": {
+    "subtitle": "sounds.wungus.player_7_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player7elim"
+    ]
+  },
+  "player_8_elim": {
+    "subtitle": "sounds.wungus.player_8_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player8elim"
+    ]
+  },
+  "player_9_elim": {
+    "subtitle": "sounds.wungus.player_9_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player9elim"
+    ]
+  },
+  "player_10_elim": {
+    "subtitle": "sounds.wungus.player_10_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player10elim"
+    ]
+  },
+  "player_11_elim": {
+    "subtitle": "sounds.wungus.player_11_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player11elim"
+    ]
+  },
+  "player_12_elim": {
+    "subtitle": "sounds.wungus.player_12_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player12elim"
+    ]
+  },
+  "player_13_elim": {
+    "subtitle": "sounds.wungus.player_13_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player13elim"
+    ]
+  },
+  "player_14_elim": {
+    "subtitle": "sounds.wungus.player_14_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player14elim"
+    ]
+  },
+  "player_15_elim": {
+    "subtitle": "sounds.wungus.player_15_elim",
+    "sounds": [
+      "wungus:wungus-game-2/eliminations/player15elim"
+    ]
+  },
+  "concerto": {
+    "subtitle": "sounds.wungus.concerto",
+    "sounds": [
+      "wungus:wungus-game-2/discs/concerto"
+    ]
+  },
+  "mingle_disc": {
+    "subtitle": "sounds.wungus.mingle_disc",
+    "sounds": [
+      "wungus:wungus-game-2/discs/mingle_disc"
+    ]
+  },
+  "moon": {
+    "subtitle": "sounds.wungus.moon",
+    "sounds": [
+      "wungus:wungus-game-2/discs/moon"
+    ]
+  },
+  "jump-rope-disc": {
+    "subtitle": "sounds.wungus.jump-rope-disc",
+    "sounds": [
+      "wungus:wungus-game-2/discs/jump_rope"
+    ]
+  },
+  "wungus-racing": {
+    "subtitle": "sounds.wungus.wungus-racing",
+    "sounds": [
+      "wungus:wungus-game-2/discs/wungusracing"
+    ]
+  },
+  "smile": {
+    "subtitle": "sounds.wungus.smile",
+    "sounds": [
+      "wungus:wungus-game-2/smile"
+    ]
+  },
+  "heartbeat": {
+    "subtitle": "sounds.wungus.heartbeat",
+    "sounds": [
+      "wungus:steroids/heartbeat"
+    ]
+  },
+  "jump-rope": {
+    "subtitle": "sounds.wungus.jump-rope",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/jump-rope"
+    ]
+  },
+  "red-light-green-light":{
+    "subtitle": "sounds.wungus.rlgl",
+    "sounds":[
+      "wungus:wungus-game-2/instructions/red-light-green-light"
+    ]
+  },
+  "mingle-instructions": {
+    "subtitle": "sounds.wungus.mingle",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/mingle"
+    ]
+  },
+  "tnt-stepping-stones": {
+    "subtitle": "sounds.wungus.tnt-stepping-stones",
+    "sounds":[
+      "wungus:wungus-game-2/instructions/tnt-stepping-stones"
+    ]
+  },
+  "numbers": {
+    "subtitle": "sounds.wungus.numbers",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/numbers"
+    ]
+  },
+  "flowers": {
+    "subtitle": "sounds.wungus.flowers",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/flowers"
+    ]
+  },
+  "crafting": {
+    "subtitle": "sounds.wungus.crafting",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/crafting"
+    ]
+  },
+  "wunger-games": {
+    "subtitle": "sounds.wungus.wunger-games",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/wunger-games"
+    ]
+  },
+  "wungus-racing-instructions":{
+    "subtitle": "sounds.wungus.wungus-racing",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/wungus-racing"
+    ]
+  },
+  "sand-dalgona": {
+    "subtitle": "sounds.wungus.sand-dalgona",
+    "sounds": [
+      "wungus:wungus-game-2/instructions/sand-dalgona"
+    ]
+  },
+  "congratulations-long": {
+    "subtitle": "sounds.wungus.congratulations-long",
+    "sounds": [
+      "wungus:wungus-game-2/congratulations-long"
+    ]
+  },
+  "congratulations-short": {
+    "subtitle": "sounds.wungus.congratulations-short",
+    "sounds": [
+      "wungus:wungus-game-2/congratulations-short"
+    ]
+  },
+  "sdiybt": {
+    "subtitle": "sounds.wungus.sdiybt",
+    "sounds": [
+      "wungus:wungus-game-2/sdiybt"
+    ]
+  },
+  "dr-song": {
+    "subtitle": "sounds.wungus.dr-song",
+    "sounds": [
+      "wungus:wungus-game-2/dr-song"
     ]
   }
 }

@@ -3,11 +3,9 @@ package net.josh.wungus.item;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.custom.*;
+import net.josh.wungus.sound.ModSounds;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -27,8 +25,14 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_HIDE = ITEMS.register("wungus_hide",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> WUNGUS_AMBROSIA = ITEMS.register("wungus_ambrosia",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> WUNGUS_BOOTS = ITEMS.register("wungus_boots",
             () -> new WungusBoots(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> WUNGUS_MASK = ITEMS.register("wungus_mask",
+            () -> new WungusMask(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> RAW_WUNGUS_FLESH = ITEMS.register("raw_wungus_flesh",
             () -> new Item(new Item.Properties().food(ModFoods.RAW_WUNGUS_FLESH)));
@@ -38,6 +42,18 @@ public class ModItems {
 
     public static final RegistryObject<Item> WUNGUS_SHAWARMA = ITEMS.register("wungus_shawarma",
             () -> new WungusShawarma(new Item.Properties().food(ModFoods.WUNGUS_SHAWARMA)));
+
+    public static final RegistryObject<Item> SANTONIO_CASHEW = ITEMS.register("santonio_cashew",
+            () -> new SantonioCashew(new Item.Properties().food(ModFoods.SANTONIO_CASHEW)));
+
+    public static final RegistryObject<Item> HEALTH_STEROID = ITEMS.register("health_steroid",
+            () -> new WungusSteroid(new Item.Properties().food(ModFoods.STEROIDS), WungusSteroid.Type.HEALTH));
+
+    public static final RegistryObject<Item> SPEED_STEROID = ITEMS.register("speed_steroid",
+            () -> new WungusSteroid(new Item.Properties().food(ModFoods.STEROIDS), WungusSteroid.Type.SPEED));
+
+    public static final RegistryObject<Item> JUMP_STEROID = ITEMS.register("jump_steroid",
+            () -> new WungusSteroid(new Item.Properties().food(ModFoods.STEROIDS), WungusSteroid.Type.JUMP));
 
     public static final RegistryObject<Item> PRATTLING_WUNGUS_1 = ITEMS.register("prattling_wungus_1",
             () -> new PrattlingWungus(new Item.Properties(), 1));
@@ -50,6 +66,21 @@ public class ModItems {
 
     public static final RegistryObject<Item> PRATTLING_WUNGUS_4 = ITEMS.register("prattling_wungus_4",
             () -> new PrattlingWungus(new Item.Properties(), 4));
+
+    public static final RegistryObject<Item> CONCERTO_DISC = ITEMS.register("concerto_disc",
+            () -> new RecordItem(6, ModSounds.CONCERTO, new Item.Properties().stacksTo(1), 5780));
+
+    public static final RegistryObject<Item> MINGLE_DISC = ITEMS.register("mingle_disc",
+            () -> new RecordItem(6, ModSounds.MINGLE_DISC, new Item.Properties().stacksTo(1), 1280));
+
+    public static final RegistryObject<Item> MOON_DISC = ITEMS.register("moon_disc",
+            () -> new RecordItem(6, ModSounds.MOON, new Item.Properties().stacksTo(1), 3660));
+
+    public static final RegistryObject<Item> JUMP_ROPE_DISC = ITEMS.register("jump_rope_disc",
+            () -> new RecordItem(6, ModSounds.JUMP_ROPE_DISC, new Item.Properties().stacksTo(1), 1680));
+
+    public static final RegistryObject<Item> WUNGUS_RACING_DISC = ITEMS.register("wungus_racing_disc",
+            () -> new RecordItem(6, ModSounds.WUNGUS_RACING, new Item.Properties().stacksTo(1), 3240));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -1,23 +1,29 @@
 package net.josh.wungus.block.custom;
 
+import net.josh.wungus.misc.ModDamageTypes;
+import net.josh.wungus.sound.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.EyeOfEnder;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
-public class QuartzLandmine extends Block {
+public class BlockLandmine extends Block {
 
-    public QuartzLandmine(Properties pProperties) {
+    public BlockLandmine(Properties pProperties) {
         super(pProperties);
     }
 
@@ -30,7 +36,11 @@ public class QuartzLandmine extends Block {
     }
 
     private static void interact(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        explode(pLevel, pPos, (LivingEntity) pEntity);
+        if(pEntity instanceof Player) {
+            pLevel.playSound(null, pPos, ModSounds.LANDMINE_TRIGGER.get(), SoundSource.BLOCKS);
+            pEntity.hurt(ModDamageTypes.causeLandMine(pLevel.registryAccess()), 10000);
+            explode(pLevel, pPos, (LivingEntity) pEntity);
+        }
     }
 
     private static void explode(Level pLevel, BlockPos pPos, @Nullable LivingEntity pEntity) {
