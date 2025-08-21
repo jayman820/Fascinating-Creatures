@@ -41,6 +41,14 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_3.get());
                         pOutput.accept(ModItems.PRATTLING_WUNGUS_4.get());
                         pOutput.accept(ModItems.WUNGUS_AMBROSIA.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_LOG.get());
+                        pOutput.accept(ModBlocks.STRIPPED_AILANTHUS_LOG.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_WOOD.get());
+                        pOutput.accept(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_LEAVES.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_PLANKS.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_SIGN.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_HANGING_SIGN.get());
                     })
                     .build());
 

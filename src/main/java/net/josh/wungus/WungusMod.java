@@ -11,6 +11,8 @@ import net.josh.wungus.item.ModItems;
 import net.josh.wungus.loot.ModLootModifiers;
 import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.sound.ModSounds;
+import net.josh.wungus.util.ModWoodTypes;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -87,6 +89,8 @@ public class WungusMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+            Sheets.addWoodType(ModWoodTypes.AILANTHUS);
+
             EntityRenderers.register(ModEntities.WUNGUS.get(), WungusRenderer::new);
         }
     }

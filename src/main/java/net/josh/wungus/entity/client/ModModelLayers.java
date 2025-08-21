@@ -8,4 +8,6 @@ public class ModModelLayers {
     public static final ModelLayerLocation WUNGUS_LAYER = new ModelLayerLocation(
             new ResourceLocation(WungusMod.MOD_ID, "wungus_layer"), "main");
 
+    public static final ModelLayerLocation LANTERNFLY_LAYER = new ModelLayerLocation(
+            new ResourceLocation(WungusMod.MOD_ID, "lanternfly_layer"), "main");
 }

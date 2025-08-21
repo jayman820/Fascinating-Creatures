@@ -9,6 +9,8 @@ import net.josh.wungus.particle.DiarrheaParticle;
 import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.particle.SparkleParticle;
 import net.josh.wungus.particle.VomitParticle;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -36,6 +38,9 @@ public class ModEventBusClientEvents {
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.WUNGUS_STATUE.get(),
                 WungusStatueBlockEntityRender::new);
+
+        event.registerBlockEntityRenderer(ModBlockEntities.MOD_SIGN.get(), SignRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MOD_HANGING_SIGN.get(), HangingSignRenderer::new);
     }
 
 }

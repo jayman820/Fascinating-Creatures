@@ -1,6 +1,7 @@
 package net.josh.wungus.datagen;
 
 import net.josh.wungus.WungusMod;
+import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.item.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -8,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -41,9 +43,25 @@ public class ModItemModelProvider extends ItemModelProvider {
         //simpleItem(ModItems.WUNGUS_HIDE);
         //simpleItem(ModItems.WUNGUS_BOOTS);
         //withExistingParent(ModItems.WUNGUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
+        simpleBlockItem(ModBlocks.AILANTHUS_LEAVES);
+        simpleBlockItem(ModBlocks.AILANTHUS_WOOD);
+        simpleBlockItem(ModBlocks.STRIPPED_AILANTHUS_WOOD);
+        simpleBlockItem(ModBlocks.AILANTHUS_LOG);
+        simpleBlockItem(ModBlocks.STRIPPED_AILANTHUS_LOG);
+        simpleBlockItem(ModBlocks.AILANTHUS_PLANKS);
+
+        simpleItem(ModItems.AILANTHUS_SIGN);
+        simpleItem(ModItems.AILANTHUS_HANGING_SIGN);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(WungusMod.MOD_ID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder simpleBlockItem(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(WungusMod.MOD_ID,"item/" + item.getId().getPath()));

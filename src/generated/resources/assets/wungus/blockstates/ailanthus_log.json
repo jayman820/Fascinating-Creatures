@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "wungus:block/ailanthus_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "wungus:block/ailanthus_log"
+    },
+    "axis=z": {
+      "model": "wungus:block/ailanthus_log_horizontal",
+      "x": 90
+    }
+  }
+}

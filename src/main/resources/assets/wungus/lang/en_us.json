@@ -23,6 +23,14 @@
   "block.wungus.glowstone_statue": "Glowstone Wungus Statue",
   "block.wungus.gold_statue": "Gold Wungus Statue",
   "block.wungus.wungus_hedge": "Wungus Hedge",
+  "block.wungus.ailanthus_log": "Ailanthus Log",
+  "block.wungus.stripped_ailanthus_log": "Stripped Ailanthus Log",
+  "block.wungus.ailanthus_wood": "Ailanthus Wood",
+  "block.wungus.stripped_ailanthus_wood": "Stripped Ailanthus Wood",
+  "block.wungus.ailanthus_planks": "Ailanthus Planks",
+  "block.wungus.ailanthus_leaves": "Ailanthus Leaves",
+  "block.wungus.ailanthus_sign": "Ailanthus Sign",
+  "block.wungus.ailanthus_hanging_sign": "Ailanthus Hanging Sign",
 
   "entity.wungus.wungus": "Wungus",
 

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "wungus:block/stripped_ailanthus_log",
+    "side": "wungus:block/stripped_ailanthus_log"
+  }
+}
