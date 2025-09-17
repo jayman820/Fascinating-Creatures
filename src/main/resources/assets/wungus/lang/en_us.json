@@ -28,9 +28,19 @@
   "block.wungus.ailanthus_wood": "Ailanthus Wood",
   "block.wungus.stripped_ailanthus_wood": "Stripped Ailanthus Wood",
   "block.wungus.ailanthus_planks": "Ailanthus Planks",
-  "block.wungus.ailanthus_leaves": "Ailanthus Leaves",
+  "block.wungus.ailanthus_leaves": "Flowering Ailanthus Leaves",
+  "block.wungus.ailanthus_leaves_2": "Ailanthus Leaves",
   "block.wungus.ailanthus_sign": "Ailanthus Sign",
   "block.wungus.ailanthus_hanging_sign": "Ailanthus Hanging Sign",
+  "block.wungus.ailanthus_stairs": "Ailanthus Stairs",
+  "block.wungus.ailanthus_slab": "Ailanthus Slab",
+  "block.wungus.ailanthus_button": "Ailanthus Button",
+  "block.wungus.ailanthus_pressure_plate": "Ailanthus Pressure Plate",
+  "block.wungus.ailanthus_fence": "Ailanthus Fence",
+  "block.wungus.ailanthus_fence_gate": "Ailanthus Fence Gate",
+  "block.wungus.ailanthus_door": "Ailanthus Door",
+  "block.wungus.ailanthus_trapdoor": "Ailanthus Trapdoor",
+
 
   "entity.wungus.wungus": "Wungus",
 

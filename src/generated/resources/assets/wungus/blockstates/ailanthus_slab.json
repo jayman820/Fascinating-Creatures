@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wungus:block/ailanthus_slab"
+    },
+    "type=double": {
+      "model": "wungus:block/ailanthus_planks"
+    },
+    "type=top": {
+      "model": "wungus:block/ailanthus_slab_top"
+    }
+  }
+}

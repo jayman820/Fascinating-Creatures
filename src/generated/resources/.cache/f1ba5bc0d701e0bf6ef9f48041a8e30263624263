@@ -1,3 +1,6 @@
-// 1.20.1	2025-08-21T17:19:31.6576297	Tags for minecraft:block mod id wungus
+// 1.20.1	2025-09-17T14:34:12.3140304	Tags for minecraft:block mod id wungus
+61a255d721f9693ad68cddb48701e77c5bed7375 data/minecraft/tags/blocks/fences.json
+39f4d0b4d78c69d15e21f6a777e0631ef87662c6 data/minecraft/tags/blocks/fence_gates.json
+e862de611135271df95de94d5a3b44728dffe3d7 data/minecraft/tags/blocks/leaves.json
 1f4924d0bc88eb1dc89b7ac0fbb45dc895012fc0 data/minecraft/tags/blocks/logs_that_burn.json
 5ad519eb3dd7e668b900c8dd8ef9db63f90d2a1e data/minecraft/tags/blocks/planks.json

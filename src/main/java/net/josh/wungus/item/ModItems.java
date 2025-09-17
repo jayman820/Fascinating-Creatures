@@ -4,8 +4,9 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.custom.*;
-import net.josh.wungus.sound.ModSounds;
-import net.minecraft.world.food.FoodProperties;
+import net.josh.wungus.item.custom.armor.BBLArmor;
+import net.josh.wungus.item.custom.armor.WungusBoots;
+import net.josh.wungus.item.custom.armor.WungusMask;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -32,7 +33,9 @@ public class ModItems {
     public static final RegistryObject<Item> WUNGUS_BOOTS = ITEMS.register("wungus_boots",
             () -> new WungusBoots(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.BOOTS, new Item.Properties()));
     public static final RegistryObject<Item> WUNGUS_MASK = ITEMS.register("wungus_mask",
-            () -> new WungusMask(ModArmorMaterials.WUNGUS_HIDE, ArmorItem.Type.HELMET, new Item.Properties()));
+            WungusMask::new);
+    public static final RegistryObject<Item> BBL = ITEMS.register("bbl",
+            BBLArmor::new);
 
     public static final RegistryObject<Item> RAW_WUNGUS_FLESH = ITEMS.register("raw_wungus_flesh",
             () -> new Item(new Item.Properties().food(ModFoods.RAW_WUNGUS_FLESH)));

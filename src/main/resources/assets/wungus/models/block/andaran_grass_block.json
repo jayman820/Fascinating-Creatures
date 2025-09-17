@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "wungus:block/andaran_grass_top",
+    "side": "wungus:block/andaran_grass_side"
+  }
+}

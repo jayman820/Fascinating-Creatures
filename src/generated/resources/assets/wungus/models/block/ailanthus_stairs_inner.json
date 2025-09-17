@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "wungus:block/ailanthus_planks",
+    "side": "wungus:block/ailanthus_planks",
+    "top": "wungus:block/ailanthus_planks"
+  }
+}

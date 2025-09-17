@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "wungus:block/ailanthus_pressure_plate"
+    },
+    "powered=true": {
+      "model": "wungus:block/ailanthus_pressure_plate_down"
+    }
+  }
+}

@@ -29,6 +29,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.WUNGUS_HEDGE.get());
                         pOutput.accept(ModItems.WUNGUS_BOOTS.get());
                         pOutput.accept(ModItems.WUNGUS_MASK.get());
+                        pOutput.accept(ModItems.BBL.get());
                         pOutput.accept(ModItems.RAW_WUNGUS_FLESH.get());
                         pOutput.accept(ModItems.COOKED_WUNGUS_FLESH.get());
                         pOutput.accept(ModItems.WUNGUS_SHAWARMA.get());
@@ -46,9 +47,20 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.AILANTHUS_WOOD.get());
                         pOutput.accept(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
                         pOutput.accept(ModBlocks.AILANTHUS_LEAVES.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_LEAVES_2.get());
                         pOutput.accept(ModBlocks.AILANTHUS_PLANKS.get());
                         pOutput.accept(ModBlocks.AILANTHUS_SIGN.get());
                         pOutput.accept(ModBlocks.AILANTHUS_HANGING_SIGN.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_FENCE.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_FENCE_GATE.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_SLAB.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_STAIRS.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_BUTTON.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_DOOR.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.ANDARAN_GRASS_BLOCK.get());
+                        pOutput.accept(ModBlocks.ANDARAN_DIRT.get());
                     })
                     .build());
 

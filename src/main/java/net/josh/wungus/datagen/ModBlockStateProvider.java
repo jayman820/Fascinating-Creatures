@@ -4,10 +4,7 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.StandingSignBlock;
-import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -37,6 +34,19 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.AILANTHUS_PLANKS);
 
         leavesBlock(ModBlocks.AILANTHUS_LEAVES);
+        leavesBlock(ModBlocks.AILANTHUS_LEAVES_2);
+
+        stairsBlock(((StairBlock) ModBlocks.AILANTHUS_STAIRS.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
+        slabBlock(((SlabBlock) ModBlocks.AILANTHUS_SLAB.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
+
+        buttonBlock(((ButtonBlock) ModBlocks.AILANTHUS_BUTTON.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
+        pressurePlateBlock(((PressurePlateBlock) ModBlocks.AILANTHUS_PRESSURE_PLATE.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
+
+        fenceBlock(((FenceBlock) ModBlocks.AILANTHUS_FENCE.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock) ModBlocks.AILANTHUS_FENCE_GATE.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
+
+        doorBlockWithRenderType(((DoorBlock) ModBlocks.AILANTHUS_DOOR.get()), modLoc("block/ailanthus_door_bottom"), modLoc("block/ailanthus_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock) ModBlocks.AILANTHUS_TRAPDOOR.get()), modLoc("block/ailanthus_trapdoor"), true, "cutout");
 
         signBlock(((StandingSignBlock) ModBlocks.AILANTHUS_SIGN.get()), ((WallSignBlock) ModBlocks.AILANTHUS_WALL_SIGN.get()),
                 blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));

@@ -26,5 +26,15 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.AILANTHUS_PLANKS.get());
+
+        this.tag(BlockTags.LEAVES)
+                .add(ModBlocks.AILANTHUS_LEAVES.get())
+                .add(ModBlocks.AILANTHUS_LEAVES_2.get());
+
+        this.tag(BlockTags.FENCES)
+                .add(ModBlocks.AILANTHUS_FENCE.get());
+        this.tag(BlockTags.FENCE_GATES)
+                .add(ModBlocks.AILANTHUS_FENCE_GATE.get());
+
     }
 }

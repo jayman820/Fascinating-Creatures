@@ -6,15 +6,18 @@ import net.josh.wungus.item.ModItems;
 import net.josh.wungus.util.ModWoodTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -73,7 +76,49 @@ public class ModBlocks {
                     return 5;
                 }
             });
+
+    public static final RegistryObject<Block> AILANTHUS_STAIRS = registerBlock("ailanthus_stairs",
+            () -> new StairBlock(() -> ModBlocks.AILANTHUS_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> AILANTHUS_SLAB = registerBlock("ailanthus_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+
+    public static final RegistryObject<Block> AILANTHUS_BUTTON = registerBlock("ailanthus_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).sound(SoundType.WOOD),
+                    BlockSetType.OAK, 10, true));
+    public static final RegistryObject<Block> AILANTHUS_PRESSURE_PLATE = registerBlock("ailanthus_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD),
+                    BlockSetType.OAK));
+
+    public static final RegistryObject<Block> AILANTHUS_FENCE = registerBlock("ailanthus_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+    public static final RegistryObject<Block> AILANTHUS_FENCE_GATE = registerBlock("ailanthus_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD), SoundEvents.FENCE_GATE_OPEN, SoundEvents.WOOD_BREAK));
+
+    public static final RegistryObject<Block> AILANTHUS_DOOR = registerBlock("ailanthus_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD).noOcclusion(), BlockSetType.OAK));
+    public static final RegistryObject<Block> AILANTHUS_TRAPDOOR = registerBlock("ailanthus_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD).noOcclusion(), BlockSetType.OAK));
+
     public static final RegistryObject<Block> AILANTHUS_LEAVES = registerBlock("ailanthus_leaves",
+            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)){
+                @Override
+                public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+                    return true;
+                }
+
+                @Override
+                public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+                    return 60;
+                }
+
+                @Override
+                public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+                    return 30;
+                }
+            });
+
+    public static final RegistryObject<Block> AILANTHUS_LEAVES_2 = registerBlock("ailanthus_leaves_2",
             () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)){
                 @Override
                 public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
@@ -99,6 +144,11 @@ public class ModBlocks {
             () -> new ModHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN), ModWoodTypes.AILANTHUS));
     public static final RegistryObject<Block> AILANTHUS_WALL_HANGING_SIGN = registerBlockNoItem("ailanthus_wall_hanging_sign",
             () -> new ModWallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_HANGING_SIGN), ModWoodTypes.AILANTHUS));
+
+    public static final RegistryObject<Block> ANDARAN_GRASS_BLOCK = registerBlock("andaran_grass_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.GRASS)));
+    public static final RegistryObject<Block> ANDARAN_DIRT = registerBlock("andaran_dirt",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.GRASS)));
 
     private static <T extends Block> RegistryObject<T> registerBlockNoItem(String name, Supplier<T> block) {
         return BLOCKS.register(name, block);

@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
@@ -40,6 +41,7 @@ public class WungdigestionEffect extends MobEffect {
                         pLivingEntity.getX() - vec.scale(1.2).get(Direction.Axis.X), pLivingEntity.getY() + 1, pLivingEntity.getZ() - vec.scale(1.2D).get(Direction.Axis.Z),
                         (rand.nextDouble() - 0.2D), -((rand.nextDouble() + 0.3D) * 1.0D), (rand.nextDouble() - 0.2D));
             }
+            pLivingEntity.push(0, 4, 0);
         }
         super.applyEffectTick(pLivingEntity, pAmplifier);
     }

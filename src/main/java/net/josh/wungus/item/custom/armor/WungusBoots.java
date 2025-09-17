@@ -1,7 +1,11 @@
-package net.josh.wungus.item.custom;
+package net.josh.wungus.item.custom.armor;
 
 import com.google.common.collect.ImmutableMap;
 import net.josh.wungus.item.ModArmorMaterials;
+import net.josh.wungus.item.custom.armor.model.WungusMaskModel;
+import net.josh.wungus.item.custom.armor.model.WungusShoesModel;
+import net.josh.wungus.item.custom.armor.provider.ArmorModelProvider;
+import net.josh.wungus.item.custom.armor.provider.SimpleModelProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -13,10 +17,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 @SuppressWarnings("removal")
-public class WungusBoots extends ArmorItem {
+public class WungusBoots extends AbstractArmorItem {
+    private static final String TEXTURE_LOCATION = "wungus:textures/armor/wungus_boots.png";
+
     private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
                     .put(ModArmorMaterials.WUNGUS_HIDE, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 1))
@@ -78,7 +85,17 @@ public class WungusBoots extends ArmorItem {
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-       return "wungus:textures/armor/wungus_boots.png";
+    protected boolean withCustomModel() {
+        return true;
+    }
+
+    @Override
+    protected ArmorModelProvider createModelProvider() {
+        return new SimpleModelProvider(WungusShoesModel::createBodyLayer, WungusShoesModel::new);
+    }
+
+    @Override
+    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return TEXTURE_LOCATION;
     }
 }
