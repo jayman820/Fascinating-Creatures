@@ -12,6 +12,9 @@ import net.josh.wungus.loot.ModLootModifiers;
 import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.util.ModWoodTypes;
+import net.josh.wungus.villager.ModVillagers;
+import net.josh.wungus.worldgen.tree.ModFoliagePlacerTypes;
+import net.josh.wungus.worldgen.tree.ModTrunkPlacerTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.damagesource.DamageSource;
@@ -59,6 +62,11 @@ public class WungusMod
         ModParticles.register(modEventBus);
 
         ModBlockEntities.register(modEventBus);
+
+        ModTrunkPlacerTypes.register(modEventBus);
+        ModFoliagePlacerTypes.register(modEventBus);
+
+        ModVillagers.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         //modEventBus.addListener(this::addCreative);

@@ -21,6 +21,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.STRIPPED_AILANTHUS_LOG.get());
         this.dropSelf(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
         this.dropSelf(ModBlocks.AILANTHUS_PLANKS.get());
+        this.dropSelf(ModBlocks.AILANTHUS_SAPLING.get());
+        this.dropSelf(ModBlocks.BBL_TABLE.get());
 
         this.dropSelf(ModBlocks.WUNGUS_STATUE.get());
         this.dropSelf(ModBlocks.STONE_STATUE.get());

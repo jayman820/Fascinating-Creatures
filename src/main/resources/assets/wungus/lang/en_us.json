@@ -40,9 +40,10 @@
   "block.wungus.ailanthus_fence_gate": "Ailanthus Fence Gate",
   "block.wungus.ailanthus_door": "Ailanthus Door",
   "block.wungus.ailanthus_trapdoor": "Ailanthus Trapdoor",
-
+  "block.wungus.bbl_table": "BBL Table",
 
   "entity.wungus.wungus": "Wungus",
+  "entity.minecraft.villager.wungus.bbl_doctor": "BBL Doctor",
 
   "creativetab.wungus_tab": "Fascinating Creatures",
 
@@ -69,5 +70,5 @@
   "death.attack.landmine_0": "%s didn't watch where they were stepping",
   "death.attack.landmine_1": "%s took a wrong turn",
   "death.attack.landmine_0.entity": "%s didn't watch where they were running while escaping %s",
-  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s"
+  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s",
 }

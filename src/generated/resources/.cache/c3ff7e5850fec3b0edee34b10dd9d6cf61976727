@@ -1,4 +1,4 @@
-// 1.20.1	2025-09-17T14:34:12.3126547	Block States: wungus
+// 1.20.1	2025-09-17T17:48:35.2450056	Block States: wungus
 e26f5472863d30acdc01443ddbb5e5a4c632e828 assets/wungus/blockstates/ailanthus_button.json
 20cb17c9c4d117284721a05be33f10400b8ec326 assets/wungus/blockstates/ailanthus_door.json
 1c38ab56041612e2965066da007d5b367af1339e assets/wungus/blockstates/ailanthus_fence.json
@@ -9,6 +9,7 @@ f784c3294517e25ff01b029870db9796532bd5be assets/wungus/blockstates/ailanthus_lea
 218777a2d82049e9460aec946a8c87e123e2ffdc assets/wungus/blockstates/ailanthus_log.json
 b5b843ff1846093f1bc3afc6a5f33cf9cd59af02 assets/wungus/blockstates/ailanthus_planks.json
 cacbd8913b3496a428a0f4a6ec983c2e8123ddf3 assets/wungus/blockstates/ailanthus_pressure_plate.json
+882334953a07fc4e8d45f6003d71b04953172fbe assets/wungus/blockstates/ailanthus_sapling.json
 5702271d66f85eadae11be5a161d104048ee5d78 assets/wungus/blockstates/ailanthus_sign.json
 4f97787cee3c45dab63acfb7dc6a85fae307d76c assets/wungus/blockstates/ailanthus_slab.json
 73359098224a91615fe66cb9d1326a8cdd6b692c assets/wungus/blockstates/ailanthus_stairs.json
@@ -42,6 +43,7 @@ d17318d440e582c4889f856cc91b18267fcef943 assets/wungus/models/block/ailanthus_le
 205a77541554f5ca57ea46fd9de2f7ffb06fb853 assets/wungus/models/block/ailanthus_planks.json
 3abd3aa8be5684dd351fd6940a720bffa4191336 assets/wungus/models/block/ailanthus_pressure_plate.json
 168435198a1d22a19cb67c7e71752222eacdced8 assets/wungus/models/block/ailanthus_pressure_plate_down.json
+a6444c61c7d33a024c1c4f7805239e41f1e508f8 assets/wungus/models/block/ailanthus_sapling.json
 68ede291533da23830fe0528cb89454f2cb66359 assets/wungus/models/block/ailanthus_sign.json
 38fe72d8672bddb85baf0eda6cf893882d317957 assets/wungus/models/block/ailanthus_slab.json
 88931821611f032bfce89f3ab4167730ac3ea03b assets/wungus/models/block/ailanthus_slab_top.json

@@ -59,8 +59,10 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.AILANTHUS_PRESSURE_PLATE.get());
                         pOutput.accept(ModBlocks.AILANTHUS_DOOR.get());
                         pOutput.accept(ModBlocks.AILANTHUS_TRAPDOOR.get());
+                        pOutput.accept(ModBlocks.AILANTHUS_SAPLING.get());
                         pOutput.accept(ModBlocks.ANDARAN_GRASS_BLOCK.get());
                         pOutput.accept(ModBlocks.ANDARAN_DIRT.get());
+                        pOutput.accept(ModBlocks.BBL_TABLE.get());
                     })
                     .build());
 

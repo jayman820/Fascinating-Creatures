@@ -30,10 +30,10 @@ public class WungdigestionEffect extends MobEffect {
             for(int i = 0; i < 2000; i++) {
                 pLivingEntity.level().addParticle(ModParticles.VOMIT_PARTICLE_1.get(),
                         pLivingEntity.getX() + vec.get(Direction.Axis.X), pLivingEntity.getY() + 1.5, pLivingEntity.getZ() + vec.get(Direction.Axis.Z),
-                        -(rand.nextDouble() - 0.2D) * 1.3D * (vec.get(Direction.Axis.X) > 0 ? -1 : 1), -((rand.nextDouble() + 0.8D)), -(rand.nextDouble() - 0.2D) * 1.3D * (vec.get(Direction.Axis.Z) > 0 ? -1 : 1));
+                        -(rand.nextDouble() - 0.2D) * 1.3D * Math.cos(vec.get(Direction.Axis.X) * 2 * Math.PI), -((rand.nextDouble() + 0.8D)), -(rand.nextDouble() - 0.2D) * 1.3D * Math.sin(vec.get(Direction.Axis.Z) * 2 * Math.PI));
             }
         }
-        if(hit2 < 6) {
+        if(hit2 < -1) {
             pLivingEntity.playSound(ModSounds.FART.get());
             Vec3 vec = pLivingEntity.getViewVector(0);
             for(int i = 0; i < 2000; i++) {

@@ -4,6 +4,7 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.custom.*;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.util.ModWoodTypes;
+import net.josh.wungus.worldgen.tree.AilanthusTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -49,6 +50,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> WUNGUS_HEDGE = registerBlock("wungus_hedge",
             () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().sound(SoundType.AZALEA_LEAVES).randomTicks()));
 
+    public static final RegistryObject<Block> BBL_TABLE = registerBlock("bbl_table",
+            () -> new BBLTable(BlockBehaviour.Properties.copy(Blocks.SMITHING_TABLE).noOcclusion().sound(SoundType.METAL).randomTicks()));
+
 
     public static final RegistryObject<Block> AILANTHUS_LOG = registerBlock("ailanthus_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(3f)));
@@ -76,6 +80,9 @@ public class ModBlocks {
                     return 5;
                 }
             });
+
+    public static final RegistryObject<Block> AILANTHUS_SAPLING = registerBlock("ailanthus_sapling",
+            () -> new SaplingBlock(new AilanthusTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistryObject<Block> AILANTHUS_STAIRS = registerBlock("ailanthus_stairs",
             () -> new StairBlock(() -> ModBlocks.AILANTHUS_PLANKS.get().defaultBlockState(),

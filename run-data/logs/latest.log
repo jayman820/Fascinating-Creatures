@@ -1,33 +1,35 @@
-[17Sep2025 14:41:30.365] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\Owner\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.3.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, wungus, --all, --output, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\generated\resources, --existing, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\main\resources]
-[17Sep2025 14:41:30.376] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[17Sep2025 14:41:30.477] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[17Sep2025 14:41:30.513] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/Owner/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[17Sep2025 14:41:30.676] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.3.0\d7ebc62120f202109e300e084ca1a31a7b946a62\javafmllanguage-1.20.1-47.3.0.jar is missing mods.toml file
-[17Sep2025 14:41:30.678] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.3.0\1bf3e845ea0ce750096da8c71c8364b188ab74d4\lowcodelanguage-1.20.1-47.3.0.jar is missing mods.toml file
-[17Sep2025 14:41:30.680] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.3.0\6093682e943ddccbabf70539319d7f2fe64db2e7\mclanguage-1.20.1-47.3.0.jar is missing mods.toml file
-[17Sep2025 14:41:30.682] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.3.0\3b6be96aba3e323f3c918e8ef6a96312d82d76ad\fmlcore-1.20.1-47.3.0.jar is missing mods.toml file
-[17Sep2025 14:41:30.722] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[17Sep2025 14:41:31.560] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\Owner\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, wungus, --all, --output, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\generated\resources, --existing, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\main\resources]
-[17Sep2025 14:41:31.832] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [wungus]
-[17Sep2025 14:41:34.316] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.3.0, for MC 1.20.1 with MCP 20230612.114412
-[17Sep2025 14:41:34.318] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.3.0 Initialized
-[17Sep2025 14:41:34.649] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Owner/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[17Sep2025 14:41:34.649] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Owner/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[17Sep2025 14:41:34.784] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id wungus
-[17Sep2025 14:41:34.881] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id wungus finished after 96 ms
-[17Sep2025 14:41:34.881] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id wungus
-[17Sep2025 14:41:34.882] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id wungus finished after 0 ms
-[17Sep2025 14:41:34.882] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[17Sep2025 14:41:34.917] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 33 ms
-[17Sep2025 14:41:34.917] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: wungus
-[17Sep2025 14:41:35.013] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: wungus finished after 97 ms
-[17Sep2025 14:41:35.015] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: wungus
-[17Sep2025 14:41:35.016] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: wungus finished after 1 ms
-[17Sep2025 14:41:35.016] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
-[17Sep2025 14:41:35.026] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 9 ms
-[17Sep2025 14:41:35.026] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : wungus
-[17Sep2025 14:41:35.031] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : wungus finished after 4 ms
-[17Sep2025 14:41:35.031] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
-[17Sep2025 14:41:35.088] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 57 ms
-[17Sep2025 14:41:35.088] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 304 ms
-[17Sep2025 14:41:35.096] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 170, old count: 172, new count: 171, removed stale: 0, written: 0
+[25Sep2025 14:42:44.040] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\Owner\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.3.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, wungus, --all, --output, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\generated\resources, --existing, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\main\resources]
+[25Sep2025 14:42:44.052] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[25Sep2025 14:42:44.157] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[25Sep2025 14:42:44.193] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/Owner/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[25Sep2025 14:42:44.388] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.3.0\d7ebc62120f202109e300e084ca1a31a7b946a62\javafmllanguage-1.20.1-47.3.0.jar is missing mods.toml file
+[25Sep2025 14:42:44.390] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.3.0\1bf3e845ea0ce750096da8c71c8364b188ab74d4\lowcodelanguage-1.20.1-47.3.0.jar is missing mods.toml file
+[25Sep2025 14:42:44.392] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.3.0\6093682e943ddccbabf70539319d7f2fe64db2e7\mclanguage-1.20.1-47.3.0.jar is missing mods.toml file
+[25Sep2025 14:42:44.393] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Owner\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.3.0\3b6be96aba3e323f3c918e8ef6a96312d82d76ad\fmlcore-1.20.1-47.3.0.jar is missing mods.toml file
+[25Sep2025 14:42:44.446] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[25Sep2025 14:42:45.237] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\Owner\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, wungus, --all, --output, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\generated\resources, --existing, C:\Users\Owner\IdeaProjects\Fascinating-Creatures\src\main\resources]
+[25Sep2025 14:42:45.525] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [wungus]
+[25Sep2025 14:42:47.992] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.3.0, for MC 1.20.1 with MCP 20230612.114412
+[25Sep2025 14:42:47.993] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.3.0 Initialized
+[25Sep2025 14:42:48.313] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Owner/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[25Sep2025 14:42:48.313] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Owner/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.0_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[25Sep2025 14:42:48.522] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id wungus
+[25Sep2025 14:42:48.531] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id wungus finished after 8 ms
+[25Sep2025 14:42:48.531] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id wungus
+[25Sep2025 14:42:48.531] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id wungus finished after 0 ms
+[25Sep2025 14:42:48.532] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[25Sep2025 14:42:48.559] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 27 ms
+[25Sep2025 14:42:48.559] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: wungus
+[25Sep2025 14:42:48.652] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: wungus finished after 93 ms
+[25Sep2025 14:42:48.652] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: wungus
+[25Sep2025 14:42:48.654] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: wungus finished after 1 ms
+[25Sep2025 14:42:48.654] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
+[25Sep2025 14:42:48.667] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 13 ms
+[25Sep2025 14:42:48.667] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : wungus
+[25Sep2025 14:42:48.673] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : wungus finished after 5 ms
+[25Sep2025 14:42:48.673] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
+[25Sep2025 14:42:48.725] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 52 ms
+[25Sep2025 14:42:48.725] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:point_of_interest_type mod id wungus
+[25Sep2025 14:42:48.726] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:point_of_interest_type mod id wungus finished after 0 ms
+[25Sep2025 14:42:48.726] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 204 ms
+[25Sep2025 14:42:48.735] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 179, old count: 179, new count: 180, removed stale: 0, written: 1

@@ -2,6 +2,7 @@ package net.josh.wungus.worldgen;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -9,10 +10,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.w3c.dom.ls.LSParserFilter;
 
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class ModBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> SPAWN_WUNGUS_BLUE = registerKey("spawn_wungus_blue");
     public static final TagKey<Biome> SPAWN_BLUE_WUNGUS_TAG = tag("can_spawn_blue_wungus");
+
+    public static final ResourceKey<BiomeModifier> ADD_TREE_AILANTHUS = registerKey("add_tree_ailanthus");
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -48,6 +53,11 @@ public class ModBiomeModifiers {
         context.register(SPAWN_WUNGUS_BLUE, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(SPAWN_BLUE_WUNGUS_TAG),
                 List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
+
+        context.register(ADD_TREE_AILANTHUS, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.AILANTHUS_PLACED_KEY)),
+                GenerationStep.Decoration.VEGETAL_DECORATION));
 
     }
 

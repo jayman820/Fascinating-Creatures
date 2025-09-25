@@ -36,6 +36,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         leavesBlock(ModBlocks.AILANTHUS_LEAVES);
         leavesBlock(ModBlocks.AILANTHUS_LEAVES_2);
 
+        saplingBlock(ModBlocks.AILANTHUS_SAPLING);
+
         stairsBlock(((StairBlock) ModBlocks.AILANTHUS_STAIRS.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
         slabBlock(((SlabBlock) ModBlocks.AILANTHUS_SLAB.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()), blockTexture(ModBlocks.AILANTHUS_PLANKS.get()));
 
@@ -77,6 +79,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
     public void hangingSignBlock(Block signBlock, Block wallSignBlock, ModelFile sign) {
         simpleBlock(signBlock, sign);
         simpleBlock(wallSignBlock, sign);
+    }
+
+    private void saplingBlock(RegistryObject<Block> blockRegistryObject) {
+        simpleBlock(blockRegistryObject.get(),
+                models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
 
     private String name(Block block) {
