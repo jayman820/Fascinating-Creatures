@@ -1,0 +1,37 @@
+{
+  "parent": "wungus:wungus_egg_obtain",
+  "criteria": {
+    "killed_wungus": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wungus:wungus"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "text": "How could you?"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "wungus:wungus_hide"
+    },
+    "title": {
+      "text": "You monster"
+    }
+  },
+  "requirements": [
+    [
+      "killed_wungus"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

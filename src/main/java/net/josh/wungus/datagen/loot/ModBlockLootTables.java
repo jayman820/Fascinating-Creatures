@@ -1,17 +1,18 @@
 package net.josh.wungus.datagen.loot;
 
+import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.item.ModItems;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
-import net.josh.wungus.block.ModBlocks;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Set;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
-    public ModBlockLootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public ModBlockLootTables(HolderLookup.Provider registries) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
     @Override
@@ -39,13 +40,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.AILANTHUS_LEAVES_2.get(), block ->
                 createLeavesDrops(block, ModBlocks.AILANTHUS_LEAVES_2.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
+        // The wall signs share the loot table of the standing signs (see ModBlocks#wallVariant)
         this.add(ModBlocks.AILANTHUS_SIGN.get(), block ->
                 createSingleItemTable(ModItems.AILANTHUS_SIGN.get()));
-        this.add(ModBlocks.AILANTHUS_WALL_SIGN.get(), block ->
-                createSingleItemTable(ModItems.AILANTHUS_SIGN.get()));
         this.add(ModBlocks.AILANTHUS_HANGING_SIGN.get(), block ->
-                createSingleItemTable(ModItems.AILANTHUS_HANGING_SIGN.get()));
-        this.add(ModBlocks.AILANTHUS_WALL_HANGING_SIGN.get(), block ->
                 createSingleItemTable(ModItems.AILANTHUS_HANGING_SIGN.get()));
 
         this.dropSelf(ModBlocks.AILANTHUS_STAIRS.get());
@@ -63,6 +61,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
+        return ModBlocks.BLOCKS.getEntries().stream().<Block>map(DeferredHolder::get)::iterator;
     }
 }

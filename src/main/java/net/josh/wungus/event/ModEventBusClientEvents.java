@@ -1,27 +1,59 @@
 package net.josh.wungus.event;
+
 import net.josh.wungus.WungusMod;
-import net.josh.wungus.block.entity.ModBlockEntities;
-import net.josh.wungus.block.entity.WungusStatueBlockEntity;
-import net.josh.wungus.block.entity.renderer.WungusStatueBlockEntityRender;
+import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.client.ModModelLayers;
 import net.josh.wungus.entity.client.WungusModel;
+import net.josh.wungus.entity.client.WungusRenderer;
+import net.josh.wungus.item.ModItems;
+import net.josh.wungus.item.custom.armor.model.BBLModel;
+import net.josh.wungus.item.custom.armor.model.WungusMaskModel;
+import net.josh.wungus.item.custom.armor.model.WungusShoesModel;
+import net.josh.wungus.item.custom.armor.provider.CustomArmorModelExtensions;
+import net.josh.wungus.item.custom.armor.provider.SimpleModelProvider;
+import net.josh.wungus.network.ClientPayloadHandler;
+import net.josh.wungus.network.WungdigestionPayload;
 import net.josh.wungus.particle.DiarrheaParticle;
 import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.particle.SparkleParticle;
 import net.josh.wungus.particle.VomitParticle;
-import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
-import net.minecraft.client.renderer.blockentity.SignRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.josh.wungus.util.ModWoodTypes;
+import net.minecraft.client.renderer.Sheets;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
-@Mod.EventBusSubscriber(modid = WungusMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = WungusMod.MOD_ID, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> Sheets.addWoodType(ModWoodTypes.AILANTHUS));
+    }
+
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.WUNGUS_LAYER, WungusModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.WUNGUS.get(), WungusRenderer::new);
+        // The ailanthus signs use the vanilla sign block entities, which already have their renderers
+    }
+
+    @SubscribeEvent
+    public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        event.registerItem(new CustomArmorModelExtensions(
+                new SimpleModelProvider(WungusMaskModel::createBodyLayer, WungusMaskModel::new)), ModItems.WUNGUS_MASK.get());
+        event.registerItem(new CustomArmorModelExtensions(
+                new SimpleModelProvider(WungusShoesModel::createBodyLayer, WungusShoesModel::new)), ModItems.WUNGUS_BOOTS.get());
+        event.registerItem(new CustomArmorModelExtensions(
+                new SimpleModelProvider(BBLModel::createBodyLayer, BBLModel::new)), ModItems.BBL.get());
     }
 
     @SubscribeEvent
@@ -35,12 +67,7 @@ public class ModEventBusClientEvents {
     }
 
     @SubscribeEvent
-    public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntities.WUNGUS_STATUE.get(),
-                WungusStatueBlockEntityRender::new);
-
-        event.registerBlockEntityRenderer(ModBlockEntities.MOD_SIGN.get(), SignRenderer::new);
-        event.registerBlockEntityRenderer(ModBlockEntities.MOD_HANGING_SIGN.get(), HangingSignRenderer::new);
+    public static void registerPayloadHandlers(RegisterClientPayloadHandlersEvent event) {
+        event.register(WungdigestionPayload.TYPE, ClientPayloadHandler::handleWungdigestion);
     }
-
 }

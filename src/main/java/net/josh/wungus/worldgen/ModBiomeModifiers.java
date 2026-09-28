@@ -4,20 +4,18 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.ModEntities;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.w3c.dom.ls.LSParserFilter;
-
-import java.util.List;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> SPAWN_WUNGUS = registerKey("spawn_wungus");
@@ -34,39 +32,39 @@ public class ModBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> ADD_TREE_AILANTHUS = registerKey("add_tree_ailanthus");
 
-    public static void bootstrap(BootstapContext<BiomeModifier> context) {
+    public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
 
-        context.register(SPAWN_WUNGUS, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-                biomes.getOrThrow(SPAWN_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
+        context.register(SPAWN_WUNGUS, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
+                biomes.getOrThrow(SPAWN_WUNGUS_TAG), wungusSpawn()));
 
-        context.register(SPAWN_WUNGUS_WHITE, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-                biomes.getOrThrow(SPAWN_WHITE_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
+        context.register(SPAWN_WUNGUS_WHITE, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
+                biomes.getOrThrow(SPAWN_WHITE_WUNGUS_TAG), wungusSpawn()));
 
-        context.register(SPAWN_WUNGUS_GREEN, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-                biomes.getOrThrow(SPAWN_GREEN_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
+        context.register(SPAWN_WUNGUS_GREEN, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
+                biomes.getOrThrow(SPAWN_GREEN_WUNGUS_TAG), wungusSpawn()));
 
-        context.register(SPAWN_WUNGUS_BLUE, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
-                biomes.getOrThrow(SPAWN_BLUE_WUNGUS_TAG),
-                List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
+        context.register(SPAWN_WUNGUS_BLUE, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
+                biomes.getOrThrow(SPAWN_BLUE_WUNGUS_TAG), wungusSpawn()));
 
-        context.register(ADD_TREE_AILANTHUS, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+        context.register(ADD_TREE_AILANTHUS, new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.AILANTHUS_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
 
     }
 
+    private static Weighted<MobSpawnSettings.SpawnerData> wungusSpawn() {
+        return new Weighted<>(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 2), 1);
+    }
+
     private static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(WungusMod.MOD_ID, name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, name));
     }
 
     private static TagKey<Biome> tag(String name)
     {
-        return TagKey.create(Registries.BIOME, new ResourceLocation(WungusMod.MOD_ID, "can_spawn/" + name));
+        return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "can_spawn/" + name));
     }
 }

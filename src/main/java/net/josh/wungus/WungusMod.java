@@ -5,33 +5,25 @@ import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
-import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModCreativeModeTabs;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.loot.ModLootModifiers;
 import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.sound.ModSounds;
-import net.josh.wungus.util.ModWoodTypes;
 import net.josh.wungus.villager.ModVillagers;
 import net.josh.wungus.worldgen.tree.ModFoliagePlacerTypes;
 import net.josh.wungus.worldgen.tree.ModTrunkPlacerTypes;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(WungusMod.MOD_ID)
 public class WungusMod
 {
@@ -40,10 +32,10 @@ public class WungusMod
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public WungusMod()
+    // The constructor for the mod class is the first code that is run when your mod is loaded.
+    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
+    public WungusMod(IEventBus modEventBus, ModContainer modContainer)
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         ModEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
@@ -68,7 +60,7 @@ public class WungusMod
 
         ModVillagers.register(modEventBus);
 
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
         //modEventBus.addListener(this::addCreative);
     }
 
@@ -90,16 +82,5 @@ public class WungusMod
 
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            Sheets.addWoodType(ModWoodTypes.AILANTHUS);
-
-            EntityRenderers.register(ModEntities.WUNGUS.get(), WungusRenderer::new);
-        }
-    }
+    // Client only setup (renderers, wood type textures, ...) lives in event/ModEventBusClientEvents
 }

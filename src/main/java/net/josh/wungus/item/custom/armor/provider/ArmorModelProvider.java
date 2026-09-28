@@ -1,8 +1,7 @@
 package net.josh.wungus.item.custom.armor.provider;
 
 import net.josh.wungus.item.custom.armor.model.ArmorModel;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -13,10 +12,9 @@ public interface ArmorModelProvider {
     /**
      * provides a custom armor model.
      * cache the model if possible as it's needed each <i>rendering</i> tick
-     * @param living the entity for the model
      * @param stack the stack for the model
-     * @param slot the slot for the model
+     * @param layerType the equipment layer being rendered
      * @return the model
      */
-    ArmorModel getModel(LivingEntity living, ItemStack stack, EquipmentSlot slot);
+    ArmorModel getModel(ItemStack stack, EquipmentClientInfo.LayerType layerType);
 }

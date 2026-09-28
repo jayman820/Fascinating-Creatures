@@ -1,0 +1,31 @@
+{
+  "parent": "wungus:wungus_milk_obtain",
+  "criteria": {
+    "drank_wungus_milk": {
+      "conditions": {
+        "item": {
+          "items": "wungus:wungus_milk"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "text": "Why would you drink that...?"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "wungus:wungus_milk"
+    },
+    "title": {
+      "text": "Wung are we doing here?"
+    }
+  },
+  "requirements": [
+    [
+      "drank_wungus_milk"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

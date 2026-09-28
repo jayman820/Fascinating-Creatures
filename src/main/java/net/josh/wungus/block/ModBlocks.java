@@ -4,67 +4,72 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.custom.*;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.util.ModWoodTypes;
-import net.josh.wungus.worldgen.tree.AilanthusTreeGrower;
+import net.josh.wungus.worldgen.tree.ModTreeGrowers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static net.minecraft.world.item.Items.registerBlock;
-
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, WungusMod.MOD_ID);
+    public static final DeferredRegister.Blocks BLOCKS =
+            DeferredRegister.createBlocks(WungusMod.MOD_ID);
 
-    public static final RegistryObject<Block> WUNGUS_EGG = registerBlock("wungus_egg",
-            () -> new WungusEgg(BlockBehaviour.Properties.copy(Blocks.SAND).sound(SoundType.METAL).randomTicks()));
+    public static final DeferredBlock<Block> WUNGUS_EGG = registerBlock("wungus_egg",
+            properties -> new WungusEgg(properties.sound(SoundType.METAL).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SAND));
 
-    public static final RegistryObject<Block> WUNGUS_STATUE = registerBlock("wungus_statue",
-            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().sound(SoundType.STONE).randomTicks()));
+    public static final DeferredBlock<Block> WUNGUS_STATUE = registerBlock("wungus_statue",
+            properties -> new WungusStatue(properties.noOcclusion().sound(SoundType.STONE).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
 
-    public static final RegistryObject<Block> STONE_STATUE = registerBlock("stone_statue",
-            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().sound(SoundType.STONE).randomTicks()));
+    public static final DeferredBlock<Block> STONE_STATUE = registerBlock("stone_statue",
+            properties -> new WungusStatue(properties.noOcclusion().sound(SoundType.STONE).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
 
-    public static final RegistryObject<Block> GLOWSTONE_STATUE = registerBlock("glowstone_statue",
-            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().lightLevel(s -> 15).sound(SoundType.STONE).randomTicks()));
+    public static final DeferredBlock<Block> GLOWSTONE_STATUE = registerBlock("glowstone_statue",
+            properties -> new WungusStatue(properties.noOcclusion().lightLevel(s -> 15).sound(SoundType.STONE).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
 
-    public static final RegistryObject<Block> GOLD_STATUE = registerBlock("gold_statue",
-            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().sound(SoundType.STONE).randomTicks()));
+    public static final DeferredBlock<Block> GOLD_STATUE = registerBlock("gold_statue",
+            properties -> new WungusStatue(properties.noOcclusion().sound(SoundType.STONE).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
 
-    public static final RegistryObject<Block> WUNGUS_HEDGE = registerBlock("wungus_hedge",
-            () -> new WungusStatue(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE).noOcclusion().sound(SoundType.AZALEA_LEAVES).randomTicks()));
+    public static final DeferredBlock<Block> WUNGUS_HEDGE = registerBlock("wungus_hedge",
+            properties -> new WungusStatue(properties.noOcclusion().sound(SoundType.AZALEA_LEAVES).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
 
-    public static final RegistryObject<Block> BBL_TABLE = registerBlock("bbl_table",
-            () -> new BBLTable(BlockBehaviour.Properties.copy(Blocks.SMITHING_TABLE).noOcclusion().sound(SoundType.METAL).randomTicks()));
+    public static final DeferredBlock<Block> BBL_TABLE = registerBlock("bbl_table",
+            properties -> new BBLTable(properties.noOcclusion().sound(SoundType.METAL).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMITHING_TABLE));
 
 
-    public static final RegistryObject<Block> AILANTHUS_LOG = registerBlock("ailanthus_log",
-            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(3f)));
-    public static final RegistryObject<Block> AILANTHUS_WOOD = registerBlock("ailanthus_wood",
-            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).strength(3f)));
-    public static final RegistryObject<Block> STRIPPED_AILANTHUS_LOG = registerBlock("stripped_ailanthus_log",
-            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(3f)));
-    public static final RegistryObject<Block> STRIPPED_AILANTHUS_WOOD = registerBlock("stripped_ailanthus_wood",
-            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
+    public static final DeferredBlock<Block> AILANTHUS_LOG = registerBlock("ailanthus_log",
+            properties -> new ModFlammableRotatedPillarBlock(properties.strength(3f)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG));
+    public static final DeferredBlock<Block> AILANTHUS_WOOD = registerBlock("ailanthus_wood",
+            properties -> new ModFlammableRotatedPillarBlock(properties.strength(3f)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD));
+    public static final DeferredBlock<Block> STRIPPED_AILANTHUS_LOG = registerBlock("stripped_ailanthus_log",
+            properties -> new ModFlammableRotatedPillarBlock(properties.strength(3f)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_LOG));
+    public static final DeferredBlock<Block> STRIPPED_AILANTHUS_WOOD = registerBlock("stripped_ailanthus_wood",
+            properties -> new ModFlammableRotatedPillarBlock(properties.strength(3f)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_WOOD));
 
-    public static final RegistryObject<Block> AILANTHUS_PLANKS = registerBlock("ailanthus_planks",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)){
+    public static final DeferredBlock<Block> AILANTHUS_PLANKS = registerBlock("ailanthus_planks",
+            properties -> new Block(properties){
                 @Override
                 public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
                     return true;
@@ -79,36 +84,43 @@ public class ModBlocks {
                 public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
                     return 5;
                 }
-            });
+            }, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
 
-    public static final RegistryObject<Block> AILANTHUS_SAPLING = registerBlock("ailanthus_sapling",
-            () -> new SaplingBlock(new AilanthusTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final DeferredBlock<Block> AILANTHUS_SAPLING = registerBlock("ailanthus_sapling",
+            properties -> new SaplingBlock(ModTreeGrowers.AILANTHUS, properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING));
 
-    public static final RegistryObject<Block> AILANTHUS_STAIRS = registerBlock("ailanthus_stairs",
-            () -> new StairBlock(() -> ModBlocks.AILANTHUS_PLANKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
-    public static final RegistryObject<Block> AILANTHUS_SLAB = registerBlock("ailanthus_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+    public static final DeferredBlock<Block> AILANTHUS_STAIRS = registerBlock("ailanthus_stairs",
+            properties -> new StairBlock(ModBlocks.AILANTHUS_PLANKS.get().defaultBlockState(), properties.sound(SoundType.WOOD)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
+    public static final DeferredBlock<Block> AILANTHUS_SLAB = registerBlock("ailanthus_slab",
+            properties -> new SlabBlock(properties.sound(SoundType.WOOD)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
 
-    public static final RegistryObject<Block> AILANTHUS_BUTTON = registerBlock("ailanthus_button",
-            () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).sound(SoundType.WOOD),
-                    BlockSetType.OAK, 10, true));
-    public static final RegistryObject<Block> AILANTHUS_PRESSURE_PLATE = registerBlock("ailanthus_pressure_plate",
-            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD),
-                    BlockSetType.OAK));
+    public static final DeferredBlock<Block> AILANTHUS_BUTTON = registerBlock("ailanthus_button",
+            properties -> new ButtonBlock(BlockSetType.OAK, 10, properties.sound(SoundType.WOOD)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON));
+    public static final DeferredBlock<Block> AILANTHUS_PRESSURE_PLATE = registerBlock("ailanthus_pressure_plate",
+            properties -> new PressurePlateBlock(BlockSetType.OAK, properties.sound(SoundType.WOOD)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
 
-    public static final RegistryObject<Block> AILANTHUS_FENCE = registerBlock("ailanthus_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
-    public static final RegistryObject<Block> AILANTHUS_FENCE_GATE = registerBlock("ailanthus_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD), SoundEvents.FENCE_GATE_OPEN, SoundEvents.WOOD_BREAK));
+    public static final DeferredBlock<Block> AILANTHUS_FENCE = registerBlock("ailanthus_fence",
+            properties -> new FenceBlock(properties.sound(SoundType.WOOD)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
+    public static final DeferredBlock<Block> AILANTHUS_FENCE_GATE = registerBlock("ailanthus_fence_gate",
+            properties -> new FenceGateBlock(ModWoodTypes.AILANTHUS, properties.sound(SoundType.WOOD)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
 
-    public static final RegistryObject<Block> AILANTHUS_DOOR = registerBlock("ailanthus_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD).noOcclusion(), BlockSetType.OAK));
-    public static final RegistryObject<Block> AILANTHUS_TRAPDOOR = registerBlock("ailanthus_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD).noOcclusion(), BlockSetType.OAK));
+    public static final DeferredBlock<Block> AILANTHUS_DOOR = registerBlock("ailanthus_door",
+            properties -> new DoorBlock(BlockSetType.OAK, properties.sound(SoundType.WOOD).noOcclusion()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
+    public static final DeferredBlock<Block> AILANTHUS_TRAPDOOR = registerBlock("ailanthus_trapdoor",
+            properties -> new TrapDoorBlock(BlockSetType.OAK, properties.sound(SoundType.WOOD).noOcclusion()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
 
-    public static final RegistryObject<Block> AILANTHUS_LEAVES = registerBlock("ailanthus_leaves",
-            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)){
+    // The leaf textures are not tinted, so the falling leaf particles use a fixed color matching the texture
+    public static final DeferredBlock<Block> AILANTHUS_LEAVES = registerBlock("ailanthus_leaves",
+            properties -> new UntintedParticleLeavesBlock(0.01F, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0xFF987D3D), properties){
                 @Override
                 public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
                     return true;
@@ -123,10 +135,10 @@ public class ModBlocks {
                 public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
                     return 30;
                 }
-            });
+            }, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES));
 
-    public static final RegistryObject<Block> AILANTHUS_LEAVES_2 = registerBlock("ailanthus_leaves_2",
-            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)){
+    public static final DeferredBlock<Block> AILANTHUS_LEAVES_2 = registerBlock("ailanthus_leaves_2",
+            properties -> new UntintedParticleLeavesBlock(0.01F, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0xFF7D8639), properties){
                 @Override
                 public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
                     return true;
@@ -141,34 +153,48 @@ public class ModBlocks {
                 public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
                     return 30;
                 }
-            });
+            }, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES));
 
-    public static final RegistryObject<Block> AILANTHUS_SIGN = registerBlockNoItem("ailanthus_sign",
-            () -> new ModStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN), ModWoodTypes.AILANTHUS));
-    public static final RegistryObject<Block> AILANTHUS_WALL_SIGN = registerBlockNoItem("ailanthus_wall_sign",
-            () -> new ModWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN), ModWoodTypes.AILANTHUS));
-    public static final RegistryObject<Block> AILANTHUS_HANGING_SIGN = registerBlockNoItem("ailanthus_hanging_sign",
-            () -> new ModHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN), ModWoodTypes.AILANTHUS));
-    public static final RegistryObject<Block> AILANTHUS_WALL_HANGING_SIGN = registerBlockNoItem("ailanthus_wall_hanging_sign",
-            () -> new ModWallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_HANGING_SIGN), ModWoodTypes.AILANTHUS));
+    // Signs use the vanilla sign block entities, the blocks are added to them in ModEventBusEvents.
+    // Like vanilla, the wall variants drop and are named after the standing variants.
+    public static final DeferredBlock<Block> AILANTHUS_SIGN = registerBlockNoItem("ailanthus_sign",
+            properties -> new StandingSignBlock(ModWoodTypes.AILANTHUS, properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN));
+    public static final DeferredBlock<Block> AILANTHUS_WALL_SIGN = registerBlockNoItem("ailanthus_wall_sign",
+            properties -> new WallSignBlock(ModWoodTypes.AILANTHUS, properties),
+            () -> wallVariant(AILANTHUS_SIGN.get(), Blocks.OAK_WALL_SIGN));
+    public static final DeferredBlock<Block> AILANTHUS_HANGING_SIGN = registerBlockNoItem("ailanthus_hanging_sign",
+            properties -> new CeilingHangingSignBlock(ModWoodTypes.AILANTHUS, properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN));
+    public static final DeferredBlock<Block> AILANTHUS_WALL_HANGING_SIGN = registerBlockNoItem("ailanthus_wall_hanging_sign",
+            properties -> new WallHangingSignBlock(ModWoodTypes.AILANTHUS, properties),
+            () -> wallVariant(AILANTHUS_HANGING_SIGN.get(), Blocks.OAK_WALL_HANGING_SIGN));
 
-    public static final RegistryObject<Block> ANDARAN_GRASS_BLOCK = registerBlock("andaran_grass_block",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).sound(SoundType.GRASS)));
-    public static final RegistryObject<Block> ANDARAN_DIRT = registerBlock("andaran_dirt",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT).sound(SoundType.GRASS)));
+    public static final DeferredBlock<Block> ANDARAN_GRASS_BLOCK = registerBlock("andaran_grass_block",
+            properties -> new Block(properties.sound(SoundType.GRASS)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK));
+    public static final DeferredBlock<Block> ANDARAN_DIRT = registerBlock("andaran_dirt",
+            properties -> new Block(properties.sound(SoundType.GRASS)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
 
-    private static <T extends Block> RegistryObject<T> registerBlockNoItem(String name, Supplier<T> block) {
-        return BLOCKS.register(name, block);
+    private static BlockBehaviour.Properties wallVariant(Block standingBlock, Block vanillaWallBlock) {
+        return BlockBehaviour.Properties.ofFullCopy(vanillaWallBlock)
+                .overrideLootTable(standingBlock.getLootTable())
+                .overrideDescription(standingBlock.getDescriptionId());
     }
 
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
-        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+    private static <T extends Block> DeferredBlock<T> registerBlockNoItem(String name, Function<BlockBehaviour.Properties, T> block, Supplier<BlockBehaviour.Properties> properties) {
+        return BLOCKS.registerBlock(name, block, properties);
+    }
+
+    private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> block, Supplier<BlockBehaviour.Properties> properties) {
+        DeferredBlock<T> toReturn = BLOCKS.registerBlock(name, block, properties);
         registerBlockItem(name, toReturn);
         return toReturn;
     }
 
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+    private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
+        ModItems.ITEMS.registerItem(name, properties -> new BlockItem(block.get(), properties.useBlockDescriptionPrefix()));
     }
 
     public static void register(IEventBus eventBus) {

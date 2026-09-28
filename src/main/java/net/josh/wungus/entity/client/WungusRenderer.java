@@ -5,52 +5,67 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.custom.WungusEntity;
 import net.josh.wungus.entity.variant.WungusVariant;
-import net.minecraft.Util;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 
 import java.util.Map;
 
-public class WungusRenderer extends MobRenderer<WungusEntity, WungusModel<WungusEntity>> {
-    public static final Map<WungusVariant, ResourceLocation> LOCATION_BY_VARIANT =
+public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState, WungusModel> {
+    public static final Map<WungusVariant, Identifier> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(WungusVariant.class), map -> {
-                map.put(WungusVariant.DEFAULT,
-                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/wungus.png"));
-                map.put(WungusVariant.WHITE,
-                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/nonegus.png"));
-                map.put(WungusVariant.GREEN,
-                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/greengus.png"));
-                map.put(WungusVariant.BLUE,
-                        new ResourceLocation(WungusMod.MOD_ID, "textures/entity/bluegus.png"));
+                map.put(WungusVariant.DEFAULT, texture("wungus"));
+                map.put(WungusVariant.WHITE, texture("nonegus"));
+                map.put(WungusVariant.GREEN, texture("greengus"));
+                map.put(WungusVariant.BLUE, texture("bluegus"));
             });
+    private static final Identifier SAKURA_TEXTURE = texture("pinkgus");
+    private static final Identifier PAPI_TEXTURE = texture("mangungus");
+
     public WungusRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
+        super(pContext, new WungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
+    }
+
+    private static Identifier texture(String name) {
+        return Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "textures/entity/wungus/" + name + ".png");
     }
 
     @Override
-    public WungusModel<WungusEntity> getModel() {
-        return super.getModel();
+    public WungusRenderState createRenderState() {
+        return new WungusRenderState();
     }
 
     @Override
-    public ResourceLocation getTextureLocation(WungusEntity wungusEntity) {
-        if (wungusEntity.getName().toString().toLowerCase().contains("sakura")) {
-            return new ResourceLocation(WungusMod.MOD_ID, "textures/entity/pinkgus.png");
-        } else if (wungusEntity.getName().toString().toLowerCase().contains("papi")) {
-            return new ResourceLocation(WungusMod.MOD_ID, "textures/entity/mangungus.png");
+    public void extractRenderState(WungusEntity pEntity, WungusRenderState pState, float pPartialTicks) {
+        super.extractRenderState(pEntity, pState, pPartialTicks);
+        pState.runningAnimationState.copyFrom(pEntity.runningAnimationState);
+        pState.idleAnimationState.copyFrom(pEntity.idleAnimationState);
+        pState.sittingAnimationState.copyFrom(pEntity.sittingAnimation);
+        pState.standingAnimationState.copyFrom(pEntity.standingAnimation);
+        pState.variant = pEntity.getVariant();
+
+        if (pEntity.nameContains("sakura")) {
+            pState.textureOverride = SAKURA_TEXTURE;
+        } else if (pEntity.nameContains("papi")) {
+            pState.textureOverride = PAPI_TEXTURE;
+        } else {
+            pState.textureOverride = null;
         }
-        return LOCATION_BY_VARIANT.get(wungusEntity.getVariant());
     }
 
     @Override
-    public void render(WungusEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
-        if(pEntity.isBaby()) {
+    public Identifier getTextureLocation(WungusRenderState pState) {
+        if (pState.textureOverride != null) {
+            return pState.textureOverride;
+        }
+        return LOCATION_BY_VARIANT.get(pState.variant);
+    }
+
+    @Override
+    protected void scale(WungusRenderState pState, PoseStack pPoseStack) {
+        if (pState.isBaby) {
             pPoseStack.scale(0.5f, 0.5f, 0.5f);
         }
-
-        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
     }
 }

@@ -2,101 +2,114 @@ package net.josh.wungus.datagen;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
-import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
-import net.josh.wungus.entity.custom.WungusEntity;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.critereon.*;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
-
 import net.josh.wungus.item.ModItems;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.criterion.BredAnimalsTrigger;
+import net.minecraft.advancements.criterion.ConsumeItemTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.KilledTrigger;
+import net.minecraft.advancements.criterion.TameAnimalTrigger;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.advancements.AdvancementSubProvider;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public class ModAdvancementProvider implements ForgeAdvancementProvider.AdvancementGenerator {
+public class ModAdvancementProvider implements AdvancementSubProvider {
     @Override
-    public void generate(HolderLookup.Provider registries, Consumer<Advancement> saver, ExistingFileHelper existingFileHelper) {
-        Advancement obtainWungusEgg = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModBlocks.WUNGUS_EGG.get().asItem()),
+    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver) {
+        HolderGetter<EntityType<?>> entityTypes = registries.lookupOrThrow(Registries.ENTITY_TYPE);
+        HolderGetter<Item> items = registries.lookupOrThrow(Registries.ITEM);
+
+        AdvancementHolder obtainWungusEgg = Advancement.Builder.advancement()
+                .display(ModBlocks.WUNGUS_EGG.get(),
                         Component.literal("Legend of the Wungus"), Component.literal("Is this thing even alive?"),
-                        new ResourceLocation(WungusMod.MOD_ID, "textures/advancements/wungusicon.png"), FrameType.TASK,
-                        true, true, false))
-                .addCriterion("obtained_wungus_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.WUNGUS_EGG.get().asItem()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_egg_obtain"), existingFileHelper);
+                        Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "advancements/wungusicon"), AdvancementType.TASK,
+                        true, true, false)
+                .addCriterion("obtained_wungus_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.WUNGUS_EGG.get()))
+                .save(saver, name("wungus_egg_obtain"));
 
-        EntityPredicate.Builder wungus = new EntityPredicate.Builder();
-        wungus.of(ModEntities.WUNGUS.get());
-        Advancement hatchWungus = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModBlocks.WUNGUS_EGG.get().asItem()),
+        AdvancementHolder hatchWungus = Advancement.Builder.advancement()
+                .display(ModBlocks.WUNGUS_EGG.get(),
                         Component.literal("Wung at first sight"), Component.literal("It loves you!"),
-                        null, FrameType.TASK,
-                        true, true, true))
+                        null, AdvancementType.TASK,
+                        true, true, true)
                 .parent(obtainWungusEgg)
-                .addCriterion("hatched_wungus_egg", TameAnimalTrigger.TriggerInstance.tamedAnimal(wungus.build()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "hatch_wungus_egg"), existingFileHelper);
+                .addCriterion("hatched_wungus_egg", TameAnimalTrigger.TriggerInstance.tamedAnimal(wungus(entityTypes)))
+                .save(saver, name("hatch_wungus_egg"));
 
-        Advancement breedWungus = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModBlocks.WUNGUS_EGG.get().asItem()),
+        AdvancementHolder breedWungus = Advancement.Builder.advancement()
+                .display(ModBlocks.WUNGUS_EGG.get(),
                         Component.literal("Wung is in the air"), Component.literal("Look away..."),
-                        null, FrameType.TASK,
-                        true, true, true))
+                        null, AdvancementType.TASK,
+                        true, true, true)
                 .parent(hatchWungus)
-                .addCriterion("breed_wungus", BredAnimalsTrigger.TriggerInstance.bredAnimals(wungus.build(), wungus.build(), wungus.build()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "breed_wungus"), existingFileHelper);
+                .addCriterion("breed_wungus", BredAnimalsTrigger.TriggerInstance.bredAnimals(
+                        Optional.of(wungus(entityTypes).build()), Optional.of(wungus(entityTypes).build()), Optional.of(wungus(entityTypes).build())))
+                .save(saver, name("breed_wungus"));
 
-        Advancement milkWungus = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(Items.BUCKET),
+        AdvancementHolder milkWungus = Advancement.Builder.advancement()
+                .display(Items.BUCKET,
                         Component.literal("Mmmm milk"), Component.literal("It's delicious!"),
-                        null, FrameType.TASK,
-                        true, true, true))
+                        null, AdvancementType.TASK,
+                        true, true, true)
                 .parent(obtainWungusEgg)
                 .addCriterion("obtained_wungus_milk", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.WUNGUS_MILK.get()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_milk_obtain"), existingFileHelper);
+                .save(saver, name("wungus_milk_obtain"));
 
-        Advancement drinkWungusMilk = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModItems.WUNGUS_MILK.get()),
+        AdvancementHolder drinkWungusMilk = Advancement.Builder.advancement()
+                .display(ModItems.WUNGUS_MILK.get(),
                         Component.literal("Wung are we doing here?"), Component.literal("Why would you drink that...?"),
-                        null, FrameType.TASK,
-                        true, true, true))
-                .addCriterion("drank_wungus_milk", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.WUNGUS_MILK.get()))
+                        null, AdvancementType.TASK,
+                        true, true, true)
+                .addCriterion("drank_wungus_milk", ConsumeItemTrigger.TriggerInstance.usedItem(items, ModItems.WUNGUS_MILK.get()))
                 .parent(milkWungus)
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "wungus_milk_drink"), existingFileHelper);
+                .save(saver, name("wungus_milk_drink"));
 
-        Advancement killWungus = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModItems.WUNGUS_HIDE.get()),
+        AdvancementHolder killWungus = Advancement.Builder.advancement()
+                .display(ModItems.WUNGUS_HIDE.get(),
                         Component.literal("You monster"), Component.literal("How could you?"),
-                        null, FrameType.TASK,
-                        true, true, true))
+                        null, AdvancementType.TASK,
+                        true, true, true)
                 .parent(obtainWungusEgg)
-                .addCriterion("killed_wungus", KilledTrigger.TriggerInstance.playerKilledEntity(wungus.build()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "killed_wungus"), existingFileHelper);
+                .addCriterion("killed_wungus", KilledTrigger.TriggerInstance.playerKilledEntity(wungus(entityTypes)))
+                .save(saver, name("killed_wungus"));
 
-        Advancement obtainWungusBoots = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModItems.WUNGUS_BOOTS.get()),
+        AdvancementHolder obtainWungusBoots = Advancement.Builder.advancement()
+                .display(ModItems.WUNGUS_BOOTS.get(),
                         Component.literal("This feels illegal"), Component.literal("Is this ok?"),
-                        null, FrameType.TASK,
-                        true, true, true))
+                        null, AdvancementType.TASK,
+                        true, true, true)
                 .parent(killWungus)
                 .addCriterion("obtained_wungus_boots", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.WUNGUS_BOOTS.get()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "obtained_wungus_boots"), existingFileHelper);
+                .save(saver, name("obtained_wungus_boots"));
 
-        Advancement eatWungusFlesh = Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(ModItems.COOKED_WUNGUS_FLESH.get()),
+        AdvancementHolder eatWungusFlesh = Advancement.Builder.advancement()
+                .display(ModItems.COOKED_WUNGUS_FLESH.get(),
                         Component.literal("What the fuck?"), Component.literal("Where am I?"),
-                        null, FrameType.TASK,
-                        true, true, true))
+                        null, AdvancementType.TASK,
+                        true, true, true)
                 .parent(killWungus)
-                .addCriterion("eat_wungus_flesh", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.COOKED_WUNGUS_FLESH.get()))
-                .save(saver, new ResourceLocation(WungusMod.MOD_ID, "eat_wungus_flesh"), existingFileHelper);
+                .addCriterion("eat_wungus_flesh", ConsumeItemTrigger.TriggerInstance.usedItem(items, ModItems.COOKED_WUNGUS_FLESH.get()))
+                .save(saver, name("eat_wungus_flesh"));
+    }
+
+    private static EntityPredicate.Builder wungus(HolderGetter<EntityType<?>> entityTypes) {
+        return EntityPredicate.Builder.entity().of(entityTypes, ModEntities.WUNGUS.get());
+    }
+
+    private static String name(String path) {
+        return WungusMod.MOD_ID + ":" + path;
     }
 }

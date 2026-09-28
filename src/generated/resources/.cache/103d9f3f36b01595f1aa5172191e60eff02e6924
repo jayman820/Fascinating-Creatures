@@ -1,8 +1,0 @@
-// 1.20.1	2025-09-25T14:42:48.7271986	Registries
-9865c08a995d0fc800d355e517cf6eebc14624c3 data/wungus/forge/biome_modifier/add_tree_ailanthus.json
-d387c04d2af0aff4e8854f23482ec9eb0270b51a data/wungus/forge/biome_modifier/spawn_wungus.json
-b7d9ff76ff90adc15984b207a32e88f2bc13643c data/wungus/forge/biome_modifier/spawn_wungus_blue.json
-db1963e0e80e84effe87378a1e77a460e90f3265 data/wungus/forge/biome_modifier/spawn_wungus_green.json
-3f6f745a8ce78981b5990d0e84fae877d66294b1 data/wungus/forge/biome_modifier/spawn_wungus_white.json
-91725fd007218adbfaa184ba441c73850e6db194 data/wungus/worldgen/configured_feature/ailanthus.json
-bfb5e39ef711b299f56d297937ebe1cc6e796dc8 data/wungus/worldgen/placed_feature/ailanthus_placed.json

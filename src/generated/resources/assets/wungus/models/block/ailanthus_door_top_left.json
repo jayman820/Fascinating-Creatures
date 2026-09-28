@@ -1,6 +1,5 @@
 {
   "parent": "minecraft:block/door_top_left",
-  "render_type": "minecraft:cutout",
   "textures": {
     "bottom": "wungus:block/ailanthus_door_bottom",
     "top": "wungus:block/ailanthus_door_top"

@@ -1,17 +1,18 @@
 package net.josh.wungus.worldgen.tree.custom;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.josh.wungus.worldgen.tree.ModFoliagePlacerTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 public class AilanthusFoliagePlacer extends FoliagePlacer {
-    public static final Codec<AilanthusFoliagePlacer> CODEC = RecordCodecBuilder.create(ailanthusFoliagePlacerInstance -> foliagePlacerParts(ailanthusFoliagePlacerInstance)
+    public static final MapCodec<AilanthusFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(ailanthusFoliagePlacerInstance -> foliagePlacerParts(ailanthusFoliagePlacerInstance)
             .and(Codec.intRange(0, 16).fieldOf("height").forGetter(fp -> fp.height)).apply(ailanthusFoliagePlacerInstance, AilanthusFoliagePlacer::new));
     protected final int height;
     public AilanthusFoliagePlacer(IntProvider pRadius, IntProvider pOffset, int height) {
@@ -25,7 +26,7 @@ public class AilanthusFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected void createFoliage(LevelSimulatedReader pLevel, FoliageSetter foliageSetter, RandomSource pRandom, TreeConfiguration pConfig, int pMaxFreeTreeHeight, FoliageAttachment pAttachment, int pFoliageHeight, int pFoliageRadius, int pOffset) {
+    protected void createFoliage(WorldGenLevel pLevel, FoliageSetter foliageSetter, RandomSource pRandom, TreeConfiguration pConfig, int pMaxFreeTreeHeight, FoliageAttachment pAttachment, int pFoliageHeight, int pFoliageRadius, int pOffset) {
         // Creating the foliage
         // attachment.pos() is the block directly ABOVE the last placed log
 

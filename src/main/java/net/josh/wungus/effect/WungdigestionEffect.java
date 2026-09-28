@@ -1,17 +1,13 @@
 package net.josh.wungus.effect;
 
-import net.josh.wungus.particle.ModParticles;
+import net.josh.wungus.network.WungdigestionPayload;
 import net.josh.wungus.sound.ModSounds;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.phys.Vec3;
-
-import java.util.Random;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class WungdigestionEffect extends MobEffect {
 
@@ -19,35 +15,27 @@ public class WungdigestionEffect extends MobEffect {
         super(pCategory, pColor);
     }
 
+    // Effects only tick on the server now, so the particle bursts are sent to nearby clients
+    // (see WungdigestionPayload) which spawn them exactly like the old client-side code did.
     @Override
-    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-        Random rand = new Random();
+    public boolean applyEffectTick(ServerLevel pLevel, LivingEntity pLivingEntity, int pAmplifier) {
+        RandomSource rand = pLivingEntity.getRandom();
         int hit = rand.nextInt(1000);
         int hit2 = rand.nextInt(1000);
         if(hit < 10) {
             pLivingEntity.playSound(ModSounds.BURP.get());
-            Vec3 vec = pLivingEntity.getViewVector(0).scale(0.8d);
-            for(int i = 0; i < 2000; i++) {
-                pLivingEntity.level().addParticle(ModParticles.VOMIT_PARTICLE_1.get(),
-                        pLivingEntity.getX() + vec.get(Direction.Axis.X), pLivingEntity.getY() + 1.5, pLivingEntity.getZ() + vec.get(Direction.Axis.Z),
-                        -(rand.nextDouble() - 0.2D) * 1.3D * Math.cos(vec.get(Direction.Axis.X) * 2 * Math.PI), -((rand.nextDouble() + 0.8D)), -(rand.nextDouble() - 0.2D) * 1.3D * Math.sin(vec.get(Direction.Axis.Z) * 2 * Math.PI));
-            }
+            PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new WungdigestionPayload(pLivingEntity.getId(), true));
         }
         if(hit2 < -1) {
             pLivingEntity.playSound(ModSounds.FART.get());
-            Vec3 vec = pLivingEntity.getViewVector(0);
-            for(int i = 0; i < 2000; i++) {
-                pLivingEntity.level().addParticle(ModParticles.DIARRHEA_PARTICLE_1.get(),
-                        pLivingEntity.getX() - vec.scale(1.2).get(Direction.Axis.X), pLivingEntity.getY() + 1, pLivingEntity.getZ() - vec.scale(1.2D).get(Direction.Axis.Z),
-                        (rand.nextDouble() - 0.2D), -((rand.nextDouble() + 0.3D) * 1.0D), (rand.nextDouble() - 0.2D));
-            }
+            PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new WungdigestionPayload(pLivingEntity.getId(), false));
             pLivingEntity.push(0, 4, 0);
         }
-        super.applyEffectTick(pLivingEntity, pAmplifier);
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
         return true;
     }
 }

@@ -2,7 +2,7 @@
   "type": "wungus:add_simple_item",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
+      "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:chests/stronghold_library"
     },
     {
@@ -10,5 +10,5 @@
       "condition": "minecraft:random_chance"
     }
   ],
-  "item": "wungus:prattling_wungus_1"
+  "item": "wungus:prattling_wungus_2"
 }

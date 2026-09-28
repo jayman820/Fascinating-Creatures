@@ -21,11 +21,7 @@
       "required": false
     },
     {
-      "id": "#forge:is_savanna",
-      "required": false
-    },
-    {
-      "id": "#c:savanna",
+      "id": "#c:is_savanna",
       "required": false
     },
     "minecraft:taiga",
@@ -83,11 +79,7 @@
     },
     "#minecraft:is_jungle",
     {
-      "id": "#forge:is_jungle",
-      "required": false
-    },
-    {
-      "id": "#c:in_jungle",
+      "id": "#c:is_jungle",
       "required": false
     }
   ]

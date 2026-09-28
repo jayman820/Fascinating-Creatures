@@ -2,29 +2,27 @@ package net.josh.wungus.effect;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.item.custom.WungusSteroid;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS =
-            DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, WungusMod.MOD_ID);
+            DeferredRegister.create(Registries.MOB_EFFECT, WungusMod.MOD_ID);
 
-    public static final RegistryObject<MobEffect> WUNGDIGESTION_EFFECT =
+    public static final DeferredHolder<MobEffect, MobEffect> WUNGDIGESTION_EFFECT =
             MOB_EFFECTS.register("wungdigestion", () -> new WungdigestionEffect(MobEffectCategory.NEUTRAL, 0x36ebab));
 
-    public static final RegistryObject<MobEffect> WUNGUS_HEALTH_STEROID_EFFECT =
+    public static final DeferredHolder<MobEffect, MobEffect> WUNGUS_HEALTH_STEROID_EFFECT =
             MOB_EFFECTS.register("wungus_steroid_health", () -> new WungusSteroidEffect(MobEffectCategory.NEUTRAL, 0x36ebab, WungusSteroid.Type.HEALTH));
 
-    public static final RegistryObject<MobEffect> WUNGUS_SPEED_STEROID_EFFECT =
+    public static final DeferredHolder<MobEffect, MobEffect> WUNGUS_SPEED_STEROID_EFFECT =
             MOB_EFFECTS.register("wungus_steroid_speed", () -> new WungusSteroidEffect(MobEffectCategory.NEUTRAL, 0x36ebab, WungusSteroid.Type.SPEED));
 
-    public static final RegistryObject<MobEffect> WUNGUS_JUMP_STEROID_EFFECT =
+    public static final DeferredHolder<MobEffect, MobEffect> WUNGUS_JUMP_STEROID_EFFECT =
             MOB_EFFECTS.register("wungus_steroid_jump", () -> new WungusSteroidEffect(MobEffectCategory.NEUTRAL, 0x36ebab, WungusSteroid.Type.JUMP));
 
     public static void register(IEventBus eventBus) {

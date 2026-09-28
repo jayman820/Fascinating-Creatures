@@ -7,19 +7,7 @@
       "required": false
     },
     {
-      "id": "#forge:is_mesa",
-      "required": false
-    },
-    {
-      "id": "#c:in_mesa",
-      "required": false
-    },
-    {
-      "id": "#forge:is_badlands",
-      "required": false
-    },
-    {
-      "id": "#c:badlands",
+      "id": "#c:is_badlands",
       "required": false
     },
     "minecraft:savanna",
@@ -46,11 +34,7 @@
       "required": false
     },
     {
-      "id": "#forge:is_savanna",
-      "required": false
-    },
-    {
-      "id": "#c:savanna",
+      "id": "#c:is_savanna",
       "required": false
     }
   ]

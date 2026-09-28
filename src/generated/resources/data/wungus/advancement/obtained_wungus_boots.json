@@ -1,0 +1,33 @@
+{
+  "parent": "wungus:killed_wungus",
+  "criteria": {
+    "obtained_wungus_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wungus:wungus_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "text": "Is this ok?"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "wungus:wungus_boots"
+    },
+    "title": {
+      "text": "This feels illegal"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_wungus_boots"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

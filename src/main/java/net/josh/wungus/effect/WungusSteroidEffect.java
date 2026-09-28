@@ -3,18 +3,12 @@ package net.josh.wungus.effect;
 import net.josh.wungus.item.custom.WungusSteroid;
 import net.josh.wungus.misc.ModDamageTypes;
 import net.josh.wungus.sound.ModSounds;
-import net.minecraft.world.damagesource.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-
-import java.util.Random;
 
 public class WungusSteroidEffect extends MobEffect {
     private WungusSteroid.Type type;
@@ -40,7 +34,7 @@ public class WungusSteroidEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyEffectTick(ServerLevel pLevel, LivingEntity pLivingEntity, int pAmplifier) {
         HEARTBEAT_INTERVAL--;
         LEVEL_UP_COOLDOWN--;
         if(HEARTBEAT_INTERVAL <= 0) {
@@ -50,32 +44,32 @@ public class WungusSteroidEffect extends MobEffect {
         double rand = Math.floor(Math.random() * 10000) + 1;
 
         if(!LEVEL_ONE && CARDIAC_ARREST_LEVEL == 1) {
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 10));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 500, 10));
             switch (this.type) {
                 case HEALTH:
-                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, 10));
+                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 500, 10));
                     break;
                 case SPEED:
-                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 5));
+                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.SPEED, 500, 5));
                     break;
                 case JUMP:
-                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP, 500, 5));
+                    pLivingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 500, 5));
                     break;
             }
             LEVEL_ONE = true;
         } else
         if(!LEVEL_TWO && CARDIAC_ARREST_LEVEL == 2) {
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 1800, 1));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 1800, 1));
             LEVEL_TWO = true;
         } else
         if(!LEVEL_THREE && CARDIAC_ARREST_LEVEL == 3) {
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1000, 10));
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1000, 10));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 1000, 10));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 1000, 10));
             pLivingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1000, 10));
             LEVEL_THREE = true;
         } else
         if(CARDIAC_ARREST_LEVEL == 4) {
-            pLivingEntity.hurt(ModDamageTypes.causeWungusSteroids(pLivingEntity.level().registryAccess()), 10000);
+            pLivingEntity.hurtServer(pLevel, ModDamageTypes.causeWungusSteroids(pLevel.registryAccess()), 10000);
         }
 
         if(rand <= 750 * CARDIAC_ARREST_LEVEL_MODIFIER && LEVEL_UP_COOLDOWN <= 0) {
@@ -85,11 +79,11 @@ public class WungusSteroidEffect extends MobEffect {
             LEVEL_UP_COOLDOWN = 1000;
         }
 
-        super.applyEffectTick(pLivingEntity, pAmplifier);
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
         if (pDuration == 2000) {
             resetAttributes();
         } else if (pDuration == 500) {

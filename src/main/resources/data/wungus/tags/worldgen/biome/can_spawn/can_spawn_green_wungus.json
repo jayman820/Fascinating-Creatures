@@ -3,11 +3,7 @@
   "values": [
     "#minecraft:is_forest",
     {
-      "id": "#forge:is_forest",
-      "required": false
-    },
-    {
-      "id": "#c:forest",
+      "id": "#c:is_forest",
       "required": false
     },
     "minecraft:bamboo_jungle",
@@ -26,11 +22,7 @@
     },
     "#minecraft:is_jungle",
     {
-      "id": "#forge:is_jungle",
-      "required": false
-    },
-    {
-      "id": "#c:in_jungle",
+      "id": "#c:is_jungle",
       "required": false
     }
   ]

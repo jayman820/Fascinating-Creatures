@@ -3,19 +3,13 @@ package net.josh.wungus.entity.custom;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.variant.WungusVariant;
 import net.josh.wungus.item.ModItems;
-import net.josh.wungus.item.custom.WungusSteroid;
 import net.josh.wungus.particle.ModParticles;
-import net.josh.wungus.particle.SparkleParticle;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.worldgen.ModBiomeModifiers;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -25,6 +19,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,33 +29,39 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags.Items;
-import net.minecraftforge.event.level.NoteBlockEvent;
-import org.jetbrains.annotations.Nullable;
-import org.w3c.dom.Attr;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
+import org.jspecify.annotations.Nullable;
 
-import java.util.Random;
+import java.util.Locale;
 
 public class WungusEntity extends TamableAnimal implements PlayerRideableJumping {
+    // Jump power used when the wungus jumps on its own. The JUMP_STRENGTH attribute is only used for jumps
+    // made while being ridden, like it was before jump strength became a generic attribute.
+    private static final float DEFAULT_JUMP_POWER = 0.42F;
+
     private boolean allowStandSliding;
     private float playerJumpPendingScale;
     private boolean isJumping = false;
 
     public WungusEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.setMaxUpStep(1f);
     }
 
     private static final EntityDataAccessor<Boolean> SITTING =
@@ -91,8 +92,8 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     public final AnimationState standingAnimation = new AnimationState();
     private boolean isBeingChased = false;
     private int idleAnimationTimeout = 1;
-    private boolean orderedToSit = false;
-    private WungusAvoidEntityGoal avoidEntityGoal;
+    private boolean tamedGoalsAdded = false;
+    private WungusAvoidEntityGoal<Player> avoidEntityGoal;
     private FollowParentGoal followParentGoal;
 
 
@@ -123,15 +124,15 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     @Override
-    protected void updateWalkAnimation(float pPartialTick) {
+    protected void updateWalkAnimation(float pDistance) {
         float f;
         if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
+            f = Math.min(pDistance * 6F, 1f);
         } else {
             f = 0f;
         }
 
-        this.walkAnimation.update(f, 0.2f);
+        this.walkAnimation.update(f, 0.2f, 1f);
     }
 
     @Override
@@ -148,34 +149,36 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+        return Animal.createAnimalAttributes()
                 .add(Attributes.MAX_HEALTH, 100)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.JUMP_STRENGTH, 1.0F)
                 .add(Attributes.FOLLOW_RANGE, 240)
-                .add(Attributes.ARMOR_TOUGHNESS, .05f);
+                .add(Attributes.ARMOR_TOUGHNESS, .05f)
+                .add(Attributes.STEP_HEIGHT, 1.0D);
+    }
+
+    /** Picks the variant matching the biome the wungus is in, or a random one if the biome has none. */
+    public static WungusVariant variantForBiome(Holder<Biome> biome, RandomSource random) {
+        if (biome.is(ModBiomeModifiers.SPAWN_WUNGUS_TAG)) {
+            return WungusVariant.DEFAULT;
+        } else if (biome.is(ModBiomeModifiers.SPAWN_WHITE_WUNGUS_TAG)) {
+            return WungusVariant.WHITE;
+        } else if (biome.is(ModBiomeModifiers.SPAWN_GREEN_WUNGUS_TAG)) {
+            return WungusVariant.GREEN;
+        } else if (biome.is(ModBiomeModifiers.SPAWN_BLUE_WUNGUS_TAG)) {
+            return WungusVariant.BLUE;
+        }
+        return Util.getRandom(WungusVariant.values(), random);
     }
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        WungusVariant baby;
-        if(serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(0);
-            baby = variant;
-        } else if (serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WHITE_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(1);
-            baby = variant;
-        } else if (serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_GREEN_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(2);
-            baby = variant;
-        } else if (serverLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_BLUE_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(3);
-            baby = variant;
-        } else {
-            WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
-            baby = variant;
+        WungusVariant baby = variantForBiome(serverLevel.getBiome(this.getOnPos()), this.random);
+        WungusEntity wungus = ModEntities.WUNGUS.get().create(serverLevel, EntitySpawnReason.BREEDING);
+        if (wungus == null) {
+            return null;
         }
-        WungusEntity wungus =  ModEntities.WUNGUS.get().create(serverLevel);
         Player closest = serverLevel.getNearestPlayer(ageableMob.getX() + 0.5F, ageableMob.getY() + 0.5F, ageableMob.getZ() + 0.5F, 20, EntitySelector.NO_SPECTATORS);
         if (closest != null) {
             wungus.tame(closest);
@@ -184,8 +187,9 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         return wungus;
     }
 
+    @Override
     public void aiStep() {
-        if (this.level().isClientSide && this.getName().toString().toLowerCase().contains("sakura")) {
+        if (this.level().isClientSide() && this.nameContains("sakura")) {
             for(int i = 0; i < 1; ++i) {
                 int rand_int = (int) Math.floor((Math.random() * 3));
                 SimpleParticleType sparkleParticle;
@@ -202,9 +206,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         super.aiStep();
     }
 
+    /** Easter eggs: some wungus names change the texture, sound and particles. */
+    public boolean nameContains(String name) {
+        return this.getName().getString().toLowerCase(Locale.ROOT).contains(name);
+    }
+
     @Override
     public boolean isFood(ItemStack pStack) {
-        return pStack.is(Items.SEEDS);
+        return pStack.is(Tags.Items.SEEDS);
     }
 
     public boolean isTrusting() {
@@ -215,31 +224,37 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         this.entityData.set(TRUSTING, pTrusting);
     }
 
-
-    public void setTame(boolean pTamed) {
-        super.setTame(pTamed);
-        if (pTamed) {
-            this.orderedToSit = false;
+    // Called when tamed and also when a tamed wungus is loaded (then without side effects)
+    @Override
+    public void setTame(boolean pTamed, boolean pApplySideEffects) {
+        super.setTame(pTamed, pApplySideEffects);
+        if (pTamed && !this.tamedGoalsAdded) {
+            this.tamedGoalsAdded = true;
             this.setTrusting(true);
             this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
             this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
-            this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+            this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F));
             this.goalSelector.removeGoal(this.followParentGoal);
             this.goalSelector.removeGoal(this.avoidEntityGoal);
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
-            this.setHealth(50.0F);
-        } else {
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
         }
     }
 
+    @Override
+    protected void applyTamingSideEffects() {
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
+        if (this.isTame()) {
+            this.setHealth(50.0F);
+        }
+    }
+
+    @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        if (itemstack.is(net.minecraft.world.item.Items.BUCKET) && !this.isBaby()) {
+        if (itemstack.is(Items.BUCKET) && !this.isBaby()) {
             pPlayer.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
             ItemStack itemstack1 = ItemUtils.createFilledResult(itemstack, pPlayer, new ItemStack(ModItems.WUNGUS_MILK.get()));
             pPlayer.setItemInHand(pHand, itemstack1);
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.SUCCESS;
         } else {
             InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
             if (interactionresult.consumesAction()) {
@@ -247,7 +262,9 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             }
             if (!this.isOwnedBy(pPlayer) && itemstack.is(ModItems.WUNGUS_AMBROSIA.get())) {
                 itemstack.shrink(1);
-                this.tame(pPlayer);
+                if (!this.level().isClientSide()) {
+                    this.tame(pPlayer);
+                }
                 return interactionresult;
             }
             if (this.isOwnedBy(pPlayer) && (itemstack.is(ModItems.HEALTH_STEROID.get()) || itemstack.is(ModItems.SPEED_STEROID.get()) || itemstack.is(ModItems.JUMP_STEROID.get()))) {
@@ -289,17 +306,10 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             } else {
                 boolean sit = this.isOrderedToSit();
                 if (this.isOwnedBy(pPlayer)) {
-                    if (sit) {
-                        this.setOrderedToSit(false);
-                        this.jumping = false;
-                        this.navigation.stop();
-                        return InteractionResult.SUCCESS;
-                    } else {
-                        this.setOrderedToSit(true);
-                        this.jumping = false;
-                        this.navigation.stop();
-                        return InteractionResult.SUCCESS;
-                    }
+                    this.setOrderedToSit(!sit);
+                    this.jumping = false;
+                    this.navigation.stop();
+                    return InteractionResult.SUCCESS;
                 }
             }
             return interactionresult;
@@ -320,7 +330,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     private boolean teleport(double pX, double pY, double pZ) {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(pX, pY, pZ);
 
-        while(blockpos$mutableblockpos.getY() > this.level().getMinBuildHeight() && !this.level().getBlockState(blockpos$mutableblockpos).blocksMotion()) {
+        while(blockpos$mutableblockpos.getY() > this.level().getMinY() && !this.level().getBlockState(blockpos$mutableblockpos).blocksMotion()) {
             blockpos$mutableblockpos.move(Direction.DOWN);
         }
 
@@ -328,14 +338,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         boolean flag = blockstate.blocksMotion();
         boolean flag1 = blockstate.getFluidState().is(FluidTags.WATER);
         if (flag && !flag1) {
-            net.minecraftforge.event.entity.EntityTeleportEvent.EnderEntity event = net.minecraftforge.event.ForgeEventFactory.onEnderTeleport(this, pX, pY, pZ);
+            EntityTeleportEvent.EnderEntity event = EventHooks.onEnderTeleport(this, pX, pY, pZ);
             if (event.isCanceled()) return false;
             Vec3 vec3 = this.position();
             boolean flag2 = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
             if (flag2) {
                 this.level().gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(this));
                 if (!this.isSilent()) {
-                    this.level().playSound((Player)null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                    this.level().playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
                     this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
                 }
             }
@@ -347,11 +357,16 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     @Override
-    protected int calculateFallDamage(float pFallDistance, float pDamageMultiplier) {
+    protected int calculateFallDamage(double pFallDistance, float pDamageMultiplier) {
         if (pFallDistance <= 10) {
             return 0;
         }
         return super.calculateFallDamage(pFallDistance, pDamageMultiplier);
+    }
+
+    @Override
+    protected float getJumpPower() {
+        return DEFAULT_JUMP_POWER * this.getBlockJumpFactor() + this.getJumpBoostPower();
     }
 
     @Override
@@ -362,11 +377,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             this.allowStandSliding = true;
         }
 
-        if (pJumpPower >= 90) {
-            this.playerJumpPendingScale = 1.0F;
-        } else {
-            this.playerJumpPendingScale = 0.4F + 0.4F * (float)pJumpPower / 90.0F;
-        }
+        this.playerJumpPendingScale = this.getPlayerJumpPendingScale(pJumpPower);
     }
 
     @Override
@@ -390,66 +401,66 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         pPlayer.startRiding(this);
     }
 
-    @Nullable
     @Override
-    public LivingEntity getControllingPassenger() {
-        return ((LivingEntity) this.getFirstPassenger());
+    public @Nullable LivingEntity getControllingPassenger() {
+        if (this.getFirstPassenger() instanceof Player player) {
+            return player;
+        }
+        return super.getControllingPassenger();
+    }
+
+    // Sprinting while riding doubles the speed, see getRiddenSpeed
+    @Override
+    public boolean canSprint() {
+        return true;
     }
 
     @Override
-    public void travel(Vec3 pTravelVector) {
-        if(this.isVehicle() && getControllingPassenger() instanceof Player) {
-            LivingEntity livingentity = this.getControllingPassenger();
-            this.setYRot(livingentity.getYRot());
-            this.yRotO = this.getYRot();
-            this.setXRot(livingentity.getXRot() * 0.5F);
-            this.setRot(this.getYRot(), this.getXRot());
-            this.yBodyRot = this.getYRot();
-            this.yHeadRot = this.yBodyRot;
-            float f = livingentity.xxa * 0.5F;
-            float f1 = livingentity.zza;
+    protected void tickRidden(Player pController, Vec3 pRiddenInput) {
+        super.tickRidden(pController, pRiddenInput);
+        this.setRot(pController.getYRot(), pController.getXRot() * 0.5F);
+        this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
 
-            // Inside this if statement, we are on the client!
-            if (this.isControlledByLocalInstance()) {
-                if (this.onGround()) {
-                    this.setIsJumping(false);
-                    if (this.playerJumpPendingScale > 0.0F && !this.isJumping()) {
-                        this.executeRidersJump(this.playerJumpPendingScale, pTravelVector);
-                    }
-
-                    this.playerJumpPendingScale = 0.0F;
-                }
-
-                float newSpeed = (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED);
-                // increasing speed by 100% if the spring key is held down (number for testing purposes)
-                if(Minecraft.getInstance().options.keySprint.isDown()) {
-                    newSpeed *= 2f;
-                }
-
-                this.setSpeed(newSpeed);
-                super.travel(new Vec3(f, pTravelVector.y, f1));
+        if (this.isLocalInstanceAuthoritative() && this.onGround()) {
+            this.setRiderJumping(false);
+            if (this.playerJumpPendingScale > 0.0F && !this.isRiderJumping()) {
+                this.executeRidersJump(this.playerJumpPendingScale, pRiddenInput);
             }
-        } else {
-            super.travel(pTravelVector);
+
+            this.playerJumpPendingScale = 0.0F;
         }
     }
 
-    private boolean isJumping() {
+    @Override
+    protected Vec3 getRiddenInput(Player pController, Vec3 pSelfInput) {
+        return new Vec3(pController.xxa * 0.5F, pSelfInput.y, pController.zza);
+    }
+
+    @Override
+    protected float getRiddenSpeed(Player pController) {
+        float newSpeed = (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED);
+        // increasing speed by 100% if the sprint key is held down
+        if (pController.isSprinting()) {
+            newSpeed *= 2f;
+        }
+        return newSpeed;
+    }
+
+    private boolean isRiderJumping() {
         return this.isJumping;
     }
 
-    private void setIsJumping(boolean pJumping) {
+    private void setRiderJumping(boolean pJumping) {
         this.isJumping = pJumping;
     }
 
     protected void executeRidersJump(float pPlayerJumpPendingScale, Vec3 pTravelVector) {
-        double d0 = this.getAttributeValue(Attributes.JUMP_STRENGTH) * (double)pPlayerJumpPendingScale * (double)this.getBlockJumpFactor();
-        double d1 = d0 + (double)this.getJumpBoostPower();
+        double d1 = this.getJumpPower(pPlayerJumpPendingScale);
         Vec3 vec3 = this.getDeltaMovement();
         this.setDeltaMovement(vec3.x, d1, vec3.z);
-        this.setIsJumping(true);
-        this.hasImpulse = true;
-        net.minecraftforge.common.ForgeHooks.onLivingJump(this);
+        this.setRiderJumping(true);
+        this.needsSync = true;
+        CommonHooks.onLivingJump(this);
         if (pTravelVector.z > 0.0D) {
             float f = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
             float f1 = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
@@ -488,16 +499,18 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
     static class WungusPanicGoal extends PanicGoal {
         private final WungusEntity wungus;
-        public WungusPanicGoal(PathfinderMob pMob, double pSpeedModifier) {
-            super(pMob, pSpeedModifier);
-            this.wungus = (WungusEntity) pMob;
+        public WungusPanicGoal(WungusEntity pWungus, double pSpeedModifier) {
+            super(pWungus, pSpeedModifier);
+            this.wungus = pWungus;
         }
 
+        @Override
         public void start() {
             this.wungus.isBeingChased = true;
             super.start();
         }
 
+        @Override
         public void stop() {
             this.wungus.isBeingChased = false;
             this.wungus.teleport();
@@ -513,20 +526,24 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             this.wungus = pWungus;
         }
 
+        @Override
         public boolean canUse() {
             return !this.wungus.isTrusting() && super.canUse();
         }
 
+        @Override
         public boolean canContinueToUse() {
             return !this.wungus.isTrusting() && super.canContinueToUse();
         }
 
+        @Override
         public void start() {
             this.wungus.isBeingChased = true;
             wungus.setupAnimationStates();
             super.start();
         }
 
+        @Override
         public void stop() {
             this.wungus.isBeingChased = false;
             this.wungus.teleport();
@@ -535,46 +552,50 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         }
     }
 
+    @Override
     public boolean isOrderedToSit() {
         return this.entityData.get(SITTING);
     }
 
+    @Override
     public void setOrderedToSit(boolean pOrderedToSit) {
         this.entityData.set(SITTING, pOrderedToSit);
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SITTING, false);
-        this.entityData.define(TRUSTING, false);
-        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
-        this.entityData.define(TOTAL_STEROID_USES, 0);
-        this.entityData.define(HEALTH_STEROID_USES, 0);
-        this.entityData.define(SPEED_STEROID_USES, 0);
-        this.entityData.define(JUMP_STEROID_USES, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(SITTING, false);
+        pBuilder.define(TRUSTING, false);
+        pBuilder.define(DATA_ID_TYPE_VARIANT, 0);
+        pBuilder.define(TOTAL_STEROID_USES, 0);
+        pBuilder.define(HEALTH_STEROID_USES, 0);
+        pBuilder.define(SPEED_STEROID_USES, 0);
+        pBuilder.define(JUMP_STEROID_USES, 0);
     }
 
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putBoolean("Sitting", this.isOrderedToSit());
-        compound.putBoolean("Trusting", this.isTrusting());
-        compound.putInt("Variant", this.getTypeVariant());
-        compound.putInt("TotalSteroids", this.getTotalSteroidUses());
-        compound.putInt("HealthSteroids", this.getHealthSteroidUses());
-        compound.putInt("SpeedSteroids", this.getSpeedSteroidUses());
-        compound.putInt("JumpSteroids", this.getJumpSteroidUses());
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("Sitting", this.isOrderedToSit());
+        output.putBoolean("Trusting", this.isTrusting());
+        output.putInt("Variant", this.getTypeVariant());
+        output.putInt("TotalSteroids", this.getTotalSteroidUses());
+        output.putInt("HealthSteroids", this.getHealthSteroidUses());
+        output.putInt("SpeedSteroids", this.getSpeedSteroidUses());
+        output.putInt("JumpSteroids", this.getJumpSteroidUses());
     }
 
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.setOrderedToSit(compound.getBoolean("Sitting"));
-        this.setTrusting(compound.getBoolean("Trusting"));
-        this.setTypeVariant(compound.getInt("Variant"));
-        this.setTotalSteroidUses(compound.getInt("TotalSteroids"));
-        this.setHealthSteroidUses(compound.getInt("HealthSteroids"));
-        this.setSpeedSteroidUses(compound.getInt("SpeedSteroids"));
-        this.setJumpSteroidUses(compound.getInt("JumpSteroids"));
+    @Override
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.setOrderedToSit(input.getBooleanOr("Sitting", false));
+        this.setTrusting(input.getBooleanOr("Trusting", false));
+        this.setTypeVariant(input.getIntOr("Variant", 0));
+        this.setTotalSteroidUses(input.getIntOr("TotalSteroids", 0));
+        this.setHealthSteroidUses(input.getIntOr("HealthSteroids", 0));
+        this.setSpeedSteroidUses(input.getIntOr("SpeedSteroids", 0));
+        this.setJumpSteroidUses(input.getIntOr("JumpSteroids", 0));
     }
 
     private int getTotalSteroidUses() {
@@ -626,42 +647,24 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        if(pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(0);
-            this.setVariant(variant);
-        } else if (pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_WHITE_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(1);
-            this.setVariant(variant);
-        } else if (pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_GREEN_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(2);
-            this.setVariant(variant);
-        } else if (pLevel.getBiome(this.getOnPos()).is(ModBiomeModifiers.SPAWN_BLUE_WUNGUS_TAG)) {
-            WungusVariant variant = WungusVariant.byId(3);
-            this.setVariant(variant);
-        } else {
-            WungusVariant variant = Util.getRandom(WungusVariant.values(), this.random);
-            this.setVariant(variant);
-        }
-        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, EntitySpawnReason pReason, @Nullable SpawnGroupData pSpawnData) {
+        this.setVariant(variantForBiome(pLevel.getBiome(this.getOnPos()), this.random));
+        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
     }
 
-    @Nullable
     @Override
-    protected SoundEvent getAmbientSound() {
-        if (this.getName().toString().toLowerCase().contains("papi")) { return ModSounds.MANGUNGUS_AMBIENT.get(); }
+    protected @Nullable SoundEvent getAmbientSound() {
+        if (this.nameContains("papi")) { return ModSounds.MANGUNGUS_AMBIENT.get(); }
         return ModSounds.WUNGUS_AMBIENT.get();
     }
 
-    @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+    protected @Nullable SoundEvent getHurtSound(DamageSource pDamageSource) {
         return ModSounds.WUNGUS_HURT.get();
     }
 
-    @Nullable
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @Nullable SoundEvent getDeathSound() {
         return ModSounds.WUNGUS_DEATH.get();
     }
 }

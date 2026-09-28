@@ -1,14 +1,16 @@
 package net.josh.wungus.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
-import java.util.Properties;
-
-public class DiarrheaParticle extends TextureSheetParticle {
+public class DiarrheaParticle extends SingleQuadParticle {
     protected DiarrheaParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet spriteSet, double pXSpeed, double pYSpeed, double pZSpeed) {
-        super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
+        super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, spriteSet.first());
 
         this.friction = 0.5f;
         this.xd = pXSpeed;
@@ -25,8 +27,8 @@ public class DiarrheaParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    protected Layer getLayer() {
+        return Layer.TRANSLUCENT;
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType> {
@@ -36,7 +38,8 @@ public class DiarrheaParticle extends TextureSheetParticle {
             this.spriteSet = spriteSet;
         }
 
-        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+        @Override
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, RandomSource random) {
             return new DiarrheaParticle(level, pX, pY, pZ, this.spriteSet, pXSpeed, pYSpeed, pZSpeed);
         }
     }

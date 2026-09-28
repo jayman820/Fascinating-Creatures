@@ -1,0 +1,33 @@
+{
+  "parent": "wungus:wungus_egg_obtain",
+  "criteria": {
+    "obtained_wungus_milk": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wungus:wungus_milk"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "text": "It's delicious!"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "minecraft:bucket"
+    },
+    "title": {
+      "text": "Mmmm milk"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_wungus_milk"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

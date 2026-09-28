@@ -3,14 +3,13 @@ package net.josh.wungus.block.custom;
 import net.josh.wungus.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
-
-import javax.annotation.Nullable;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
+import org.jspecify.annotations.Nullable;
 
 public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
     public ModFlammableRotatedPillarBlock(Properties pProperties) {
@@ -33,8 +32,8 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
     }
 
     @Override
-    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
-        if(context.getItemInHand().getItem() instanceof AxeItem) {
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+        if(itemAbility == ItemAbilities.AXE_STRIP && context.getItemInHand().canPerformAction(itemAbility)) {
             if(state.is(ModBlocks.AILANTHUS_LOG.get())) {
                 return ModBlocks.STRIPPED_AILANTHUS_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
@@ -44,6 +43,6 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
             }
         }
 
-        return super.getToolModifiedState(state, context, toolAction, simulate);
+        return super.getToolModifiedState(state, context, itemAbility, simulate);
     }
 }

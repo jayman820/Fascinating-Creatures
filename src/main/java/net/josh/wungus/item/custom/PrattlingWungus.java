@@ -1,17 +1,13 @@
 package net.josh.wungus.item.custom;
 
-import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.sound.ModSounds;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 
 public class PrattlingWungus extends Item {
@@ -22,14 +18,15 @@ public class PrattlingWungus extends Item {
         this.VARIANT = variant;
     }
 
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.BOW;
+    @Override
+    public ItemUseAnimation getUseAnimation(ItemStack pStack) {
+        return ItemUseAnimation.BOW;
     }
 
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+    @Override
+    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         switch (this.VARIANT) {
             case 1:
-                System.out.println("hi");
                 pPlayer.playSound(ModSounds.PRATTLING_WUNGUS_1.get());
                 break;
             case 2:

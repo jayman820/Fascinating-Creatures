@@ -1,0 +1,7 @@
+{
+  "amount": 1.0,
+  "random_sequence": "wungus:trade_set/bbl_doctor/level_1",
+  "trades": [
+    "wungus:bbl_doctor/1/emerald_bbl"
+  ]
+}

@@ -1,53 +1,35 @@
 package net.josh.wungus.item.custom.armor;
 
-import com.google.common.collect.ImmutableMap;
-import net.josh.wungus.item.ModArmorMaterials;
-import net.josh.wungus.item.custom.armor.model.WungusMaskModel;
-import net.josh.wungus.item.custom.armor.model.WungusShoesModel;
-import net.josh.wungus.item.custom.armor.provider.ArmorModelProvider;
-import net.josh.wungus.item.custom.armor.provider.SimpleModelProvider;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.equipment.Equippable;
+import org.jspecify.annotations.Nullable;
 
-import javax.annotation.Nullable;
-import java.util.Map;
+/**
+ * Wungus hide boots. The armor stats and equipment asset come from the item properties
+ * (see ModItems / ModArmorMaterials), the custom 3D model is registered on the client
+ * (see ModEventBusClientEvents).
+ */
+public class WungusBoots extends Item {
+    private static final EquipmentSlot[] ARMOR_SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
-@SuppressWarnings("removal")
-public class WungusBoots extends AbstractArmorItem {
-    private static final String TEXTURE_LOCATION = "wungus:textures/armor/wungus_boots.png";
-
-    private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
-            (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
-                    .put(ModArmorMaterials.WUNGUS_HIDE, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 1))
-                    .build();
-
-
-    public WungusBoots(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
-        super(pMaterial, pType, pProperties);
+    public WungusBoots(Properties pProperties) {
+        super(pProperties);
     }
 
+    // Replaces the old onArmorTick: equipped armor is ticked with the slot it is worn in (server side only)
     @Override
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
-        if(!level.isClientSide() && hasFullSuitOfArmorOn(player)) {
-            evaluateArmorEffects(player);
-        }
-    }
-
-    private void evaluateArmorEffects(Player player) {
-        for(Map.Entry<ArmorMaterial, MobEffectInstance> entry : MATERIAL_TO_EFFECT_MAP.entrySet()) {
-            ArmorMaterial mapArmorMaterial = entry.getKey();
-            MobEffectInstance mapEffect = entry.getValue();
-            if(hasPlayerCorrectArmorOn(mapArmorMaterial, player)) {
-                addEffectToPlayer(player, mapEffect);
-            }
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
+        super.inventoryTick(stack, level, owner, slot);
+        if (slot == EquipmentSlot.FEET && owner instanceof Player player && hasOnlyArmorEquipped(player)) {
+            addEffectToPlayer(player, new MobEffectInstance(MobEffects.SPEED, 200, 1));
         }
     }
 
@@ -60,42 +42,18 @@ public class WungusBoots extends AbstractArmorItem {
         }
     }
 
-    private boolean hasPlayerCorrectArmorOn(ArmorMaterial mapArmorMaterial, Player player) {
-        for(ItemStack armorStack : player.getArmorSlots()) {
-            if(!(armorStack.getItem() instanceof ArmorItem)) {
-                if(!(armorStack.getItem().equals(Items.AIR))) {
-                    return false;
-                }
+    // Every armor slot has to be empty or hold a piece of armor (not e.g. an elytra or a carved pumpkin)
+    private boolean hasOnlyArmorEquipped(Player player) {
+        for (EquipmentSlot armorSlot : ARMOR_SLOTS) {
+            ItemStack armorStack = player.getItemBySlot(armorSlot);
+            if (armorStack.isEmpty()) {
+                continue;
+            }
+            Equippable equippable = armorStack.get(DataComponents.EQUIPPABLE);
+            if (equippable == null || equippable.assetId().isEmpty() || armorStack.has(DataComponents.GLIDER)) {
+                return false;
             }
         }
-        ArmorItem boots = ((ArmorItem) player.getInventory().getArmor(0).getItem());
-
-        //ArmorItem helmet = ((ArmorItem) player.getInventory().getArmor(2).getItem());
-        return boots.getMaterial() == mapArmorMaterial;// && leggings.getMaterial() == mapArmorMaterial
-                //&& chestplate.getMaterial() == mapArmorMaterial && helmet.getMaterial() == mapArmorMaterial;
-    }
-
-    private boolean hasFullSuitOfArmorOn(Player player) {
-        ItemStack boots = player.getInventory().getArmor(0);
-        ItemStack leggings = player.getInventory().getArmor(1);
-        ItemStack chestplate = player.getInventory().getArmor(2);
-        ItemStack helmet = player.getInventory().getArmor(3);
-
-        return !boots.isEmpty();
-    }
-
-    @Override
-    protected boolean withCustomModel() {
         return true;
-    }
-
-    @Override
-    protected ArmorModelProvider createModelProvider() {
-        return new SimpleModelProvider(WungusShoesModel::createBodyLayer, WungusShoesModel::new);
-    }
-
-    @Override
-    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return TEXTURE_LOCATION;
     }
 }

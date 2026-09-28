@@ -1,0 +1,37 @@
+{
+  "parent": "wungus:wungus_egg_obtain",
+  "criteria": {
+    "hatched_wungus_egg": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wungus:wungus"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "description": {
+      "text": "It loves you!"
+    },
+    "hidden": true,
+    "icon": {
+      "id": "wungus:wungus_egg"
+    },
+    "title": {
+      "text": "Wung at first sight"
+    }
+  },
+  "requirements": [
+    [
+      "hatched_wungus_egg"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

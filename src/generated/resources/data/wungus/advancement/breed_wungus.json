@@ -1,0 +1,55 @@
+{
+  "parent": "wungus:hatch_wungus_egg",
+  "criteria": {
+    "breed_wungus": {
+      "conditions": {
+        "child": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wungus:wungus"
+            }
+          }
+        ],
+        "parent": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wungus:wungus"
+            }
+          }
+        ],
+        "partner": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wungus:wungus"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:bred_animals"
+    }
+  },
+  "display": {
+    "description": {
+      "text": "Look away..."
+    },
+    "hidden": true,
+    "icon": {
+      "id": "wungus:wungus_egg"
+    },
+    "title": {
+      "text": "Wung is in the air"
+    }
+  },
+  "requirements": [
+    [
+      "breed_wungus"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

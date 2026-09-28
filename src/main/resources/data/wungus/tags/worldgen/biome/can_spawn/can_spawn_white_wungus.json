@@ -4,11 +4,7 @@
     "minecraft:ice_spikes",
     "minecraft:frozen_peaks",
     {
-      "id": "#forge:is_icy",
-      "required": false
-    },
-    {
-      "id": "#c:icy",
+      "id": "#c:is_icy",
       "required": false
     },
     "minecraft:snowy_taiga",
@@ -52,15 +48,11 @@
       "required": false
     },
     {
-      "id": "#forge:is_snowy",
+      "id": "#c:is_snowy",
       "required": false
     },
     {
-      "id": "#c:snowy",
-      "required": false
-    },
-    {
-      "id": "#c:snowy_plains",
+      "id": "#c:is_snowy_plains",
       "required": false
     }
   ]

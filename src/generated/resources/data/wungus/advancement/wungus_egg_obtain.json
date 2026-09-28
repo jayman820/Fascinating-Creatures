@@ -1,0 +1,32 @@
+{
+  "criteria": {
+    "obtained_wungus_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wungus:wungus_egg"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "wungus:advancements/wungusicon",
+    "description": {
+      "text": "Is this thing even alive?"
+    },
+    "icon": {
+      "id": "wungus:wungus_egg"
+    },
+    "title": {
+      "text": "Legend of the Wungus"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_wungus_egg"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
