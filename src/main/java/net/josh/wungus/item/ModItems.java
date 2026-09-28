@@ -31,9 +31,9 @@ public class ModItems {
     public static final DeferredItem<Item> WUNGUS_BOOTS = ITEMS.registerItem("wungus_boots",
             properties -> new WungusBoots(properties.humanoidArmor(ModArmorMaterials.WUNGUS_HIDE, ArmorType.BOOTS)));
     public static final DeferredItem<Item> WUNGUS_MASK = ITEMS.registerItem("wungus_mask",
-            properties -> new Item(properties.humanoidArmor(ModArmorMaterials.WUNGUS_HIDE_MASK, ArmorType.HELMET).rarity(Rarity.EPIC)));
+            properties -> new Item(properties.humanoidArmor(ModArmorMaterials.WUNGUS_MASK, ArmorType.HELMET).rarity(Rarity.EPIC)));
     public static final DeferredItem<Item> BBL = ITEMS.registerItem("bbl",
-            properties -> new Item(properties.humanoidArmor(ModArmorMaterials.WUNGUS_HIDE_BBL, ArmorType.LEGGINGS).rarity(Rarity.EPIC)));
+            properties -> new Item(properties.humanoidArmor(ModArmorMaterials.BBL, ArmorType.LEGGINGS).rarity(Rarity.EPIC)));
 
     public static final DeferredItem<Item> RAW_WUNGUS_FLESH = ITEMS.registerItem("raw_wungus_flesh",
             properties -> new Item(properties.food(ModFoods.RAW_WUNGUS_FLESH, ModFoods.RAW_WUNGUS_FLESH_CONSUMABLE)));

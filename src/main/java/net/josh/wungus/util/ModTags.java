@@ -9,6 +9,8 @@ import net.minecraft.world.item.Item;
 public class ModTags {
     public static class Items {
         public static final TagKey<Item> REPAIRS_WUNGUS_HIDE_ARMOR = createTag("repairs_wungus_hide_armor");
+        public static final TagKey<Item> REPAIRS_WUNGUS_MASK = createTag("repairs_wungus_mask");
+        public static final TagKey<Item> REPAIRS_BBL = createTag("repairs_bbl");
         public static final TagKey<Item> AILANTHUS_LOGS = createTag("ailanthus_logs");
 
         private static TagKey<Item> createTag(String name) {

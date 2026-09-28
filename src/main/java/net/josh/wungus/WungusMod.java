@@ -1,6 +1,7 @@
 package net.josh.wungus;
 
 import com.mojang.logging.LogUtils;
+import net.josh.wungus.attachment.ModAttachments;
 import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.effect.ModEffects;
@@ -48,6 +49,7 @@ public class WungusMod
         ModLootModifiers.register(modEventBus);
 
         ModEffects.register(modEventBus);
+        ModAttachments.register(modEventBus);
 
         ModSounds.register(modEventBus);
 
