@@ -67,6 +67,10 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     private static final EntityDataAccessor<Boolean> SITTING =
             SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
 
+    // Set on the server by the panic/avoid goals, synced so the client can play the running animation
+    private static final EntityDataAccessor<Boolean> RUNNING =
+            SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
+
     private static final EntityDataAccessor<Boolean> TRUSTING =
             SynchedEntityData.defineId(WungusEntity.class, EntityDataSerializers.BOOLEAN);
 
@@ -90,7 +94,6 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState sittingAnimation = new AnimationState();
     public final AnimationState standingAnimation = new AnimationState();
-    private boolean isBeingChased = false;
     private int idleAnimationTimeout = 1;
     private boolean tamedGoalsAdded = false;
     private WungusAvoidEntityGoal<Player> avoidEntityGoal;
@@ -105,17 +108,33 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         }
     }
 
+    public boolean isRunning() {
+        return this.entityData.get(RUNNING);
+    }
+
+    private void setRunning(boolean running) {
+        this.entityData.set(RUNNING, running);
+    }
+
+    // Client side only
     private void setupAnimationStates() {
-        if(this.isBeingChased) {
-            this.runningAnimationState.start(this.tickCount);
-        }
-        if(this.entityData.get(SITTING)) {
-            this.sittingAnimation.startIfStopped(this.tickCount);
+        // startIfStopped: calling start every tick restarted the animation, so it was stuck on its first frame
+        if (this.isRunning()) {
+            this.runningAnimationState.startIfStopped(this.tickCount);
         } else {
-            this.sittingAnimation.stop();
+            this.runningAnimationState.stop();
         }
 
-        if(this.idleAnimationTimeout <= 0 && !this.isBeingChased) {
+        if (this.entityData.get(SITTING)) {
+            this.standingAnimation.stop();
+            this.sittingAnimation.startIfStopped(this.tickCount);
+        } else if (this.sittingAnimation.isStarted()) {
+            // It was sitting last tick: play the stand up animation
+            this.sittingAnimation.stop();
+            this.standingAnimation.start(this.tickCount);
+        }
+
+        if(this.idleAnimationTimeout <= 0 && !this.isRunning()) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
@@ -150,7 +169,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createAnimalAttributes()
-                .add(Attributes.MAX_HEALTH, 100)
+                .add(Attributes.MAX_HEALTH, WILD_MAX_HEALTH)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.JUMP_STRENGTH, 1.0F)
                 .add(Attributes.FOLLOW_RANGE, 240)
@@ -239,11 +258,18 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         }
     }
 
+    public static final double WILD_MAX_HEALTH = 100.0D;
+    public static final double TAMED_MAX_HEALTH = 50.0D;
+
+    // Runs when the wungus gets tamed, and when a wild wungus is loaded. Not when a tamed one is loaded, so its
+    // max health (including health steroids) comes from the saved attributes.
     @Override
     protected void applyTamingSideEffects() {
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
         if (this.isTame()) {
-            this.setHealth(50.0F);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(TAMED_MAX_HEALTH);
+            this.setHealth((float) TAMED_MAX_HEALTH);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(WILD_MAX_HEALTH);
         }
     }
 
@@ -260,49 +286,21 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             if (interactionresult.consumesAction()) {
                 return interactionresult;
             }
+            // These return SUCCESS/CONSUME so the item in hand isn't used as well afterwards
+            // (otherwise right clicking your wungus with a steroid also made you eat one)
             if (!this.isOwnedBy(pPlayer) && itemstack.is(ModItems.WUNGUS_AMBROSIA.get())) {
-                itemstack.shrink(1);
+                itemstack.consume(1, pPlayer);
                 if (!this.level().isClientSide()) {
                     this.tame(pPlayer);
                 }
-                return interactionresult;
+                return InteractionResult.SUCCESS;
             }
             if (this.isOwnedBy(pPlayer) && (itemstack.is(ModItems.HEALTH_STEROID.get()) || itemstack.is(ModItems.SPEED_STEROID.get()) || itemstack.is(ModItems.JUMP_STEROID.get()))) {
-                if (itemstack.is(ModItems.HEALTH_STEROID.get())) {
-                    if (this.getHealthSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
-                        this.setHealthSteroidUses(this.getHealthSteroidUses() + 1);
-                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
-                        float health = (float) this.getAttributes().getBaseValue(Attributes.MAX_HEALTH);
-                        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + 1);
-                        this.setHealth(health + 1.0f);
-                        itemstack.shrink(1);
-                    }
-                    return interactionresult;
-
-                } else if (itemstack.is(ModItems.SPEED_STEROID.get())) {
-                    if (this.getSpeedSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
-                        this.setSpeedSteroidUses(this.getSpeedSteroidUses() + 1);
-                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
-                        float speed = (float) this.getAttributes().getBaseValue(Attributes.MOVEMENT_SPEED);
-                        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed + 0.05);
-                        itemstack.shrink(1);
-                    }
-                    return interactionresult;
-
-                } else if (itemstack.is(ModItems.JUMP_STEROID.get())) {
-                    if (this.getJumpSteroidUses() < 5 && this.getTotalSteroidUses() < 10) {
-                        this.setJumpSteroidUses(this.getJumpSteroidUses() + 1);
-                        this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
-                        float jump = (float) this.getAttributes().getBaseValue(Attributes.JUMP_STRENGTH);
-                        this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(jump + 0.075);
-                        itemstack.shrink(1);
-                    }
-                    return interactionresult;
-
-                }
+                return this.useSteroid(pPlayer, itemstack);
             }
             if (!pPlayer.isCrouching() && !this.isBaby() && !this.isOrderedToSit() && this.isOwnedBy(pPlayer)) {
                 setRiding(pPlayer);
+                return InteractionResult.SUCCESS;
             } else {
                 boolean sit = this.isOrderedToSit();
                 if (this.isOwnedBy(pPlayer)) {
@@ -314,6 +312,43 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
             }
             return interactionresult;
         }
+    }
+
+    // Feeds a steroid to the wungus. Every steroid type can be given 5 times, 10 steroids in total.
+    private InteractionResult useSteroid(Player pPlayer, ItemStack itemstack) {
+        if (this.getTotalSteroidUses() >= 10) {
+            return InteractionResult.CONSUME;
+        }
+
+        if (itemstack.is(ModItems.HEALTH_STEROID.get())) {
+            if (this.getHealthSteroidUses() >= 5) return InteractionResult.CONSUME;
+            if (!this.level().isClientSide()) {
+                this.setHealthSteroidUses(this.getHealthSteroidUses() + 1);
+                float health = (float) this.getAttributes().getBaseValue(Attributes.MAX_HEALTH);
+                this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health + 1);
+                this.setHealth(health + 1.0f);
+            }
+        } else if (itemstack.is(ModItems.SPEED_STEROID.get())) {
+            if (this.getSpeedSteroidUses() >= 5) return InteractionResult.CONSUME;
+            if (!this.level().isClientSide()) {
+                this.setSpeedSteroidUses(this.getSpeedSteroidUses() + 1);
+                double speed = this.getAttributes().getBaseValue(Attributes.MOVEMENT_SPEED);
+                this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed + 0.05);
+            }
+        } else {
+            if (this.getJumpSteroidUses() >= 5) return InteractionResult.CONSUME;
+            if (!this.level().isClientSide()) {
+                this.setJumpSteroidUses(this.getJumpSteroidUses() + 1);
+                double jump = this.getAttributes().getBaseValue(Attributes.JUMP_STRENGTH);
+                this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(jump + 0.075);
+            }
+        }
+
+        if (!this.level().isClientSide()) {
+            this.setTotalSteroidUses(this.getTotalSteroidUses() + 1);
+        }
+        itemstack.consume(1, pPlayer);
+        return InteractionResult.SUCCESS;
     }
 
     protected boolean teleport() {
@@ -506,13 +541,13 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
         @Override
         public void start() {
-            this.wungus.isBeingChased = true;
+            this.wungus.setRunning(true);
             super.start();
         }
 
         @Override
         public void stop() {
-            this.wungus.isBeingChased = false;
+            this.wungus.setRunning(false);
             this.wungus.teleport();
             super.stop();
         }
@@ -538,16 +573,14 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
 
         @Override
         public void start() {
-            this.wungus.isBeingChased = true;
-            wungus.setupAnimationStates();
+            this.wungus.setRunning(true);
             super.start();
         }
 
         @Override
         public void stop() {
-            this.wungus.isBeingChased = false;
+            this.wungus.setRunning(false);
             this.wungus.teleport();
-            wungus.setupAnimationStates();
             super.stop();
         }
     }
@@ -567,6 +600,7 @@ public class WungusEntity extends TamableAnimal implements PlayerRideableJumping
         super.defineSynchedData(pBuilder);
         pBuilder.define(SITTING, false);
         pBuilder.define(TRUSTING, false);
+        pBuilder.define(RUNNING, false);
         pBuilder.define(DATA_ID_TYPE_VARIANT, 0);
         pBuilder.define(TOTAL_STEROID_USES, 0);
         pBuilder.define(HEALTH_STEROID_USES, 0);

@@ -26,7 +26,7 @@ public class WungdigestionEffect extends MobEffect {
             pLivingEntity.playSound(ModSounds.BURP.get());
             PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new WungdigestionPayload(pLivingEntity.getId(), true));
         }
-        if(hit2 < -1) {
+        if(hit2 < 10) {
             pLivingEntity.playSound(ModSounds.FART.get());
             PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new WungdigestionPayload(pLivingEntity.getId(), false));
             pLivingEntity.push(0, 4, 0);

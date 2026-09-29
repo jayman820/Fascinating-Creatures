@@ -130,7 +130,10 @@ public class WungusModel extends EntityModel<WungusRenderState> {
 		super.setupAnim(state);
 		this.applyHeadRotation(state.yRot, state.xRot);
 
-		this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 1f, 2.5f);
+		// The running animation has its own leg movement, so only use the walk cycle when not running
+		if (!state.runningAnimationState.isStarted()) {
+			this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 1f, 2.5f);
+		}
 		this.runAnimation.apply(state.runningAnimationState, state.ageInTicks, 1f);
 		this.sitAnimation.apply(state.sittingAnimationState, state.ageInTicks, 1f);
 		this.standAnimation.apply(state.standingAnimationState, state.ageInTicks, 1f);
