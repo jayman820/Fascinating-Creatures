@@ -4,6 +4,7 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.effect.HeartPalpitationsEffect;
 import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.entity.client.BabyWungusModel;
 import net.josh.wungus.entity.client.ModModelLayers;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.entity.client.WungusRenderer;
@@ -50,6 +51,7 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.WUNGUS_LAYER, WungusModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.WUNGUS_BABY_LAYER, BabyWungusModel::createBodyLayer);
     }
 
     @SubscribeEvent

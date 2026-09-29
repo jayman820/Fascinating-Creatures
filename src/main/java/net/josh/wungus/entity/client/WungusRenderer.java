@@ -5,14 +5,19 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.custom.WungusEntity;
 import net.josh.wungus.entity.variant.WungusVariant;
+import net.minecraft.client.model.AdultAndBabyModelPair;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
 
 import java.util.Map;
 
-public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState, WungusModel> {
+// Adults and babies have their own model and texture, like vanilla's split adult/baby animals
+public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState, EntityModel<WungusRenderState>> {
     public static final Map<WungusVariant, Identifier> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(WungusVariant.class), map -> {
                 map.put(WungusVariant.DEFAULT, texture("wungus"));
@@ -22,9 +27,14 @@ public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState,
             });
     private static final Identifier SAKURA_TEXTURE = texture("pinkgus");
     private static final Identifier PAPI_TEXTURE = texture("mangungus");
+    // One texture for all baby wungi (every variant and name)
+    private static final Identifier BABY_TEXTURE = texture("wungus_baby");
+
+    private final AdultAndBabyModelPair<EntityModel<WungusRenderState>> models;
 
     public WungusRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new WungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
+        this.models = new AdultAndBabyModelPair<>(this.model, new BabyWungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_BABY_LAYER)));
     }
 
     private static Identifier texture(String name) {
@@ -55,17 +65,19 @@ public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState,
     }
 
     @Override
+    public void submit(WungusRenderState pState, PoseStack pPoseStack, SubmitNodeCollector pSubmitNodeCollector, CameraRenderState pCamera) {
+        this.model = this.models.getModel(pState.isBaby);
+        super.submit(pState, pPoseStack, pSubmitNodeCollector, pCamera);
+    }
+
+    @Override
     public Identifier getTextureLocation(WungusRenderState pState) {
+        if (pState.isBaby) {
+            return BABY_TEXTURE;
+        }
         if (pState.textureOverride != null) {
             return pState.textureOverride;
         }
         return LOCATION_BY_VARIANT.get(pState.variant);
-    }
-
-    @Override
-    protected void scale(WungusRenderState pState, PoseStack pPoseStack) {
-        if (pState.isBaby) {
-            pPoseStack.scale(0.5f, 0.5f, 0.5f);
-        }
     }
 }
