@@ -3,6 +3,7 @@ package net.josh.wungus.effect;
 import net.josh.wungus.network.WungdigestionPayload;
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -23,15 +24,21 @@ public class WungdigestionEffect extends MobEffect {
         int hit = rand.nextInt(1000);
         int hit2 = rand.nextInt(1000);
         if(hit < 10) {
-            pLivingEntity.playSound(ModSounds.BURP.get());
+            playSound(pLevel, pLivingEntity, ModSounds.BURP.get());
             PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new WungdigestionPayload(pLivingEntity.getId(), true));
         }
         if(hit2 < 10) {
-            pLivingEntity.playSound(ModSounds.FART.get());
+            playSound(pLevel, pLivingEntity, ModSounds.FART.get());
             PacketDistributor.sendToPlayersTrackingEntityAndSelf(pLivingEntity, new WungdigestionPayload(pLivingEntity.getId(), false));
             pLivingEntity.push(0, 4, 0);
         }
         return true;
+    }
+
+    // Played through the level so the entity itself hears it too: entity.playSound skips the player itself,
+    // because the player's own client normally plays it, but effects only run on the server.
+    private static void playSound(ServerLevel level, LivingEntity entity, SoundEvent sound) {
+        level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), sound, entity.getSoundSource(), 1.0F, 1.0F);
     }
 
     @Override
