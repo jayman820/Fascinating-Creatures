@@ -7,7 +7,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -18,6 +17,7 @@ import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter;
 import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraft.world.level.levelgen.placement.SurfaceWaterDepthFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
@@ -29,10 +29,11 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        // Rare: one tree in about every 4th chunk (the chance has to be 1/n). Uses the heightmap without leaves (instead of vanilla's
-        // tree placement) so the tree starts on the ground below the forest canopy instead of on top of it.
+        // Rare: one tree in about every 10th chunk of the allowed biomes (raise the number to make them rarer).
+        // Uses the heightmap without leaves (instead of vanilla's tree placement) so the tree starts on the ground
+        // below the forest canopy instead of on top of it.
         register(context, AILANTHUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.AILANTHUS_KEY), List.of(
-                PlacementUtils.countExtra(0, 0.25f, 1),
+                RarityFilter.onAverageOnceEvery(10),
                 InSquarePlacement.spread(),
                 SurfaceWaterDepthFilter.forMaxDepth(0),
                 HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES),
