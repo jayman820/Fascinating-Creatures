@@ -12,7 +12,6 @@ import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -31,6 +30,9 @@ public class ModBiomeModifiers {
     public static final TagKey<Biome> SPAWN_BLUE_WUNGUS_TAG = tag("can_spawn_blue_wungus");
 
     public static final ResourceKey<BiomeModifier> ADD_TREE_AILANTHUS = registerKey("add_tree_ailanthus");
+    // Forest and birch forests, see data/wungus/tags/worldgen/biome/has_ailanthus_trees.json
+    public static final TagKey<Biome> HAS_AILANTHUS_TREES_TAG =
+            TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "has_ailanthus_trees"));
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -49,7 +51,7 @@ public class ModBiomeModifiers {
                 biomes.getOrThrow(SPAWN_BLUE_WUNGUS_TAG), wungusSpawn()));
 
         context.register(ADD_TREE_AILANTHUS, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
+                biomes.getOrThrow(HAS_AILANTHUS_TREES_TAG),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.AILANTHUS_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
 

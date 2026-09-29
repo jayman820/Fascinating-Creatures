@@ -8,13 +8,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> AILANTHUS_KEY = registerKey("ailanthus");
@@ -22,10 +25,14 @@ public class ModConfiguredFeatures {
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         register(context, AILANTHUS_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.AILANTHUS_LOG.get()),
-                new AilanthusTrunkPlacer(5, 4, 3),
-                BlockStateProvider.simple(ModBlocks.AILANTHUS_LEAVES.get()),
-                new AilanthusFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2), 3),
-                new TwoLayersFeatureSize(1, 0 , 2)).build()
+                // Trunk of 5 to 7 blocks
+                new AilanthusTrunkPlacer(5, 2, 0),
+                // Mostly plain leaves with some flowering (seed cluster) leaves mixed in
+                new WeightedStateProvider(WeightedList.<BlockState>builder()
+                        .add(ModBlocks.AILANTHUS_LEAVES_2.get().defaultBlockState(), 4)
+                        .add(ModBlocks.AILANTHUS_LEAVES.get().defaultBlockState(), 1)),
+                new AilanthusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 3),
+                new TwoLayersFeatureSize(1, 0, 1)).build()
         );
     }
 

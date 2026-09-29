@@ -2,16 +2,23 @@ package net.josh.wungus.worldgen;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.SurfaceWaterDepthFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
@@ -22,9 +29,16 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        register(context, AILANTHUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.AILANTHUS_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 2),
-                        ModBlocks.AILANTHUS_SAPLING.get()));
+        // Rare: one tree in about every 4th chunk (the chance has to be 1/n). Uses the heightmap without leaves (instead of vanilla's
+        // tree placement) so the tree starts on the ground below the forest canopy instead of on top of it.
+        register(context, AILANTHUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.AILANTHUS_KEY), List.of(
+                PlacementUtils.countExtra(0, 0.25f, 1),
+                InSquarePlacement.spread(),
+                SurfaceWaterDepthFilter.forMaxDepth(0),
+                HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES),
+                BiomeFilter.biome(),
+                BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(
+                        ModBlocks.AILANTHUS_SAPLING.get().defaultBlockState(), BlockPos.ZERO))));
     }
 
     public static ResourceKey<PlacedFeature> registerKey(String name) {
