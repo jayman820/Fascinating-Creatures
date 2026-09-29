@@ -10,10 +10,22 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
+/**
+ * Places a leafy tuft at every branch end of the AilanthusTrunkPlacer: a small dome that is a bit ragged and open,
+ * with leaves hanging down from its edge like the long drooping leaves (and seed clusters) of a tree of heaven.
+ * Layers go from {@code offset} (top, one smaller) down to {@code offset - height + 1}.
+ */
 public class AilanthusFoliagePlacer extends FoliagePlacer {
-    public static final Codec<AilanthusFoliagePlacer> CODEC = RecordCodecBuilder.create(ailanthusFoliagePlacerInstance -> foliagePlacerParts(ailanthusFoliagePlacerInstance)
-            .and(Codec.intRange(0, 16).fieldOf("height").forGetter(fp -> fp.height)).apply(ailanthusFoliagePlacerInstance, AilanthusFoliagePlacer::new));
+    public static final Codec<AilanthusFoliagePlacer> CODEC = RecordCodecBuilder.create(instance -> foliagePlacerParts(instance)
+            .and(Codec.intRange(1, 16).fieldOf("height").forGetter(fp -> fp.height)).apply(instance, AilanthusFoliagePlacer::new));
+
+    private static final float EDGE_HOLE_CHANCE = 0.25F;
+    private static final float INNER_HOLE_CHANCE = 0.08F;
+    private static final float HANGING_LEAVES_CHANCE = 0.3F;
+    private static final float HANGING_LEAVES_EXTENSION_CHANCE = 0.4F;
+
     protected final int height;
+
     public AilanthusFoliagePlacer(IntProvider pRadius, IntProvider pOffset, int height) {
         super(pRadius, pOffset);
         this.height = height;
@@ -26,65 +38,42 @@ public class AilanthusFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected void createFoliage(LevelSimulatedReader pLevel, FoliageSetter foliageSetter, RandomSource pRandom, TreeConfiguration pConfig, int pMaxFreeTreeHeight, FoliageAttachment pAttachment, int pFoliageHeight, int pFoliageRadius, int pOffset) {
-        // Creating the foliage
-        // attachment.pos() is the block directly ABOVE the last placed log
-
-        // tryPlaceLeaf() places one leaf at a given position
-
-        for(int i = 0; i < 5; i++) {
-            if (i == 0) {
-                this.placeLeavesRowWithHangingLeavesBelow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().above(i), 2, -2, false, 0.5f, 0.7f);
+        int radius = pFoliageRadius + pAttachment.radiusOffset();
+        int bottom = pOffset - pFoliageHeight + 1;
+        for (int y = pOffset; y >= bottom; y--) {
+            // The top layer is one smaller, which rounds off the tuft
+            int layerRadius = y == pOffset ? radius - 1 : radius;
+            if (layerRadius < 0) {
+                continue;
             }
-            else if (i <= 2) {
-                this.placeLeavesRow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().above(i), 2, -2, pAttachment.doubleTrunk());
+            if (y == bottom) {
+                this.placeLeavesRowWithHangingLeavesBelow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos(), layerRadius, y,
+                        pAttachment.doubleTrunk(), HANGING_LEAVES_CHANCE, HANGING_LEAVES_EXTENSION_CHANCE);
+            } else {
+                this.placeLeavesRow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos(), layerRadius, y, pAttachment.doubleTrunk());
             }
-            else if (i == 3) {
-                this.placeLeavesRow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().above(i), 1, -2, pAttachment.doubleTrunk());
-
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().east(2).north(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().east(2).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().east(2).south(1).above(i - 2));
-
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().north(2).east(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().north(2).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().north(2).west(1).above(i - 2));
-
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().west(2).north(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().west(2).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().west(2).south(1).above(i - 2));
-
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().south(2).east(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().south(2).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().south(2).west(1).above(i - 2));
-            }
-            else if (i == 4) {
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().east(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().north(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().west(1).above(i - 2));
-                tryPlaceLeaf(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos().south(1).above(i - 2));
-            }
-
         }
     }
 
     @Override
     public int foliageHeight(RandomSource pRandom, int pHeight, TreeConfiguration pConfig) {
-        return 0;
+        return this.height;
     }
 
     @Override
     protected boolean shouldSkipLocation(RandomSource pRandom, int pLocalX, int pLocalY, int pLocalZ, int pRange, boolean pLarge) {
-        if (pLocalY == -2 && (pLocalX == pRange || pLocalZ == pRange) && pRandom.nextFloat() < 0.4) {
-            return true;
-        } else {
-            boolean flag = pLocalX == pRange && pLocalZ == pRange;
-            boolean flag1 = pRange > 2;
-            if (flag1) {
-                return flag || pLocalX + pLocalZ > pRange * 2 - 2 && pRandom.nextFloat() < 0.1;
-            } else {
-                return flag && pRandom.nextFloat() < 0.1;
-            }
+        if (pRange == 0) {
+            return false;
         }
+        boolean corner = pLocalX == pRange && pLocalZ == pRange;
+        boolean edge = pLocalX == pRange || pLocalZ == pRange;
+        if (corner) {
+            return true;
+        }
+        if (edge) {
+            return pRandom.nextFloat() < EDGE_HOLE_CHANCE;
+        }
+        // A few holes inside the lower layers keep the tufts from looking like solid blocks
+        return pLocalY <= 0 && pRandom.nextFloat() < INNER_HOLE_CHANCE;
     }
 }

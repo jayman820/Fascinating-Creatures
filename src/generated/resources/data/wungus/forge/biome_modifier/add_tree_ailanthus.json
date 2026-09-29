@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#forge:is_plains",
+  "biomes": "#wungus:has_ailanthus_trees",
   "features": "wungus:ailanthus_placed",
   "step": "vegetal_decoration"
 }

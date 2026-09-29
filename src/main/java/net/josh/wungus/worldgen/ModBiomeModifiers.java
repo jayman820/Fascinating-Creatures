@@ -33,6 +33,9 @@ public class ModBiomeModifiers {
     public static final TagKey<Biome> SPAWN_BLUE_WUNGUS_TAG = tag("can_spawn_blue_wungus");
 
     public static final ResourceKey<BiomeModifier> ADD_TREE_AILANTHUS = registerKey("add_tree_ailanthus");
+    // Forest and birch forests, see data/wungus/tags/worldgen/biome/has_ailanthus_trees.json
+    public static final TagKey<Biome> HAS_AILANTHUS_TREES_TAG =
+            TagKey.create(Registries.BIOME, new ResourceLocation(WungusMod.MOD_ID, "has_ailanthus_trees"));
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -55,7 +58,7 @@ public class ModBiomeModifiers {
                 List.of(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2))));
 
         context.register(ADD_TREE_AILANTHUS, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
+                biomes.getOrThrow(HAS_AILANTHUS_TREES_TAG),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.AILANTHUS_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
 

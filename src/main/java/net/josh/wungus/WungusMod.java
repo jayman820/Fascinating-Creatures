@@ -9,6 +9,7 @@ import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModCreativeModeTabs;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.loot.ModLootModifiers;
+import net.josh.wungus.network.ModNetworking;
 import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.util.ModWoodTypes;
@@ -74,7 +75,7 @@ public class WungusMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        event.enqueueWork(ModNetworking::register);
     }
 
     // Add the example block item to the building blocks tab

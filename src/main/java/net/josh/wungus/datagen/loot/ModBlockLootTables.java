@@ -35,9 +35,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropWhenSilkTouch(ModBlocks.WUNGUS_EGG.get());
 
         this.add(ModBlocks.AILANTHUS_LEAVES.get(), block ->
-                createLeavesDrops(block, ModBlocks.AILANTHUS_LEAVES.get(), NORMAL_LEAVES_SAPLING_CHANCES)); //todo: change to sapling
+                createLeavesDrops(block, ModBlocks.AILANTHUS_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.add(ModBlocks.AILANTHUS_LEAVES_2.get(), block ->
-                createLeavesDrops(block, ModBlocks.AILANTHUS_LEAVES_2.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                createLeavesDrops(block, ModBlocks.AILANTHUS_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.add(ModBlocks.AILANTHUS_SIGN.get(), block ->
                 createSingleItemTable(ModItems.AILANTHUS_SIGN.get()));

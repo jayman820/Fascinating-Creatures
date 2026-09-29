@@ -4,6 +4,7 @@
   "item.wungus.wungus_hide": "Wungus Hide",
   "item.wungus.wungus_boots": "Wungus Shoes",
   "item.wungus.wungus_mask": "Wungus Mask",
+  "item.wungus.bbl": "BBL",
   "item.wungus.raw_wungus_flesh": "Raw Wungus Flesh",
   "item.wungus.cooked_wungus_flesh": "Dried Wungus Flesh",
   "item.wungus.wungus_shawarma": "Wungus Shawarma",
@@ -30,6 +31,7 @@
   "block.wungus.ailanthus_planks": "Ailanthus Planks",
   "block.wungus.ailanthus_leaves": "Flowering Ailanthus Leaves",
   "block.wungus.ailanthus_leaves_2": "Ailanthus Leaves",
+  "block.wungus.ailanthus_sapling": "Ailanthus Sapling",
   "block.wungus.ailanthus_sign": "Ailanthus Sign",
   "block.wungus.ailanthus_hanging_sign": "Ailanthus Hanging Sign",
   "block.wungus.ailanthus_stairs": "Ailanthus Stairs",
@@ -41,6 +43,8 @@
   "block.wungus.ailanthus_door": "Ailanthus Door",
   "block.wungus.ailanthus_trapdoor": "Ailanthus Trapdoor",
   "block.wungus.bbl_table": "BBL Table",
+  "block.wungus.andaran_dirt": "Andaran Dirt",
+  "block.wungus.andaran_grass_block": "Andaran Grass Block",
 
   "entity.wungus.wungus": "Wungus",
   "entity.minecraft.villager.wungus.bbl_doctor": "BBL Doctor",
@@ -48,6 +52,7 @@
   "creativetab.wungus_tab": "Fascinating Creatures",
 
   "effect.wungus.wungdigestion": "Wungdigestion",
+  "effect.wungus.heart_palpitations": "Heart Palpitations",
   "effect.wungus.wungus_steroid_health": "Heart Failure",
   "effect.wungus.wungus_steroid_speed": "Heart Failure",
   "effect.wungus.wungus_steroid_jump": "Heart Failure",
@@ -70,5 +75,5 @@
   "death.attack.landmine_0": "%s didn't watch where they were stepping",
   "death.attack.landmine_1": "%s took a wrong turn",
   "death.attack.landmine_0.entity": "%s didn't watch where they were running while escaping %s",
-  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s",
+  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s"
 }

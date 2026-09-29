@@ -8,7 +8,9 @@ public class VomitParticle extends TextureSheetParticle {
     protected VomitParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet spriteSet, double pXSpeed, double pYSpeed, double pZSpeed) {
         super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
 
-        this.friction = 1.2f;
+        // Fall like a liquid, then slide a little on the floor and stay there (a puddle)
+        this.gravity = 1.0f;
+        this.friction = 0.96f;
         this.xd = pXSpeed;
         this.yd = pYSpeed;
         this.zd = pZSpeed;

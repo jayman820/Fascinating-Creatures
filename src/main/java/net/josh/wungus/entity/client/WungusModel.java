@@ -137,7 +137,10 @@ public class WungusModel<T extends Entity> extends HierarchicalModel<T> {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		this.animateWalk(ModAnimationDefinitions.WUNGUS_WALK, limbSwing, limbSwingAmount, 1f, 2.5f);
+		// The running animation has its own leg movement, so only use the walk cycle when not running
+		if (!((WungusEntity) entity).runningAnimationState.isStarted()) {
+			this.animateWalk(ModAnimationDefinitions.WUNGUS_WALK, limbSwing, limbSwingAmount, 1f, 2.5f);
+		}
 		this.animate(((WungusEntity)entity).runningAnimationState, ModAnimationDefinitions.WUNGUS_RUN, ageInTicks, 1f);
 		this.animate(((WungusEntity)entity).sittingAnimation, ModAnimationDefinitions.WUNGUS_SIT, ageInTicks, 1f);
 		this.animate(((WungusEntity)entity).standingAnimation, ModAnimationDefinitions.WUNGUS_STAND, ageInTicks, 1f);

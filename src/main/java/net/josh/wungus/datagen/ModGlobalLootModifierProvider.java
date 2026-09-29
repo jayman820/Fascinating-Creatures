@@ -168,11 +168,6 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("prattling2_stronghold_library", new AddSimpleItem(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("chests/stronghold_library")).build(),
                 LootItemRandomChanceCondition.randomChance(0.10f).build()},
-                ModItems.PRATTLING_WUNGUS_1.get()));
-
-        add("prattling1_ancient_city", new AddSimpleItem(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("chests/ancient_city")).build(),
-                LootItemRandomChanceCondition.randomChance(0.10f).build()},
                 ModItems.PRATTLING_WUNGUS_2.get()));
 
         add("prattling2_ruined_portal", new AddSimpleItem(new LootItemCondition[] {

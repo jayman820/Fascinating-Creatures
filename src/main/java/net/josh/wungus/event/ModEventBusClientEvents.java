@@ -3,6 +3,7 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.block.entity.WungusStatueBlockEntity;
 import net.josh.wungus.block.entity.renderer.WungusStatueBlockEntityRender;
+import net.josh.wungus.entity.client.BabyWungusModel;
 import net.josh.wungus.entity.client.ModModelLayers;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.particle.DiarrheaParticle;
@@ -13,7 +14,9 @@ import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,6 +25,12 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.WUNGUS_LAYER, WungusModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.WUNGUS_BABY_LAYER, BabyWungusModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(), "heart_failure_pulse", ModClientForgeEvents::renderRedPulse);
     }
 
     @SubscribeEvent

@@ -26,7 +26,7 @@ public class WungusMask extends AbstractArmorItem {
     private static final String TEXTURE_LOCATION = "wungus:textures/armor/wungus_mask.png";
 
     public WungusMask() {
-        super(ModArmorMaterials.WUNGUS_HIDE, Type.HELMET, new Properties().rarity(Rarity.EPIC));
+        super(ModArmorMaterials.WUNGUS_MASK, Type.HELMET, new Properties().rarity(Rarity.EPIC));
     }
 
     @Override

@@ -10,7 +10,9 @@ public class DiarrheaParticle extends TextureSheetParticle {
     protected DiarrheaParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet spriteSet, double pXSpeed, double pYSpeed, double pZSpeed) {
         super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
 
-        this.friction = 0.5f;
+        // Fall like a liquid, then slide a little on the floor and stay there (a puddle)
+        this.gravity = 1.0f;
+        this.friction = 0.96f;
         this.xd = pXSpeed;
         this.yd = pYSpeed;
         this.zd = pZSpeed;

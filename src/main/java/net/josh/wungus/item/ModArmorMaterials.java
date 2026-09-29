@@ -21,7 +21,23 @@ public enum ModArmorMaterials implements ArmorMaterial {
         p_266652_.put(ArmorItem.Type.LEGGINGS, 2);
         p_266652_.put(ArmorItem.Type.CHESTPLATE, 3);
         p_266652_.put(ArmorItem.Type.HELMET, 1);
-    }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.of(ModItems.WUNGUS_HIDE.get()));
+    }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.of(ModItems.WUNGUS_HIDE.get())),
+
+    // The mask and the bbl are separate pieces (found as loot), not made of wungus hide. They can't be repaired
+    // for now: put the repair item in their Ingredient.
+    WUNGUS_MASK("wungus_mask", 5, Util.make(new EnumMap<>(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 4);
+        map.put(ArmorItem.Type.LEGGINGS, 2);
+        map.put(ArmorItem.Type.CHESTPLATE, 3);
+        map.put(ArmorItem.Type.HELMET, 1);
+    }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.EMPTY),
+
+    BBL("bbl", 5, Util.make(new EnumMap<>(ArmorItem.Type.class), (map) -> {
+        map.put(ArmorItem.Type.BOOTS, 4);
+        map.put(ArmorItem.Type.LEGGINGS, 2);
+        map.put(ArmorItem.Type.CHESTPLATE, 3);
+        map.put(ArmorItem.Type.HELMET, 1);
+    }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.EMPTY);
 
 
     public static final StringRepresentable.EnumCodec<ArmorMaterials> CODEC = StringRepresentable.fromEnum(ArmorMaterials::values);

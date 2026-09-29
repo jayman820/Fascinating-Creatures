@@ -15,7 +15,7 @@ public class BBLArmor extends AbstractArmorItem {
     private static final String TEXTURE_LOCATION = "wungus:textures/armor/bbl.png";
 
     public BBLArmor() {
-        super(ModArmorMaterials.WUNGUS_HIDE, Type.LEGGINGS, new Properties().rarity(Rarity.EPIC));
+        super(ModArmorMaterials.BBL, Type.LEGGINGS, new Properties().rarity(Rarity.EPIC));
     }
 
     @Override
