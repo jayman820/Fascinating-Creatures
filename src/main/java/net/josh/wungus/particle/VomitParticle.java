@@ -12,7 +12,9 @@ public class VomitParticle extends SingleQuadParticle {
     protected VomitParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet spriteSet, double pXSpeed, double pYSpeed, double pZSpeed) {
         super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, spriteSet.first());
 
-        this.friction = 0.9f; // below 1 so the particles slow down and the cone keeps its shape
+        // Fall like a liquid, then slide a little on the floor and stay there (a puddle)
+        this.gravity = 1.0f;
+        this.friction = 0.96f;
         this.xd = pXSpeed;
         this.yd = pYSpeed;
         this.zd = pZSpeed;
