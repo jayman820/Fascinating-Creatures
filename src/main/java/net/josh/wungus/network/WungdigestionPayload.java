@@ -5,7 +5,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Sent from the server to nearby clients when an entity with the Wungdigestion effect burps (vomit = true)
@@ -13,7 +13,7 @@ import net.minecraft.resources.Identifier;
  */
 public record WungdigestionPayload(int entityId, boolean vomit) implements CustomPacketPayload {
     public static final Type<WungdigestionPayload> TYPE =
-            new Type<>(Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wungdigestion"));
+            new Type<>(ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "wungdigestion"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, WungdigestionPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, WungdigestionPayload::entityId,

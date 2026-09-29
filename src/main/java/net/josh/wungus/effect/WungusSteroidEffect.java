@@ -4,7 +4,6 @@ import net.josh.wungus.attachment.SteroidState;
 import net.josh.wungus.item.custom.WungusSteroid;
 import net.josh.wungus.misc.ModDamageTypes;
 import net.josh.wungus.sound.ModSounds;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -24,9 +23,10 @@ import java.util.function.Supplier;
  * - late in the dose slowness, mining fatigue and weakness,
  * - and near the end the heart gives out.
  * The progress is stored per entity (SteroidState), not in this class: one effect object is shared by every entity.
+ * A new heart failure starts when the effect is newly added (see ModEvents#onEffectAdded).
  */
 public class WungusSteroidEffect extends MobEffect {
-    // Length of a dose from a steroid item, used if the length can't be read from the effect
+    // Length of a dose from a steroid item, used if the length isn't known
     public static final int DEFAULT_DOSE_TICKS = 2000;
 
     // The heartbeat speed and the screen shake steps are in HeartPalpitationsEffect (shared with the client)
@@ -42,37 +42,33 @@ public class WungusSteroidEffect extends MobEffect {
         this.state = state;
     }
 
-    // Called when the effect is newly added (not when an active dose is refreshed): start a new heart failure
-    @Override
-    public void onEffectAdded(LivingEntity pLivingEntity, int pAmplifier) {
-        super.onEffectAdded(pLivingEntity, pAmplifier);
-        int duration = DEFAULT_DOSE_TICKS;
-        for (MobEffectInstance instance : pLivingEntity.getActiveEffects()) {
-            if (instance.getEffect().value() == this && !instance.isInfiniteDuration()) {
-                duration = instance.getDuration();
-            }
-        }
-        pLivingEntity.setData(this.state, new SteroidState(duration));
+    /** Starts a new heart failure for a dose of the given length. */
+    public void startHeartFailure(LivingEntity pLivingEntity, int pDuration) {
+        pLivingEntity.setData(this.state, new SteroidState(pDuration));
     }
 
+    // The effect ticks on both sides, everything happens on the server
     @Override
-    public boolean applyEffectTick(ServerLevel pLevel, LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+        if (pLivingEntity.level().isClientSide()) {
+            return true;
+        }
         SteroidState s = pLivingEntity.getData(this.state);
         s.ticksActive++;
         float progress = s.progress();
 
         if (s.stage < 1) {
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 500, 10));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, 10));
             switch (this.type) {
-                case HEALTH -> pLivingEntity.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 500, 10));
-                case SPEED -> pLivingEntity.addEffect(new MobEffectInstance(MobEffects.SPEED, 500, 5));
-                case JUMP -> pLivingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 500, 5));
+                case HEALTH -> pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, 10));
+                case SPEED -> pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, 5));
+                case JUMP -> pLivingEntity.addEffect(new MobEffectInstance(MobEffects.JUMP, 500, 5));
             }
             s.stage = 1;
         }
         if (s.stage < 2 && progress >= WEAKNESS_PROGRESS) {
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 1000, 10));
-            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 1000, 10));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1000, 10));
+            pLivingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1000, 10));
             pLivingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1000, 10));
             s.stage = 2;
         }
@@ -80,7 +76,7 @@ public class WungusSteroidEffect extends MobEffect {
         // The heart beats faster and faster
         if (--s.nextHeartbeat <= 0) {
             // Played through the level so the entity itself hears it too (entity.playSound skips the player itself)
-            pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), ModSounds.HEARTBEAT.get(),
+            pLivingEntity.level().playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), ModSounds.HEARTBEAT.get(),
                     pLivingEntity.getSoundSource(), Mth.lerp(progress, 0.7F, 1.3F), Mth.lerp(progress, 0.9F, 1.3F));
             s.nextHeartbeat = Math.round(HeartPalpitationsEffect.heartbeatInterval(progress));
         }
@@ -89,12 +85,12 @@ public class WungusSteroidEffect extends MobEffect {
         // short duration so it stops soon after the heart failure ends.
         int shake = HeartPalpitationsEffect.levelFor(progress);
         if (shake >= 0 && s.ticksActive % 10 == 0) {
-            pLivingEntity.addEffect(new MobEffectInstance(ModEffects.HEART_PALPITATIONS_EFFECT, 30, shake, false, false, false));
+            pLivingEntity.addEffect(new MobEffectInstance(ModEffects.holder(ModEffects.HEART_PALPITATIONS_EFFECT), 30, shake, false, false, false));
         }
 
         if (progress >= DEATH_PROGRESS) {
             // The steroids damage type bypasses armor, resistance and protection (see data/minecraft/tags/damage_type)
-            pLivingEntity.hurtServer(pLevel, ModDamageTypes.causeWungusSteroids(pLevel.registryAccess()), 10000);
+            pLivingEntity.hurt(ModDamageTypes.causeWungusSteroids(pLivingEntity.level().registryAccess()), 10000);
         }
         return true;
     }

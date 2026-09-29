@@ -3,14 +3,14 @@ package net.josh.wungus.entity.client;
 // Made with Blockbench 4.12.1
 
 import net.josh.wungus.entity.animations.ModAnimationDefinitions;
-import net.minecraft.client.animation.KeyframeAnimation;
-import net.minecraft.client.model.EntityModel;
+import net.josh.wungus.entity.custom.WungusEntity;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class WungusModel extends EntityModel<WungusRenderState> {
+public class WungusModel extends HierarchicalModel<WungusEntity> {
 	private final ModelPart main;
 	private final ModelPart legR;
 	private final ModelPart legL;
@@ -25,14 +25,7 @@ public class WungusModel extends EntityModel<WungusRenderState> {
 	private final ModelPart tailsec3;
 	private final ModelPart tailsec4;
 
-	private final KeyframeAnimation walkAnimation;
-	private final KeyframeAnimation runAnimation;
-	private final KeyframeAnimation sitAnimation;
-	private final KeyframeAnimation standAnimation;
-	private final KeyframeAnimation idleAnimation;
-
 	public WungusModel(ModelPart root) {
-		super(root);
 		this.main = root.getChild("main");
 		this.legR = this.main.getChild("legR");
 		this.legL = this.main.getChild("legL");
@@ -46,12 +39,6 @@ public class WungusModel extends EntityModel<WungusRenderState> {
 		this.tailsec2 = this.tail.getChild("tailsec2");
 		this.tailsec3 = this.tailsec2.getChild("tailsec3");
 		this.tailsec4 = this.tailsec3.getChild("tailsec4");
-
-		this.walkAnimation = ModAnimationDefinitions.WUNGUS_WALK.bake(root);
-		this.runAnimation = ModAnimationDefinitions.WUNGUS_RUN.bake(root);
-		this.sitAnimation = ModAnimationDefinitions.WUNGUS_SIT.bake(root);
-		this.standAnimation = ModAnimationDefinitions.WUNGUS_STAND.bake(root);
-		this.idleAnimation = ModAnimationDefinitions.WUNGUS_IDLE.bake(root);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -126,17 +113,22 @@ public class WungusModel extends EntityModel<WungusRenderState> {
 	}
 
 	@Override
-	public void setupAnim(WungusRenderState state) {
-		super.setupAnim(state);
-		this.applyHeadRotation(state.yRot, state.xRot);
+	public ModelPart root() {
+		return main;
+	}
+
+	@Override
+	public void setupAnim(WungusEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		this.applyHeadRotation(netHeadYaw, headPitch);
 
 		// The running animation has its own leg movement, so only use the walk cycle when not running
-		if (!state.runningAnimationState.isStarted()) {
-			this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 1f, 2.5f);
+		if (!entity.runningAnimationState.isStarted()) {
+			this.animateWalk(ModAnimationDefinitions.WUNGUS_WALK, limbSwing, limbSwingAmount, 1f, 2.5f);
 		}
-		this.runAnimation.apply(state.runningAnimationState, state.ageInTicks, 1f);
-		this.sitAnimation.apply(state.sittingAnimationState, state.ageInTicks, 1f);
-		this.standAnimation.apply(state.standingAnimationState, state.ageInTicks, 1f);
-		this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks, 1f);
+		this.animate(entity.runningAnimationState, ModAnimationDefinitions.WUNGUS_RUN, ageInTicks, 1f);
+		this.animate(entity.sittingAnimation, ModAnimationDefinitions.WUNGUS_SIT, ageInTicks, 1f);
+		this.animate(entity.standingAnimation, ModAnimationDefinitions.WUNGUS_STAND, ageInTicks, 1f);
+		this.animate(entity.idleAnimationState, ModAnimationDefinitions.WUNGUS_IDLE, ageInTicks, 1f);
 	}
 }

@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-// Only referenced from client-side code
+// Only runs on the client (see ModNetworking), it only uses common classes
 public class ClientPayloadHandler {
     private static final int PARTICLE_COUNT = 2000;
 
@@ -77,7 +77,7 @@ public class ClientPayloadHandler {
             // Uniform over the spherical cap, so the particles are not bunched up in the middle of the cone
             double cosTheta = 1.0 - rand.nextDouble() * (1.0 - cosMax);
             double sinTheta = Math.sqrt(1.0 - cosTheta * cosTheta);
-            double phi = rand.nextDouble() * Mth.TWO_PI;
+            double phi = rand.nextDouble() * Math.PI * 2.0;
 
             Vec3 dir = axis.scale(cosTheta)
                     .add(side.scale(sinTheta * Math.cos(phi)))

@@ -5,10 +5,9 @@ import net.josh.wungus.entity.ModEntities;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -32,7 +31,7 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_TREE_AILANTHUS = registerKey("add_tree_ailanthus");
     // Forest and birch forests, see data/wungus/tags/worldgen/biome/has_ailanthus_trees.json
     public static final TagKey<Biome> HAS_AILANTHUS_TREES_TAG =
-            TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "has_ailanthus_trees"));
+            TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "has_ailanthus_trees"));
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -57,16 +56,16 @@ public class ModBiomeModifiers {
 
     }
 
-    private static Weighted<MobSpawnSettings.SpawnerData> wungusSpawn() {
-        return new Weighted<>(new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 2), 1);
+    private static MobSpawnSettings.SpawnerData wungusSpawn() {
+        return new MobSpawnSettings.SpawnerData(ModEntities.WUNGUS.get(), 1, 1, 2);
     }
 
     private static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, name));
     }
 
     private static TagKey<Biome> tag(String name)
     {
-        return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "can_spawn/" + name));
+        return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "can_spawn/" + name));
     }
 }

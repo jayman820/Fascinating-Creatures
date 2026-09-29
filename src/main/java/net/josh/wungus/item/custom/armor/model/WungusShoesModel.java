@@ -4,7 +4,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-// Ported to 26.1: the boots are now children of the vanilla leg parts, so they follow the leg animation
+// The boots are children of the vanilla leg parts, so they follow the leg animation
 public class WungusShoesModel extends ArmorModel {
     public WungusShoesModel(ModelPart root) {
         super(root);
@@ -14,8 +14,8 @@ public class WungusShoesModel extends ArmorModel {
         MeshDefinition meshdefinition = createEmptyHumanoidMesh();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition right_leg = partdefinition.getChild("right_leg");
-        PartDefinition left_leg = partdefinition.getChild("left_leg");
+        PartDefinition right_leg = partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-1.9F, 12.0F, 0.0F));
+        PartDefinition left_leg = partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(1.9F, 12.0F, 0.0F));
 
         PartDefinition right_boot = right_leg.addOrReplaceChild("right_boot", CubeListBuilder.create().texOffs(0, 28).addBox(-2.0F, 10.0F, -2.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(1.0F))
                 .texOffs(0, 0).addBox(-1.0F, 10.0F, -15.0F, 4.0F, 2.0F, 12.0F, new CubeDeformation(0.0F))

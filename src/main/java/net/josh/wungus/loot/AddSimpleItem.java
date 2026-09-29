@@ -18,13 +18,9 @@ public class AddSimpleItem extends LootModifier {
             .apply(inst, AddSimpleItem::new));
     private final Item item;
 
-    public AddSimpleItem(LootItemCondition[] conditionsIn, int priority, Item item) {
-        super(conditionsIn, priority);
-        this.item = item;
-    }
-
     public AddSimpleItem(LootItemCondition[] conditionsIn, Item item) {
-        this(conditionsIn, IGlobalLootModifier.DEFAULT_PRIORITY, item);
+        super(conditionsIn);
+        this.item = item;
     }
 
     @Override

@@ -2,15 +2,15 @@ package net.josh.wungus.entity.client;
 
 import net.josh.wungus.WungusMod;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModModelLayers {
     public static final ModelLayerLocation WUNGUS_LAYER = new ModelLayerLocation(
-            Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wungus_layer"), "main");
+            ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "wungus_layer"), "main");
 
     public static final ModelLayerLocation WUNGUS_BABY_LAYER = new ModelLayerLocation(
-            Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wungus_baby_layer"), "main");
+            ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "wungus_baby_layer"), "main");
 
     public static final ModelLayerLocation LANTERNFLY_LAYER = new ModelLayerLocation(
-            Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "lanternfly_layer"), "main");
+            ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "lanternfly_layer"), "main");
 }

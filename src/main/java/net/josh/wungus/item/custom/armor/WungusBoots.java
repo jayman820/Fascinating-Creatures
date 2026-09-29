@@ -1,35 +1,35 @@
 package net.josh.wungus.item.custom.armor;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.server.level.ServerLevel;
+import net.josh.wungus.item.ModArmorMaterials;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.equipment.Equippable;
-import org.jspecify.annotations.Nullable;
+import net.minecraft.world.level.Level;
 
 /**
- * Wungus hide boots. The armor stats and equipment asset come from the item properties
- * (see ModItems / ModArmorMaterials), the custom 3D model is registered on the client
- * (see ModEventBusClientEvents).
+ * Wungus hide boots: speed while worn, as long as every other armor slot is empty or holds a piece of armor.
+ * The custom 3D model is registered on the client (see ModEventBusClientEvents).
  */
-public class WungusBoots extends Item {
+public class WungusBoots extends ArmorItem {
     private static final EquipmentSlot[] ARMOR_SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
-    public WungusBoots(Properties pProperties) {
-        super(pProperties);
+    public WungusBoots(Holder<ArmorMaterial> pMaterial, Type pType, Properties pProperties) {
+        super(pMaterial, pType, pProperties);
     }
 
-    // Replaces the old onArmorTick: equipped armor is ticked with the slot it is worn in (server side only)
+    // Worn armor is ticked like every other item in the inventory, so check that the boots are actually worn
     @Override
-    public void inventoryTick(ItemStack stack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
-        super.inventoryTick(stack, level, owner, slot);
-        if (slot == EquipmentSlot.FEET && owner instanceof Player player && hasOnlyArmorEquipped(player)) {
-            addEffectToPlayer(player, new MobEffectInstance(MobEffects.SPEED, 200, 1));
+    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
+        if (!pLevel.isClientSide() && pEntity instanceof Player player
+                && player.getItemBySlot(EquipmentSlot.FEET) == pStack && hasOnlyArmorEquipped(player)) {
+            addEffectToPlayer(player, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 1));
         }
     }
 
@@ -42,18 +42,16 @@ public class WungusBoots extends Item {
         }
     }
 
-    // Every armor slot has to be empty or hold a piece of armor (not e.g. an elytra or a carved pumpkin)
+    // Every armor slot has to be empty or hold a piece of armor (not e.g. an elytra or a carved pumpkin),
+    // and the boots have to be wungus hide
     private boolean hasOnlyArmorEquipped(Player player) {
         for (EquipmentSlot armorSlot : ARMOR_SLOTS) {
             ItemStack armorStack = player.getItemBySlot(armorSlot);
-            if (armorStack.isEmpty()) {
-                continue;
-            }
-            Equippable equippable = armorStack.get(DataComponents.EQUIPPABLE);
-            if (equippable == null || equippable.assetId().isEmpty() || armorStack.has(DataComponents.GLIDER)) {
+            if (!armorStack.isEmpty() && !(armorStack.getItem() instanceof ArmorItem)) {
                 return false;
             }
         }
-        return true;
+        return player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof ArmorItem boots
+                && boots.getMaterial().is(ModArmorMaterials.WUNGUS_HIDE.getKey());
     }
 }

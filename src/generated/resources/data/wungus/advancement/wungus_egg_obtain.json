@@ -12,11 +12,12 @@
     }
   },
   "display": {
-    "background": "wungus:advancements/wungusicon",
+    "background": "wungus:textures/advancements/wungusicon.png",
     "description": {
       "text": "Is this thing even alive?"
     },
     "icon": {
+      "count": 1,
       "id": "wungus:wungus_egg"
     },
     "title": {

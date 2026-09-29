@@ -6,6 +6,7 @@ import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.item.ModArmorMaterials;
 import net.josh.wungus.item.ModCreativeModeTabs;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.loot.ModLootModifiers;
@@ -43,6 +44,7 @@ public class WungusMod
 
         ModCreativeModeTabs.register(modEventBus);
 
+        ModArmorMaterials.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 

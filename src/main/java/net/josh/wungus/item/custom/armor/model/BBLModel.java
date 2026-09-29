@@ -4,7 +4,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-// Ported to 26.1: the cubes now live in the vanilla leg parts (pivots +-1.9, 12, 0)
+// The cubes live in the vanilla leg parts (pivots +-1.9, 12, 0)
 public class BBLModel extends ArmorModel {
     public BBLModel(ModelPart root) {
         super(root);

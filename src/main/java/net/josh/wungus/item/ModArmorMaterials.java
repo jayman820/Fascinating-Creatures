@@ -1,47 +1,62 @@
 package net.josh.wungus.item;
 
 import net.josh.wungus.WungusMod;
-import net.josh.wungus.util.ModTags;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.Util;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.item.equipment.EquipmentAsset;
-import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
- * Armor materials are plain records now, each one points at its own equipment asset (assets/wungus/equipment/*.json).
+ * Armor materials are registry entries in 1.21. Each material has one texture layer:
+ * assets/wungus/textures/models/armor/{texture}_layer_1.png (layer_2 for leggings, which use the inner model).
  * Only the boots are made of wungus hide. The mask and the bbl are separate pieces (found as loot) with their own
- * material, and can be repaired with whatever is added to their repair tags (empty for now, so not repairable).
+ * material. They can't be repaired for now: put the repair item in their Ingredient.
  */
 public class ModArmorMaterials {
-    public static final ResourceKey<EquipmentAsset> WUNGUS_BOOTS_ASSET = createAsset("wungus_boots");
-    public static final ResourceKey<EquipmentAsset> WUNGUS_MASK_ASSET = createAsset("wungus_mask");
-    public static final ResourceKey<EquipmentAsset> BBL_ASSET = createAsset("bbl");
+    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS =
+            DeferredRegister.create(Registries.ARMOR_MATERIAL, WungusMod.MOD_ID);
 
-    public static final ArmorMaterial WUNGUS_HIDE = new ArmorMaterial(5, defense(4, 2, 3, 1), 15,
-            SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, ModTags.Items.REPAIRS_WUNGUS_HIDE_ARMOR, WUNGUS_BOOTS_ASSET);
+    // Durability multiplier, the durability of a piece is its type's base durability times this
+    public static final int DURABILITY_MULTIPLIER = 5;
 
-    public static final ArmorMaterial WUNGUS_MASK = new ArmorMaterial(5, defense(4, 2, 3, 1), 15,
-            SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, ModTags.Items.REPAIRS_WUNGUS_MASK, WUNGUS_MASK_ASSET);
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> WUNGUS_HIDE = register("wungus_hide", "wungus_boots",
+            () -> Ingredient.of(ModItems.WUNGUS_HIDE.get()));
 
-    public static final ArmorMaterial BBL = new ArmorMaterial(5, defense(4, 2, 3, 1), 15,
-            SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, ModTags.Items.REPAIRS_BBL, BBL_ASSET);
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> WUNGUS_MASK = register("wungus_mask", "wungus_mask",
+            () -> Ingredient.EMPTY);
 
-    private static Map<ArmorType, Integer> defense(int boots, int leggings, int chestplate, int helmet) {
-        Map<ArmorType, Integer> defense = new EnumMap<>(ArmorType.class);
-        defense.put(ArmorType.BOOTS, boots);
-        defense.put(ArmorType.LEGGINGS, leggings);
-        defense.put(ArmorType.CHESTPLATE, chestplate);
-        defense.put(ArmorType.HELMET, helmet);
-        return defense;
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> BBL = register("bbl", "bbl",
+            () -> Ingredient.EMPTY);
+
+    private static DeferredHolder<ArmorMaterial, ArmorMaterial> register(String name, String texture, Supplier<Ingredient> repairIngredient) {
+        return ARMOR_MATERIALS.register(name, () -> new ArmorMaterial(defense(4, 2, 3, 1), 15,
+                SoundEvents.ARMOR_EQUIP_LEATHER, repairIngredient,
+                List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, texture))),
+                0.0F, 0.0F));
     }
 
-    private static ResourceKey<EquipmentAsset> createAsset(String name) {
-        return ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, name));
+    private static Map<ArmorItem.Type, Integer> defense(int boots, int leggings, int chestplate, int helmet) {
+        return Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+            map.put(ArmorItem.Type.BOOTS, boots);
+            map.put(ArmorItem.Type.LEGGINGS, leggings);
+            map.put(ArmorItem.Type.CHESTPLATE, chestplate);
+            map.put(ArmorItem.Type.HELMET, helmet);
+            map.put(ArmorItem.Type.BODY, chestplate);
+        });
+    }
+
+    public static void register(IEventBus eventBus) {
+        ARMOR_MATERIALS.register(eventBus);
     }
 }

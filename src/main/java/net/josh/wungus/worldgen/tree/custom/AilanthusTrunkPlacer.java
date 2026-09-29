@@ -6,7 +6,7 @@ import net.josh.wungus.worldgen.tree.ModTrunkPlacerTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -46,9 +46,9 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
     }
 
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos, TreeConfiguration pConfig) {
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos, TreeConfiguration pConfig) {
         List<FoliagePlacer.FoliageAttachment> attachments = new ArrayList<>();
-        placeBelowTrunkBlock(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
+        setDirtAt(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
 
         // Trunk, sometimes with a one block jog a few blocks up
         int leanHeight = pRandom.nextFloat() < LEAN_CHANCE ? 2 + pRandom.nextInt(2) : -1;
@@ -59,7 +59,7 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
             if (y == leanHeight) {
                 trunk.move(leanDirection);
                 placeLog(pLevel, pBlockSetter, pRandom, trunk, pConfig,
-                        state -> state.trySetValue(RotatedPillarBlock.AXIS, leanDirection.getAxis()));
+                        state -> withAxis(state, leanDirection.getAxis()));
             }
             trunk.move(Direction.UP);
         }
@@ -88,7 +88,7 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
         return attachments;
     }
 
-    private FoliagePlacer.FoliageAttachment placeBranch(WorldGenLevel level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random,
+    private FoliagePlacer.FoliageAttachment placeBranch(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random,
                                                         BlockPos start, int[] direction, TreeConfiguration config) {
         BlockPos.MutableBlockPos pos = start.mutable();
 
@@ -98,11 +98,11 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
         for (int step = 0; step < length; step++) {
             if (direction[0] != 0) {
                 pos.move(direction[0], 0, 0);
-                placeLog(level, blockSetter, random, pos, config, state -> state.trySetValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+                placeLog(level, blockSetter, random, pos, config, state -> withAxis(state, Direction.Axis.X));
             }
             if (direction[1] != 0) {
                 pos.move(0, 0, direction[1]);
-                placeLog(level, blockSetter, random, pos, config, state -> state.trySetValue(RotatedPillarBlock.AXIS, Direction.Axis.Z));
+                placeLog(level, blockSetter, random, pos, config, state -> withAxis(state, Direction.Axis.Z));
             }
             // Branches grow outwards and upwards, the first step is usually flat
             if (step > 0 || random.nextFloat() < 0.3F) {
@@ -117,5 +117,9 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
         }
 
         return new FoliagePlacer.FoliageAttachment(pos.above(), 0, false);
+    }
+
+    private static BlockState withAxis(BlockState state, Direction.Axis axis) {
+        return state.hasProperty(RotatedPillarBlock.AXIS) ? state.setValue(RotatedPillarBlock.AXIS, axis) : state;
     }
 }

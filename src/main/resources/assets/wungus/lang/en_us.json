@@ -4,6 +4,7 @@
   "item.wungus.wungus_hide": "Wungus Hide",
   "item.wungus.wungus_boots": "Wungus Shoes",
   "item.wungus.wungus_mask": "Wungus Mask",
+  "item.wungus.bbl": "BBL",
   "item.wungus.raw_wungus_flesh": "Raw Wungus Flesh",
   "item.wungus.cooked_wungus_flesh": "Dried Wungus Flesh",
   "item.wungus.wungus_shawarma": "Wungus Shawarma",
@@ -16,7 +17,6 @@
   "item.wungus.health_steroid": "Health Steroids",
   "item.wungus.jump_steroid": "Jump Steroids",
   "item.wungus.speed_steroid": "Speed Steroids",
-  "item.wungus.bbl": "BBL",
 
   "block.wungus.wungus_egg": "Wungus Egg",
   "block.wungus.wungus_statue": "Wungus Statue",
@@ -47,15 +47,15 @@
   "block.wungus.andaran_grass_block": "Andaran Grass Block",
 
   "entity.wungus.wungus": "Wungus",
-  "entity.wungus.villager.bbl_doctor": "BBL Doctor",
+  "entity.minecraft.villager.wungus.bbl_doctor": "BBL Doctor",
 
   "creativetab.wungus_tab": "Fascinating Creatures",
 
   "effect.wungus.wungdigestion": "Wungdigestion",
+  "effect.wungus.heart_palpitations": "Heart Palpitations",
   "effect.wungus.wungus_steroid_health": "Heart Failure",
   "effect.wungus.wungus_steroid_speed": "Heart Failure",
   "effect.wungus.wungus_steroid_jump": "Heart Failure",
-  "effect.wungus.heart_palpitations": "Heart Palpitations",
 
   "sounds.wungus.burp": "Wungdigestion Burp Effect Noise",
   "sounds.wungus.fart": "Wungdigestion Fart Effect Noise",

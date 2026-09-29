@@ -2,12 +2,12 @@ package net.josh.wungus.item.custom;
 
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class PrattlingWungus extends Item {
@@ -19,12 +19,12 @@ public class PrattlingWungus extends Item {
     }
 
     @Override
-    public ItemUseAnimation getUseAnimation(ItemStack pStack) {
-        return ItemUseAnimation.BOW;
+    public UseAnim getUseAnimation(ItemStack pStack) {
+        return UseAnim.BOW;
     }
 
     @Override
-    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         switch (this.VARIANT) {
             case 1:
                 pPlayer.playSound(ModSounds.PRATTLING_WUNGUS_1.get());

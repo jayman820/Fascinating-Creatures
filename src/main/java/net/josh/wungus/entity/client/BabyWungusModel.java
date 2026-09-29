@@ -3,37 +3,28 @@ package net.josh.wungus.entity.client;
 // Made with Blockbench 5.1.6 (prigus_java.bbmodel)
 
 import net.josh.wungus.entity.animations.BabyWungusAnimations;
-import net.minecraft.client.animation.KeyframeAnimation;
-import net.minecraft.client.model.EntityModel;
+import net.josh.wungus.entity.custom.WungusEntity;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
 /** The baby wungus, used instead of WungusModel for babies (see WungusRenderer). */
-public class BabyWungusModel extends EntityModel<WungusRenderState> {
+public class BabyWungusModel extends HierarchicalModel<WungusEntity> {
+	private final ModelPart root;
 	private final ModelPart prigus;
 	private final ModelPart body;
 	private final ModelPart snout;
 	private final ModelPart legL;
 	private final ModelPart legR;
 
-	private final KeyframeAnimation walkAnimation;
-	private final KeyframeAnimation idleAnimation;
-	private final KeyframeAnimation sitAnimation;
-	private final KeyframeAnimation standAnimation;
-
 	public BabyWungusModel(ModelPart root) {
-		super(root);
+		this.root = root;
 		this.prigus = root.getChild("prigus");
 		this.body = this.prigus.getChild("body");
 		this.snout = this.body.getChild("snout");
 		this.legL = this.prigus.getChild("legL");
 		this.legR = this.prigus.getChild("legR");
-
-		this.walkAnimation = BabyWungusAnimations.BABY_WALK.bake(root);
-		this.idleAnimation = BabyWungusAnimations.BABY_IDLE.bake(root);
-		this.sitAnimation = BabyWungusAnimations.BABY_SIT.bake(root);
-		this.standAnimation = BabyWungusAnimations.BABY_STAND.bake(root);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -63,14 +54,20 @@ public class BabyWungusModel extends EntityModel<WungusRenderState> {
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
+	// The animations look up the bones by name below this part, so it has to be the real root (it holds "prigus")
 	@Override
-	public void setupAnim(WungusRenderState state) {
-		super.setupAnim(state);
+	public ModelPart root() {
+		return this.root;
+	}
+
+	@Override
+	public void setupAnim(WungusEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
 
 		// The baby has no running animation, so it keeps walking while it runs away
-		this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 1f, 2.5f);
-		this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks, 1f);
-		this.sitAnimation.apply(state.sittingAnimationState, state.ageInTicks, 1f);
-		this.standAnimation.apply(state.standingAnimationState, state.ageInTicks, 1f);
+		this.animateWalk(BabyWungusAnimations.BABY_WALK, limbSwing, limbSwingAmount, 1f, 2.5f);
+		this.animate(entity.idleAnimationState, BabyWungusAnimations.BABY_IDLE, ageInTicks, 1f);
+		this.animate(entity.sittingAnimation, BabyWungusAnimations.BABY_SIT, ageInTicks, 1f);
+		this.animate(entity.standingAnimation, BabyWungusAnimations.BABY_STAND, ageInTicks, 1f);
 	}
 }

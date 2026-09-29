@@ -3,7 +3,6 @@ package net.josh.wungus.block.custom;
 import com.mojang.serialization.MapCodec;
 import net.josh.wungus.sound.ModSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,20 +12,20 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class BBLTable extends Block {
     public static final MapCodec<BBLTable> CODEC = simpleCodec(BBLTable::new);
-    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public BBLTable(BlockBehaviour.Properties pProperties) {
         super(pProperties);
     }
 
     @Override
-    protected MapCodec<? extends BBLTable> codec() {
+    public MapCodec<? extends BBLTable> codec() {
         return CODEC;
     }
 
@@ -36,12 +35,12 @@ public class BBLTable extends Block {
     }
 
     @Override
-    protected BlockState rotate(BlockState pState, Rotation pRotation) {
+    public BlockState rotate(BlockState pState, Rotation pRotation) {
         return pState.setValue(FACING, pRotation.rotate(pState.getValue(FACING)));
     }
 
     @Override
-    protected BlockState mirror(BlockState pState, Mirror pMirror) {
+    public BlockState mirror(BlockState pState, Mirror pMirror) {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }
 
@@ -51,12 +50,12 @@ public class BBLTable extends Block {
     }
 
     @Override
-    protected boolean isPathfindable(BlockState pState, PathComputationType pType) {
+    public boolean isPathfindable(BlockState pState, PathComputationType pType) {
         return false;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
+    public InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
         pLevel.playSound(null, pPos, ModSounds.WUNGUS_STATUE.get(), SoundSource.BLOCKS);
         return InteractionResult.SUCCESS;
     }

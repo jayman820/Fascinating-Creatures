@@ -1,6 +1,6 @@
 package net.josh.wungus.item.custom.armor.model;// Made with Blockbench 4.12.5
 // Exported for Minecraft version 1.17 or later with Mojang mappings
-// Ported to 26.1: the cubes now live in the vanilla head part (pivot 0, 0, 0)
+// The cubes live in the vanilla head part (pivot 0, 0, 0)
 
 
 import net.minecraft.client.model.geom.ModelPart;
@@ -25,8 +25,6 @@ public class WungusMaskModel extends ArmorModel {
 				PartPose.ZERO);
 
 		//PartDefinition cube_r1 = head.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(36, 0).addBox(-1.5F, -5.0F, -2.0F, 3.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -17.0F, 0.0F, -0.1745F, 0.0F, 0.0F));
-
-		head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}

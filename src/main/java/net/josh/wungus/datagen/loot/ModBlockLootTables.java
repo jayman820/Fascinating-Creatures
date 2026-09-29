@@ -41,10 +41,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.AILANTHUS_LEAVES_2.get(), block ->
                 createLeavesDrops(block, ModBlocks.AILANTHUS_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
-        // The wall signs share the loot table of the standing signs (see ModBlocks#wallVariant)
         this.add(ModBlocks.AILANTHUS_SIGN.get(), block ->
                 createSingleItemTable(ModItems.AILANTHUS_SIGN.get()));
+        this.add(ModBlocks.AILANTHUS_WALL_SIGN.get(), block ->
+                createSingleItemTable(ModItems.AILANTHUS_SIGN.get()));
         this.add(ModBlocks.AILANTHUS_HANGING_SIGN.get(), block ->
+                createSingleItemTable(ModItems.AILANTHUS_HANGING_SIGN.get()));
+        this.add(ModBlocks.AILANTHUS_WALL_HANGING_SIGN.get(), block ->
                 createSingleItemTable(ModItems.AILANTHUS_HANGING_SIGN.get()));
 
         this.dropSelf(ModBlocks.AILANTHUS_STAIRS.get());

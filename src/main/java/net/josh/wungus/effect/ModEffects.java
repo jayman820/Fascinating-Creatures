@@ -3,6 +3,8 @@ package net.josh.wungus.effect;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.attachment.ModAttachments;
 import net.josh.wungus.item.custom.WungusSteroid;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -29,6 +31,14 @@ public class ModEffects {
 
     public static final DeferredHolder<MobEffect, MobEffect> WUNGUS_JUMP_STEROID_EFFECT =
             MOB_EFFECTS.register("wungus_steroid_jump", () -> new WungusSteroidEffect(MobEffectCategory.NEUTRAL, 0x36ebab, WungusSteroid.Type.JUMP, ModAttachments.JUMP_STEROID_STATE));
+
+    /**
+     * The registry's own holder of an effect. Use it for MobEffectInstances: the active effects of an entity are
+     * stored in a map keyed by holder, and effects loaded from a save or synced from the server use this holder.
+     */
+    public static Holder<MobEffect> holder(DeferredHolder<MobEffect, MobEffect> effect) {
+        return BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect.get());
+    }
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

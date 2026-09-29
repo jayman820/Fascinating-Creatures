@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.loot.LootModifier;
 
 /**
  * Adds a full item stack (including data components, e.g. a written book with pages) to the loot.
- * This replaces the old "nbtString" field: items no longer carry NBT, the JSON looks like
+ * This replaces the old "nbtString" field: items no longer carry NBT in 1.21, the JSON looks like
  * {"item": {"id": "minecraft:written_book", "components": {"minecraft:written_book_content": {...}}}}
  */
 public class AddItemModifier extends LootModifier {
@@ -20,17 +20,14 @@ public class AddItemModifier extends LootModifier {
             .apply(inst, AddItemModifier::new));
     private final ItemStack stack;
 
-    public AddItemModifier(LootItemCondition[] conditionsIn, int priority, ItemStack stack) {
-        super(conditionsIn, priority);
-        this.stack = stack;
-    }
-
     public AddItemModifier(LootItemCondition[] conditionsIn, ItemStack stack) {
-        this(conditionsIn, IGlobalLootModifier.DEFAULT_PRIORITY, stack);
+        super(conditionsIn);
+        this.stack = stack;
     }
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+        // The conditions have already been checked by LootModifier#apply
         generatedLoot.add(this.stack.copy());
         return generatedLoot;
     }

@@ -5,79 +5,60 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.custom.WungusEntity;
 import net.josh.wungus.entity.variant.WungusVariant;
-import net.minecraft.client.model.AdultAndBabyModelPair;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.Util;
+import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.Util;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
 
-// Adults and babies have their own model and texture, like vanilla's split adult/baby animals
-public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState, EntityModel<WungusRenderState>> {
-    public static final Map<WungusVariant, Identifier> LOCATION_BY_VARIANT =
+// Adults and babies have their own model and texture
+public class WungusRenderer extends MobRenderer<WungusEntity, HierarchicalModel<WungusEntity>> {
+    public static final Map<WungusVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(WungusVariant.class), map -> {
                 map.put(WungusVariant.DEFAULT, texture("wungus"));
                 map.put(WungusVariant.WHITE, texture("nonegus"));
                 map.put(WungusVariant.GREEN, texture("greengus"));
                 map.put(WungusVariant.BLUE, texture("bluegus"));
             });
-    private static final Identifier SAKURA_TEXTURE = texture("pinkgus");
-    private static final Identifier PAPI_TEXTURE = texture("mangungus");
+    private static final ResourceLocation SAKURA_TEXTURE = texture("pinkgus");
+    private static final ResourceLocation PAPI_TEXTURE = texture("mangungus");
     // One texture for all baby wungi (every variant and name)
-    private static final Identifier BABY_TEXTURE = texture("wungus_baby");
+    private static final ResourceLocation BABY_TEXTURE = texture("wungus_baby");
 
-    private final AdultAndBabyModelPair<EntityModel<WungusRenderState>> models;
+    private final HierarchicalModel<WungusEntity> adultModel;
+    private final HierarchicalModel<WungusEntity> babyModel;
 
     public WungusRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new WungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 0.7f);
-        this.models = new AdultAndBabyModelPair<>(this.model, new BabyWungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_BABY_LAYER)));
+        this.adultModel = this.model;
+        this.babyModel = new BabyWungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_BABY_LAYER));
     }
 
-    private static Identifier texture(String name) {
-        return Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "textures/entity/wungus/" + name + ".png");
-    }
-
-    @Override
-    public WungusRenderState createRenderState() {
-        return new WungusRenderState();
+    private static ResourceLocation texture(String name) {
+        return ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "textures/entity/wungus/" + name + ".png");
     }
 
     @Override
-    public void extractRenderState(WungusEntity pEntity, WungusRenderState pState, float pPartialTicks) {
-        super.extractRenderState(pEntity, pState, pPartialTicks);
-        pState.runningAnimationState.copyFrom(pEntity.runningAnimationState);
-        pState.idleAnimationState.copyFrom(pEntity.idleAnimationState);
-        pState.sittingAnimationState.copyFrom(pEntity.sittingAnimation);
-        pState.standingAnimationState.copyFrom(pEntity.standingAnimation);
-        pState.variant = pEntity.getVariant();
-
-        if (pEntity.nameContains("sakura")) {
-            pState.textureOverride = SAKURA_TEXTURE;
-        } else if (pEntity.nameContains("papi")) {
-            pState.textureOverride = PAPI_TEXTURE;
-        } else {
-            pState.textureOverride = null;
-        }
-    }
-
-    @Override
-    public void submit(WungusRenderState pState, PoseStack pPoseStack, SubmitNodeCollector pSubmitNodeCollector, CameraRenderState pCamera) {
-        this.model = this.models.getModel(pState.isBaby);
-        super.submit(pState, pPoseStack, pSubmitNodeCollector, pCamera);
-    }
-
-    @Override
-    public Identifier getTextureLocation(WungusRenderState pState) {
-        if (pState.isBaby) {
+    public ResourceLocation getTextureLocation(WungusEntity wungusEntity) {
+        if (wungusEntity.isBaby()) {
             return BABY_TEXTURE;
         }
-        if (pState.textureOverride != null) {
-            return pState.textureOverride;
+        if (wungusEntity.nameContains("sakura")) {
+            return SAKURA_TEXTURE;
+        } else if (wungusEntity.nameContains("papi")) {
+            return PAPI_TEXTURE;
         }
-        return LOCATION_BY_VARIANT.get(pState.variant);
+        return LOCATION_BY_VARIANT.get(wungusEntity.getVariant());
+    }
+
+    @Override
+    public void render(WungusEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+        // Babies have their own, smaller model (instead of drawing the adult at half size)
+        this.model = pEntity.isBaby() ? this.babyModel : this.adultModel;
+
+        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
     }
 }

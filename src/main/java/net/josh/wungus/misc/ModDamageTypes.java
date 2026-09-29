@@ -5,8 +5,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
@@ -14,25 +14,25 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class ModDamageTypes {
 
-    public static final ResourceKey<DamageType> STEROIDS = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "steroids"));
-    public static final ResourceKey<DamageType> CASHEW = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "cashew"));
-    public static final ResourceKey<DamageType> NONEGUS = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "nonegus"));
-    public static final ResourceKey<DamageType> LANDMINE = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "landmine"));
+    public static final ResourceKey<DamageType> STEROIDS = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "steroids"));
+    public static final ResourceKey<DamageType> CASHEW = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "cashew"));
+    public static final ResourceKey<DamageType> NONEGUS = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "nonegus"));
+    public static final ResourceKey<DamageType> LANDMINE = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "landmine"));
 
     public static DamageSource causeWungusSteroids(RegistryAccess registryAccess) {
-        return new DamageSourceRandomMessages(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(STEROIDS), 1);
+        return new DamageSourceRandomMessages(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(STEROIDS), 1);
     }
 
     public static DamageSource causeSantonioCashew(RegistryAccess registryAccess) {
-        return new DamageSourceRandomMessages(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(CASHEW), 2);
+        return new DamageSourceRandomMessages(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(CASHEW), 2);
     }
 
     public static DamageSource causeLandMine(RegistryAccess registryAccess) {
-        return new DamageSourceRandomMessages(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(LANDMINE), 2);
+        return new DamageSourceRandomMessages(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(LANDMINE), 2);
     }
 
     public static DamageSource causeNonegusBite(RegistryAccess registryAccess, Entity source) {
-        return new DamageSourceRandomMessages(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(NONEGUS), source, 2);
+        return new DamageSourceRandomMessages(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(NONEGUS), source, 2);
     }
 
 

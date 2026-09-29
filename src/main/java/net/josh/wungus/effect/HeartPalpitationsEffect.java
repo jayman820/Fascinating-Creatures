@@ -6,7 +6,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 
 /**
  * Given (hidden) by the steroid heart failure. On the client it shakes the camera and, near the end, pulses the
- * screen edges red (see ModEventBusClientEvents). The amplifier tells the client how far the heart failure is.
+ * screen edges red (see ModClientGameEvents). The amplifier tells the client how far the heart failure is.
  * The timing math is here so the server and the client agree on it.
  */
 public class HeartPalpitationsEffect extends MobEffect {

@@ -8,13 +8,24 @@
   "type": "farmersdelight:cooking",
   "recipe_book_tab": "misc",
   "ingredients": [
-    "wungus:cooked_wungus_flesh",
-    "#c:foods/dough",
-    "#c:crops/tomato",
-    "#c:crops/onion",
-    "#c:crops/cabbage"
+    {
+      "item": "wungus:cooked_wungus_flesh"
+    },
+    {
+      "tag": "c:foods/dough"
+    },
+    {
+      "tag": "c:crops/tomato"
+    },
+    {
+      "tag": "c:crops/onion"
+    },
+    {
+      "tag": "c:crops/cabbage"
+    }
   ],
   "result": {
+    "count": 1,
     "id": "wungus:wungus_shawarma"
   },
   "cookingtime": 200

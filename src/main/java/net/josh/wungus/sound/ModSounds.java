@@ -2,7 +2,7 @@ package net.josh.wungus.sound;
 
 import net.josh.wungus.WungusMod;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -26,7 +26,7 @@ public class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> MANGUNGUS_AMBIENT = registerSoundEvents("mangungus_ambient");
 
     public static DeferredHolder<SoundEvent, SoundEvent> registerSoundEvents(String name) {
-        Identifier id = Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

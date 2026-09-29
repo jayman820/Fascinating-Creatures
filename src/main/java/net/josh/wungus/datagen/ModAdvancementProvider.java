@@ -7,35 +7,29 @@ import net.josh.wungus.item.ModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.criterion.BredAnimalsTrigger;
-import net.minecraft.advancements.criterion.ConsumeItemTrigger;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.advancements.criterion.KilledTrigger;
-import net.minecraft.advancements.criterion.TameAnimalTrigger;
-import net.minecraft.core.HolderGetter;
+import net.minecraft.advancements.critereon.BredAnimalsTrigger;
+import net.minecraft.advancements.critereon.ConsumeItemTrigger;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.KilledTrigger;
+import net.minecraft.advancements.critereon.TameAnimalTrigger;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class ModAdvancementProvider implements AdvancementSubProvider {
+public class ModAdvancementProvider implements AdvancementProvider.AdvancementGenerator {
     @Override
-    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver) {
-        HolderGetter<EntityType<?>> entityTypes = registries.lookupOrThrow(Registries.ENTITY_TYPE);
-        HolderGetter<Item> items = registries.lookupOrThrow(Registries.ITEM);
-
+    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
         AdvancementHolder obtainWungusEgg = Advancement.Builder.advancement()
                 .display(ModBlocks.WUNGUS_EGG.get(),
                         Component.literal("Legend of the Wungus"), Component.literal("Is this thing even alive?"),
-                        Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "advancements/wungusicon"), AdvancementType.TASK,
+                        ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, "textures/advancements/wungusicon.png"), AdvancementType.TASK,
                         true, true, false)
                 .addCriterion("obtained_wungus_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.WUNGUS_EGG.get()))
                 .save(saver, name("wungus_egg_obtain"));
@@ -46,7 +40,7 @@ public class ModAdvancementProvider implements AdvancementSubProvider {
                         null, AdvancementType.TASK,
                         true, true, true)
                 .parent(obtainWungusEgg)
-                .addCriterion("hatched_wungus_egg", TameAnimalTrigger.TriggerInstance.tamedAnimal(wungus(entityTypes)))
+                .addCriterion("hatched_wungus_egg", TameAnimalTrigger.TriggerInstance.tamedAnimal(wungus()))
                 .save(saver, name("hatch_wungus_egg"));
 
         AdvancementHolder breedWungus = Advancement.Builder.advancement()
@@ -56,7 +50,7 @@ public class ModAdvancementProvider implements AdvancementSubProvider {
                         true, true, true)
                 .parent(hatchWungus)
                 .addCriterion("breed_wungus", BredAnimalsTrigger.TriggerInstance.bredAnimals(
-                        Optional.of(wungus(entityTypes).build()), Optional.of(wungus(entityTypes).build()), Optional.of(wungus(entityTypes).build())))
+                        Optional.of(wungus().build()), Optional.of(wungus().build()), Optional.of(wungus().build())))
                 .save(saver, name("breed_wungus"));
 
         AdvancementHolder milkWungus = Advancement.Builder.advancement()
@@ -73,7 +67,7 @@ public class ModAdvancementProvider implements AdvancementSubProvider {
                         Component.literal("Wung are we doing here?"), Component.literal("Why would you drink that...?"),
                         null, AdvancementType.TASK,
                         true, true, true)
-                .addCriterion("drank_wungus_milk", ConsumeItemTrigger.TriggerInstance.usedItem(items, ModItems.WUNGUS_MILK.get()))
+                .addCriterion("drank_wungus_milk", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.WUNGUS_MILK.get()))
                 .parent(milkWungus)
                 .save(saver, name("wungus_milk_drink"));
 
@@ -83,7 +77,7 @@ public class ModAdvancementProvider implements AdvancementSubProvider {
                         null, AdvancementType.TASK,
                         true, true, true)
                 .parent(obtainWungusEgg)
-                .addCriterion("killed_wungus", KilledTrigger.TriggerInstance.playerKilledEntity(wungus(entityTypes)))
+                .addCriterion("killed_wungus", KilledTrigger.TriggerInstance.playerKilledEntity(wungus()))
                 .save(saver, name("killed_wungus"));
 
         AdvancementHolder obtainWungusBoots = Advancement.Builder.advancement()
@@ -101,12 +95,12 @@ public class ModAdvancementProvider implements AdvancementSubProvider {
                         null, AdvancementType.TASK,
                         true, true, true)
                 .parent(killWungus)
-                .addCriterion("eat_wungus_flesh", ConsumeItemTrigger.TriggerInstance.usedItem(items, ModItems.COOKED_WUNGUS_FLESH.get()))
+                .addCriterion("eat_wungus_flesh", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.COOKED_WUNGUS_FLESH.get()))
                 .save(saver, name("eat_wungus_flesh"));
     }
 
-    private static EntityPredicate.Builder wungus(HolderGetter<EntityType<?>> entityTypes) {
-        return EntityPredicate.Builder.entity().of(entityTypes, ModEntities.WUNGUS.get());
+    private static EntityPredicate.Builder wungus() {
+        return EntityPredicate.Builder.entity().of(ModEntities.WUNGUS.get());
     }
 
     private static String name(String path) {

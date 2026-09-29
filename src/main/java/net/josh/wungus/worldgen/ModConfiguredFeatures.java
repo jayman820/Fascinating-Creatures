@@ -7,8 +7,8 @@ import net.josh.wungus.worldgen.tree.custom.AilanthusTrunkPlacer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.random.WeightedList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -28,7 +28,7 @@ public class ModConfiguredFeatures {
                 // Trunk of 5 to 7 blocks
                 new AilanthusTrunkPlacer(5, 2, 0),
                 // Mostly plain leaves with some flowering (seed cluster) leaves mixed in
-                new WeightedStateProvider(WeightedList.<BlockState>builder()
+                new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                         .add(ModBlocks.AILANTHUS_LEAVES_2.get().defaultBlockState(), 4)
                         .add(ModBlocks.AILANTHUS_LEAVES.get().defaultBlockState(), 1)),
                 new AilanthusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 3),
@@ -37,7 +37,7 @@ public class ModConfiguredFeatures {
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(WungusMod.MOD_ID, name));
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context,

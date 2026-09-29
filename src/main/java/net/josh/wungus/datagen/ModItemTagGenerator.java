@@ -2,18 +2,20 @@ package net.josh.wungus.datagen;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
-import net.josh.wungus.item.ModItems;
-import net.josh.wungus.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
-import net.neoforged.neoforge.common.data.ItemTagsProvider;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagGenerator extends ItemTagsProvider {
-    public ModItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, lookupProvider, WungusMod.MOD_ID);
+    public ModItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
+                               CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
+        super(output, lookupProvider, blockTags, WungusMod.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -26,11 +28,5 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
         this.tag(ItemTags.PLANKS)
                 .add(ModBlocks.AILANTHUS_PLANKS.get().asItem());
-
-        this.tag(ModTags.Items.REPAIRS_WUNGUS_HIDE_ARMOR)
-                .add(ModItems.WUNGUS_HIDE.get());
-        // Add the repair items for the mask and the bbl here (empty tags mean they can't be repaired)
-        this.tag(ModTags.Items.REPAIRS_WUNGUS_MASK);
-        this.tag(ModTags.Items.REPAIRS_BBL);
     }
 }

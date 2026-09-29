@@ -1,7 +1,6 @@
 package net.josh.wungus.attachment;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 /**
@@ -9,7 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
  * instead of in the effect: there is only one effect object shared by every entity that has the effect.
  */
 public class SteroidState {
-    public static final MapCodec<SteroidState> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+    public static final Codec<SteroidState> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.INT.fieldOf("ticks_active").forGetter(s -> s.ticksActive),
             Codec.INT.fieldOf("total_ticks").forGetter(s -> s.totalTicks),
             Codec.INT.fieldOf("next_heartbeat").forGetter(s -> s.nextHeartbeat),
