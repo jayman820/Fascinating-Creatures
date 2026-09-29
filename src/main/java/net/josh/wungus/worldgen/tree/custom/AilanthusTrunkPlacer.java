@@ -22,7 +22,7 @@ import java.util.function.BiConsumer;
  * Tree of heaven style trunk:
  * - a tall, mostly bare trunk that sometimes has a small jog (the tree leans a bit),
  * - near the top it splits into 2 to 4 long branches that spread out in different directions (also diagonally)
- *   and rise as they go,
+ *   and rise as they go, stepping sideways and up so every log touches the next one with a full face,
  * - leaf tufts at the end of every branch (see AilanthusFoliagePlacer) and sometimes a small one on top of the trunk,
  *   which gives the open crown made of separate leafy clumps.
  */
@@ -91,20 +91,23 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
     private FoliagePlacer.FoliageAttachment placeBranch(WorldGenLevel level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random,
                                                         BlockPos start, int[] direction, TreeConfiguration config) {
         BlockPos.MutableBlockPos pos = start.mutable();
-        // Horizontal logs lie along x, or along z for branches going straight north/south
-        Direction.Axis sidewaysAxis = direction[0] != 0 ? Direction.Axis.X : Direction.Axis.Z;
 
+        // Every log touches the previous one with a full face (no gaps like diagonal logs have):
+        // a step goes sideways (for diagonal branches along x and then along z), then up
         int length = 2 + random.nextInt(2);
         for (int step = 0; step < length; step++) {
-            pos.move(direction[0], 0, direction[1]);
+            if (direction[0] != 0) {
+                pos.move(direction[0], 0, 0);
+                placeLog(level, blockSetter, random, pos, config, state -> state.trySetValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+            }
+            if (direction[1] != 0) {
+                pos.move(0, 0, direction[1]);
+                placeLog(level, blockSetter, random, pos, config, state -> state.trySetValue(RotatedPillarBlock.AXIS, Direction.Axis.Z));
+            }
             // Branches grow outwards and upwards, the first step is usually flat
-            boolean rise = step > 0 || random.nextFloat() < 0.3F;
-            if (rise) {
+            if (step > 0 || random.nextFloat() < 0.3F) {
                 pos.move(Direction.UP);
                 placeLog(level, blockSetter, random, pos, config);
-            } else {
-                placeLog(level, blockSetter, random, pos, config,
-                        state -> state.trySetValue(RotatedPillarBlock.AXIS, sidewaysAxis));
             }
         }
         // Sometimes the tip turns up a bit more
