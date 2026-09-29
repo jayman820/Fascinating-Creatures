@@ -19,7 +19,8 @@ import java.util.function.Supplier;
  * Heart failure from a steroid dose. It is timed to the length of the dose:
  * - at the start a strong boost (strength and the steroid's own effect),
  * - the heartbeat speeds up (and gets louder and higher) the whole time,
- * - the screen starts shaking and shakes harder and harder (Heart Palpitations),
+ * - the screen starts shaking a little and slowly shakes harder, and near the end the screen edges pulse red
+ *   with the heartbeat (Heart Palpitations),
  * - late in the dose slowness, mining fatigue and weakness,
  * - and near the end the heart gives out.
  * The progress is stored per entity (SteroidState), not in this class: one effect object is shared by every entity.
@@ -28,11 +29,7 @@ public class WungusSteroidEffect extends MobEffect {
     // Length of a dose from a steroid item, used if the length can't be read from the effect
     public static final int DEFAULT_DOSE_TICKS = 2000;
 
-    // Heartbeat interval in ticks at the start and at the end of the dose (20 ticks = 1 second)
-    private static final int FIRST_HEARTBEAT_INTERVAL = 30;
-    private static final int LAST_HEARTBEAT_INTERVAL = 4;
-    // Progress (0 to 1) at which the screen shake gets stronger, one step per entry
-    private static final float[] SHAKE_STEPS = {0.2F, 0.45F, 0.65F, 0.8F, 0.9F};
+    // The heartbeat speed and the screen shake steps are in HeartPalpitationsEffect (shared with the client)
     private static final float WEAKNESS_PROGRESS = 0.7F;
     private static final float DEATH_PROGRESS = 0.95F;
 
@@ -85,11 +82,12 @@ public class WungusSteroidEffect extends MobEffect {
             // Played through the level so the entity itself hears it too (entity.playSound skips the player itself)
             pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), ModSounds.HEARTBEAT.get(),
                     pLivingEntity.getSoundSource(), Mth.lerp(progress, 0.7F, 1.3F), Mth.lerp(progress, 0.9F, 1.3F));
-            s.nextHeartbeat = Math.round(Mth.lerp(progress * progress, FIRST_HEARTBEAT_INTERVAL, LAST_HEARTBEAT_INTERVAL));
+            s.nextHeartbeat = Math.round(HeartPalpitationsEffect.heartbeatInterval(progress));
         }
 
-        // Screen shake, refreshed often with a short duration so it stops soon after the heart failure ends
-        int shake = shakeLevel(progress);
+        // Screen shake (and red pulse near the end), getting a bit stronger in small steps. Refreshed often with a
+        // short duration so it stops soon after the heart failure ends.
+        int shake = HeartPalpitationsEffect.levelFor(progress);
         if (shake >= 0 && s.ticksActive % 10 == 0) {
             pLivingEntity.addEffect(new MobEffectInstance(ModEffects.HEART_PALPITATIONS_EFFECT, 30, shake, false, false, false));
         }
@@ -99,17 +97,6 @@ public class WungusSteroidEffect extends MobEffect {
             pLivingEntity.hurtServer(pLevel, ModDamageTypes.causeWungusSteroids(pLevel.registryAccess()), 10000);
         }
         return true;
-    }
-
-    /** -1 for no shaking yet, otherwise the Heart Palpitations amplifier (stronger shaking). */
-    private static int shakeLevel(float progress) {
-        int level = -1;
-        for (float step : SHAKE_STEPS) {
-            if (progress >= step) {
-                level++;
-            }
-        }
-        return level;
     }
 
     @Override
