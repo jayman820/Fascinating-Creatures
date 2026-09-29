@@ -17,6 +17,10 @@ public class ModEffects {
     public static final DeferredHolder<MobEffect, MobEffect> WUNGDIGESTION_EFFECT =
             MOB_EFFECTS.register("wungdigestion", () -> new WungdigestionEffect(MobEffectCategory.NEUTRAL, 0x36ebab));
 
+    // Hidden effect that shakes the screen, given by the steroid heart failure
+    public static final DeferredHolder<MobEffect, MobEffect> HEART_PALPITATIONS_EFFECT =
+            MOB_EFFECTS.register("heart_palpitations", () -> new HeartPalpitationsEffect(MobEffectCategory.HARMFUL, 0xb3122e));
+
     public static final DeferredHolder<MobEffect, MobEffect> WUNGUS_HEALTH_STEROID_EFFECT =
             MOB_EFFECTS.register("wungus_steroid_health", () -> new WungusSteroidEffect(MobEffectCategory.NEUTRAL, 0x36ebab, WungusSteroid.Type.HEALTH, ModAttachments.HEALTH_STEROID_STATE));
 

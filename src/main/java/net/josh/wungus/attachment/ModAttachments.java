@@ -1,6 +1,7 @@
 package net.josh.wungus.attachment;
 
 import net.josh.wungus.WungusMod;
+import net.josh.wungus.effect.WungusSteroidEffect;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -18,7 +19,7 @@ public class ModAttachments {
     public static final Supplier<AttachmentType<SteroidState>> JUMP_STEROID_STATE = steroidState("jump_steroid_state");
 
     private static Supplier<AttachmentType<SteroidState>> steroidState(String name) {
-        return ATTACHMENT_TYPES.register(name, () -> AttachmentType.builder(SteroidState::new).serialize(SteroidState.CODEC).build());
+        return ATTACHMENT_TYPES.register(name, () -> AttachmentType.builder(() -> new SteroidState(WungusSteroidEffect.DEFAULT_DOSE_TICKS)).serialize(SteroidState.CODEC).build());
     }
 
     public static void register(IEventBus eventBus) {
