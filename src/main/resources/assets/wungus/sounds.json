@@ -315,7 +315,7 @@
     ]
   },
   "mingle-instructions": {
-    "subtitle": "sounds.wungus.mingle_instructions",
+    "subtitle": "sounds.wungus.mingle",
     "sounds": [
       "wungus:wungus-game-2/instructions/mingle"
     ]
@@ -351,7 +351,7 @@
     ]
   },
   "wungus-racing-instructions":{
-    "subtitle": "sounds.wungus.wungus_racing_instructions",
+    "subtitle": "sounds.wungus.wungus-racing",
     "sounds": [
       "wungus:wungus-game-2/instructions/wungus-racing"
     ]
