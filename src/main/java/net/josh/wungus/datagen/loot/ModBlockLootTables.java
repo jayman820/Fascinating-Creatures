@@ -35,10 +35,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.dropWhenSilkTouch(ModBlocks.WUNGUS_EGG.get());
 
+        // Leaves themselves with shears or silk touch, otherwise a chance for a sapling (and sticks), like vanilla leaves
         this.add(ModBlocks.AILANTHUS_LEAVES.get(), block ->
-                createLeavesDrops(block, ModBlocks.AILANTHUS_LEAVES.get(), NORMAL_LEAVES_SAPLING_CHANCES)); //todo: change to sapling
+                createLeavesDrops(block, ModBlocks.AILANTHUS_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.add(ModBlocks.AILANTHUS_LEAVES_2.get(), block ->
-                createLeavesDrops(block, ModBlocks.AILANTHUS_LEAVES_2.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                createLeavesDrops(block, ModBlocks.AILANTHUS_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         // The wall signs share the loot table of the standing signs (see ModBlocks#wallVariant)
         this.add(ModBlocks.AILANTHUS_SIGN.get(), block ->
