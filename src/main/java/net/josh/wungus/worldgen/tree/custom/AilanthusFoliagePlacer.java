@@ -12,13 +12,19 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 /**
- * Places a rounded, slightly flat clump of leaves around every branch end of the AilanthusTrunkPlacer.
- * The clumps overlap into one broad, rounded crown, like the umbrella shaped crown of a tree of heaven.
+ * Places a leafy tuft at every branch end of the AilanthusTrunkPlacer: a small dome that is a bit ragged and open,
+ * with leaves hanging down from its edge like the long drooping leaves (and seed clusters) of a tree of heaven.
  * Layers go from {@code offset} (top, one smaller) down to {@code offset - height + 1}.
  */
 public class AilanthusFoliagePlacer extends FoliagePlacer {
     public static final MapCodec<AilanthusFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(instance -> foliagePlacerParts(instance)
             .and(Codec.intRange(1, 16).fieldOf("height").forGetter(fp -> fp.height)).apply(instance, AilanthusFoliagePlacer::new));
+
+    private static final float EDGE_HOLE_CHANCE = 0.25F;
+    private static final float INNER_HOLE_CHANCE = 0.08F;
+    private static final float HANGING_LEAVES_CHANCE = 0.3F;
+    private static final float HANGING_LEAVES_EXTENSION_CHANCE = 0.4F;
+
     protected final int height;
 
     public AilanthusFoliagePlacer(IntProvider pRadius, IntProvider pOffset, int height) {
@@ -34,10 +40,17 @@ public class AilanthusFoliagePlacer extends FoliagePlacer {
     @Override
     protected void createFoliage(WorldGenLevel pLevel, FoliageSetter foliageSetter, RandomSource pRandom, TreeConfiguration pConfig, int pMaxFreeTreeHeight, FoliageAttachment pAttachment, int pFoliageHeight, int pFoliageRadius, int pOffset) {
         int radius = pFoliageRadius + pAttachment.radiusOffset();
-        for (int y = pOffset; y > pOffset - pFoliageHeight; y--) {
-            // The top layer is one smaller, which rounds off the clump
+        int bottom = pOffset - pFoliageHeight + 1;
+        for (int y = pOffset; y >= bottom; y--) {
+            // The top layer is one smaller, which rounds off the tuft
             int layerRadius = y == pOffset ? radius - 1 : radius;
-            if (layerRadius >= 0) {
+            if (layerRadius < 0) {
+                continue;
+            }
+            if (y == bottom) {
+                this.placeLeavesRowWithHangingLeavesBelow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos(), layerRadius, y,
+                        pAttachment.doubleTrunk(), HANGING_LEAVES_CHANCE, HANGING_LEAVES_EXTENSION_CHANCE);
+            } else {
                 this.placeLeavesRow(pLevel, foliageSetter, pRandom, pConfig, pAttachment.pos(), layerRadius, y, pAttachment.doubleTrunk());
             }
         }
@@ -53,9 +66,15 @@ public class AilanthusFoliagePlacer extends FoliagePlacer {
         if (pRange == 0) {
             return false;
         }
-        // Always cut the corners, and randomly thin out the rest of the edge so the crown doesn't look boxy
         boolean corner = pLocalX == pRange && pLocalZ == pRange;
         boolean edge = pLocalX == pRange || pLocalZ == pRange;
-        return corner || (edge && pRandom.nextFloat() < 0.2F);
+        if (corner) {
+            return true;
+        }
+        if (edge) {
+            return pRandom.nextFloat() < EDGE_HOLE_CHANCE;
+        }
+        // A few holes inside the lower layers keep the tufts from looking like solid blocks
+        return pLocalY <= 0 && pRandom.nextFloat() < INNER_HOLE_CHANCE;
     }
 }

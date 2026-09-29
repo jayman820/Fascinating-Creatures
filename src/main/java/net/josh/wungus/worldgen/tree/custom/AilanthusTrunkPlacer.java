@@ -6,7 +6,6 @@ import net.josh.wungus.worldgen.tree.ModTrunkPlacerTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.Util;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,13 +19,22 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
- * Tree of heaven style trunk: a straight trunk that forks near the top into 2 or 3 branches.
- * Each branch goes sideways for 1-2 blocks and then rises for 1-2 blocks, which gives the open, vase shaped crown.
- * Leaves are placed at the end of every branch and on top of the trunk (see AilanthusFoliagePlacer).
+ * Tree of heaven style trunk:
+ * - a tall, mostly bare trunk that sometimes has a small jog (the tree leans a bit),
+ * - near the top it splits into 2 to 4 long branches that spread out in different directions (also diagonally)
+ *   and rise as they go,
+ * - leaf tufts at the end of every branch (see AilanthusFoliagePlacer) and sometimes a small one on top of the trunk,
+ *   which gives the open crown made of separate leafy clumps.
  */
 public class AilanthusTrunkPlacer extends TrunkPlacer {
     public static final MapCodec<AilanthusTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(instance ->
             trunkPlacerParts(instance).apply(instance, AilanthusTrunkPlacer::new));
+
+    // The 8 horizontal directions (with diagonals), in circular order
+    private static final int[][] DIRECTIONS = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
+
+    private static final float LEAN_CHANCE = 0.35F;
+    private static final float TOP_TUFT_CHANCE = 0.6F;
 
     public AilanthusTrunkPlacer(int pBaseHeight, int pHeightRandA, int pHeightRandB) {
         super(pBaseHeight, pHeightRandA, pHeightRandB);
@@ -42,38 +50,65 @@ public class AilanthusTrunkPlacer extends TrunkPlacer {
         List<FoliagePlacer.FoliageAttachment> attachments = new ArrayList<>();
         placeBelowTrunkBlock(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
 
+        // Trunk, sometimes with a one block jog a few blocks up
+        int leanHeight = pRandom.nextFloat() < LEAN_CHANCE ? 2 + pRandom.nextInt(2) : -1;
+        Direction leanDirection = Direction.Plane.HORIZONTAL.getRandomDirection(pRandom);
+        BlockPos.MutableBlockPos trunk = pPos.mutable();
         for (int y = 0; y < pFreeTreeHeight; y++) {
-            placeLog(pLevel, pBlockSetter, pRandom, pPos.above(y), pConfig);
+            placeLog(pLevel, pBlockSetter, pRandom, trunk, pConfig);
+            if (y == leanHeight) {
+                trunk.move(leanDirection);
+                placeLog(pLevel, pBlockSetter, pRandom, trunk, pConfig,
+                        state -> state.trySetValue(RotatedPillarBlock.AXIS, leanDirection.getAxis()));
+            }
+            trunk.move(Direction.UP);
         }
-        // A smaller clump of leaves on top of the trunk fills the middle of the crown
-        attachments.add(new FoliagePlacer.FoliageAttachment(pPos.above(pFreeTreeHeight), -1, false));
+        // trunk is now the block above the top log
+        if (pRandom.nextFloat() < TOP_TUFT_CHANCE) {
+            attachments.add(new FoliagePlacer.FoliageAttachment(trunk.immutable(), -1, false));
+        }
 
-        // 2 or 3 branches, each in a different direction
-        List<Direction> directions = new ArrayList<>(Direction.Plane.HORIZONTAL.stream().toList());
-        Util.shuffle(directions, pRandom);
-        int branchCount = 2 + pRandom.nextInt(2);
+        // 2 to 4 branches, spread evenly around the trunk with a bit of randomness
+        int branchCount = 2 + (pRandom.nextBoolean() ? 1 : 0) + (pRandom.nextFloat() < 0.15F ? 1 : 0);
+        int firstDirection = pRandom.nextInt(DIRECTIONS.length);
+        List<Integer> used = new ArrayList<>();
         for (int i = 0; i < branchCount; i++) {
-            // The branches start 1 or 2 blocks below the top of the trunk, so they don't all fork at the same height
-            int startY = pFreeTreeHeight - 1 - pRandom.nextInt(2);
-            attachments.add(placeBranch(pLevel, pBlockSetter, pRandom, pPos.above(startY), directions.get(i), pConfig));
+            int index = (firstDirection + i * DIRECTIONS.length / branchCount) % DIRECTIONS.length;
+            int shifted = (index + 1) % DIRECTIONS.length;
+            if (i > 0 && pRandom.nextBoolean() && !used.contains(shifted)) {
+                index = shifted;
+            }
+            used.add(index);
+
+            // Branches start 1 or 2 blocks below the top of the trunk
+            BlockPos start = trunk.below(1 + pRandom.nextInt(2));
+            attachments.add(placeBranch(pLevel, pBlockSetter, pRandom, start, DIRECTIONS[index], pConfig));
         }
 
         return attachments;
     }
 
     private FoliagePlacer.FoliageAttachment placeBranch(WorldGenLevel level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random,
-                                                        BlockPos start, Direction direction, TreeConfiguration config) {
+                                                        BlockPos start, int[] direction, TreeConfiguration config) {
         BlockPos.MutableBlockPos pos = start.mutable();
+        // Horizontal logs lie along x, or along z for branches going straight north/south
+        Direction.Axis sidewaysAxis = direction[0] != 0 ? Direction.Axis.X : Direction.Axis.Z;
 
-        int sideways = 1 + random.nextInt(2);
-        for (int i = 0; i < sideways; i++) {
-            pos.move(direction);
-            placeLog(level, blockSetter, random, pos, config,
-                    state -> state.trySetValue(RotatedPillarBlock.AXIS, direction.getAxis()));
+        int length = 2 + random.nextInt(2);
+        for (int step = 0; step < length; step++) {
+            pos.move(direction[0], 0, direction[1]);
+            // Branches grow outwards and upwards, the first step is usually flat
+            boolean rise = step > 0 || random.nextFloat() < 0.3F;
+            if (rise) {
+                pos.move(Direction.UP);
+                placeLog(level, blockSetter, random, pos, config);
+            } else {
+                placeLog(level, blockSetter, random, pos, config,
+                        state -> state.trySetValue(RotatedPillarBlock.AXIS, sidewaysAxis));
+            }
         }
-
-        int upwards = 1 + random.nextInt(2);
-        for (int i = 0; i < upwards; i++) {
+        // Sometimes the tip turns up a bit more
+        if (random.nextBoolean()) {
             pos.move(Direction.UP);
             placeLog(level, blockSetter, random, pos, config);
         }
