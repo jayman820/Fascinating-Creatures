@@ -35,7 +35,7 @@ public class WungusRenderer extends MobRenderer<WungusEntity, HierarchicalModel<
     private final HierarchicalModel<WungusEntity> babyModel;
 
     public WungusRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
+        super(pContext, new WungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 0.7f);
         this.adultModel = this.model;
         this.babyModel = new BabyWungusModel<>(pContext.bakeLayer(ModModelLayers.WUNGUS_BABY_LAYER));
     }
@@ -57,7 +57,6 @@ public class WungusRenderer extends MobRenderer<WungusEntity, HierarchicalModel<
     public void render(WungusEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         // Babies have their own, smaller model (instead of drawing the adult at half size)
         this.model = pEntity.isBaby() ? this.babyModel : this.adultModel;
-        this.shadowRadius = pEntity.isBaby() ? 0.5f : 1f;
 
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
     }
