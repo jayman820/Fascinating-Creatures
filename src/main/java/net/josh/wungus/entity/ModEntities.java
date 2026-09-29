@@ -19,8 +19,11 @@ public class ModEntities {
             Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wungus"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<WungusEntity>> WUNGUS =
+            // About as wide as the body (like a cow). The head and tail stick out in front and behind, like on a horse:
+            // a wider hitbox rests on block edges while the legs are over air, which makes the wungus look like it floats.
+            // Babies are half this size automatically.
             ENTITY_TYPES.register("wungus", () -> EntityType.Builder.of(WungusEntity::new, MobCategory.CREATURE)
-                    .sized(1.4f, 1.65f).build(WUNGUS_KEY));
+                    .sized(0.9f, 1.65f).build(WUNGUS_KEY));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

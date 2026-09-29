@@ -33,7 +33,7 @@ public class WungusRenderer extends MobRenderer<WungusEntity, WungusRenderState,
     private final AdultAndBabyModelPair<EntityModel<WungusRenderState>> models;
 
     public WungusRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new WungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 1f);
+        super(pContext, new WungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_LAYER)), 0.7f);
         this.models = new AdultAndBabyModelPair<>(this.model, new BabyWungusModel(pContext.bakeLayer(ModModelLayers.WUNGUS_BABY_LAYER)));
     }
 
