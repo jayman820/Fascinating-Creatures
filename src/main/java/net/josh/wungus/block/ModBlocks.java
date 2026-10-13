@@ -30,6 +30,15 @@ public class ModBlocks {
             properties -> new WungusEgg(properties.sound(SoundType.METAL).randomTicks()),
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SAND));
 
+    // Wungus Game 2: stepping on one is deadly (see BlockLandmine)
+    public static final DeferredBlock<Block> QUARTZ_LANDMINE = registerBlock("quartz_landmine",
+            properties -> new BlockLandmine(properties.sound(SoundType.NETHER_ORE).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK));
+
+    public static final DeferredBlock<Block> SAND_LANDMINE = registerBlock("sand_landmine",
+            properties -> new BlockLandmine(properties.sound(SoundType.SAND).randomTicks()),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SAND));
+
     public static final DeferredBlock<Block> WUNGUS_STATUE = registerBlock("wungus_statue",
             properties -> new WungusStatue(properties.noOcclusion().sound(SoundType.STONE).randomTicks()),
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
@@ -49,6 +58,73 @@ public class ModBlocks {
     public static final DeferredBlock<Block> WUNGUS_HEDGE = registerBlock("wungus_hedge",
             properties -> new WungusStatue(properties.noOcclusion().sound(SoundType.AZALEA_LEAVES).randomTicks()),
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS_PANE));
+
+    // Wungus Game 2: lamps, number boards with their frames
+    public static final DeferredBlock<Block> SANDSTONE_LAMP = registerBlock("sandstone_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SANDSTONE));
+    public static final DeferredBlock<Block> QUARTZ_LAMP = registerBlock("quartz_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_BLOCK));
+    public static final DeferredBlock<Block> TERRACOTTA_LAMP = registerBlock("terracotta_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA));
+    public static final DeferredBlock<Block> LB_CONCRETE_LAMP = registerBlock("lb_concrete_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_CONCRETE));
+    public static final DeferredBlock<Block> L_CONCRETE_LAMP = registerBlock("l_concrete_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CYAN_CONCRETE));
+    public static final DeferredBlock<Block> P_CONCRETE_LAMP = registerBlock("p_concrete_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.STONE).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_CONCRETE));
+    public static final DeferredBlock<Block> Y_WOOL_LAMP = registerBlock("y_wool_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.WOOL).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_WOOL));
+    public static final DeferredBlock<Block> B_WOOL_LAMP = registerBlock("b_wool_lamp",
+            properties -> new Block(properties.noOcclusion().sound(SoundType.WOOL).lightLevel(s -> 15)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL));
+
+    public static final DeferredBlock<Block> FRAME_CORNER_R = registerBlock("frame_corner_r",
+            properties -> new Frame(properties.noOcclusion().sound(SoundType.STONE)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> FRAME_CORNER_L = registerBlock("frame_corner_l",
+            properties -> new Frame(properties.noOcclusion().sound(SoundType.STONE)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> FRAME_MIDDLE = registerBlock("frame_middle",
+            properties -> new Frame(properties.noOcclusion().sound(SoundType.STONE)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> FRAME_SIDE = registerBlock("frame_side",
+            properties -> new Frame(properties.noOcclusion().sound(SoundType.STONE)),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+
+    public static final DeferredBlock<Block> BOARD_1 = registerBlock("board_1",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 1),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_2 = registerBlock("board_2",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 2),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_3 = registerBlock("board_3",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 3),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_4 = registerBlock("board_4",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 4),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_5 = registerBlock("board_5",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 5),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_6 = registerBlock("board_6",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 6),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_7 = registerBlock("board_7",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 7),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_8 = registerBlock("board_8",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 8),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
+    public static final DeferredBlock<Block> BOARD_9 = registerBlock("board_9",
+            properties -> new NumberBoard(properties.noOcclusion().sound(SoundType.STONE), 9),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
 
     public static final DeferredBlock<Block> BBL_TABLE = registerBlock("bbl_table",
             properties -> new BBLTable(properties.noOcclusion().sound(SoundType.METAL).randomTicks()),

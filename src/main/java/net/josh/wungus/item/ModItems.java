@@ -5,6 +5,7 @@ import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.item.custom.*;
 import net.josh.wungus.item.custom.armor.WungusBoots;
+import net.josh.wungus.sound.ModJukeboxSongs;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -27,6 +28,18 @@ public class ModItems {
                     .usingConvertsTo(Items.BUCKET)));
 
     public static final DeferredItem<Item> WUNGUS_HIDE = ITEMS.registerSimpleItem("wungus_hide");
+
+    // Wungus Game 2 music discs, the songs are in ModJukeboxSongs
+    public static final DeferredItem<Item> CONCERTO_DISC = ITEMS.registerItem("concerto_disc",
+            properties -> new Item(properties.stacksTo(1).jukeboxPlayable(ModJukeboxSongs.CONCERTO)));
+    public static final DeferredItem<Item> MINGLE_DISC = ITEMS.registerItem("mingle_disc",
+            properties -> new Item(properties.stacksTo(1).jukeboxPlayable(ModJukeboxSongs.MINGLE)));
+    public static final DeferredItem<Item> MOON_DISC = ITEMS.registerItem("moon_disc",
+            properties -> new Item(properties.stacksTo(1).jukeboxPlayable(ModJukeboxSongs.MOON)));
+    public static final DeferredItem<Item> JUMP_ROPE_DISC = ITEMS.registerItem("jump_rope_disc",
+            properties -> new Item(properties.stacksTo(1).jukeboxPlayable(ModJukeboxSongs.JUMP_ROPE)));
+    public static final DeferredItem<Item> WUNGUS_RACING_DISC = ITEMS.registerItem("wungus_racing_disc",
+            properties -> new Item(properties.stacksTo(1).jukeboxPlayable(ModJukeboxSongs.WUNGUS_RACING)));
 
     public static final DeferredItem<Item> WUNGUS_AMBROSIA = ITEMS.registerSimpleItem("wungus_ambrosia");
 

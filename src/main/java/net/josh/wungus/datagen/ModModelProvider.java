@@ -6,6 +6,7 @@ import net.josh.wungus.item.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
@@ -61,6 +62,21 @@ public class ModModelProvider extends ModelProvider {
         /* ITEMS */
         itemModels.generateFlatItem(ModItems.WUNGUS_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.LANTERNFLY_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.CONCERTO_DISC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.MINGLE_DISC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.MOON_DISC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.JUMP_ROPE_DISC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.WUNGUS_RACING_DISC.get(), ModelTemplates.FLAT_ITEM);
+
+        // The Wungus Game 2 lamps look like vanilla blocks (see their block states), and so do their items
+        vanillaBlockItem(itemModels, ModBlocks.SANDSTONE_LAMP.get(), "smooth_sandstone");
+        vanillaBlockItem(itemModels, ModBlocks.QUARTZ_LAMP.get(), "quartz_block");
+        vanillaBlockItem(itemModels, ModBlocks.TERRACOTTA_LAMP.get(), "cyan_terracotta");
+        vanillaBlockItem(itemModels, ModBlocks.LB_CONCRETE_LAMP.get(), "light_blue_concrete");
+        vanillaBlockItem(itemModels, ModBlocks.L_CONCRETE_LAMP.get(), "lime_concrete");
+        vanillaBlockItem(itemModels, ModBlocks.P_CONCRETE_LAMP.get(), "pink_concrete");
+        vanillaBlockItem(itemModels, ModBlocks.Y_WOOL_LAMP.get(), "yellow_wool");
+        vanillaBlockItem(itemModels, ModBlocks.B_WOOL_LAMP.get(), "black_wool");
         itemModels.generateFlatItem(ModItems.WUNGUS_MILK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_HIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_AMBROSIA.get(), ModelTemplates.FLAT_ITEM);
@@ -94,11 +110,23 @@ public class ModModelProvider extends ModelProvider {
                 BlockModelGenerators.plainVariant(vertical), BlockModelGenerators.plainVariant(horizontal)));
     }
 
+    private static void vanillaBlockItem(ItemModelGenerators itemModels, Block block, String vanillaBlockModel) {
+        itemModels.itemModelOutput.accept(block.asItem(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath("minecraft", "block/" + vanillaBlockModel)));
+    }
+
     // Blocks whose block states and models are hand made, see src/main/resources/assets/wungus/blockstates
     private static Set<Block> handMadeBlocks() {
         return Set.of(ModBlocks.ANDARAN_DIRT.get(), ModBlocks.ANDARAN_GRASS_BLOCK.get(), ModBlocks.BBL_TABLE.get(),
                 ModBlocks.WUNGUS_STATUE.get(), ModBlocks.STONE_STATUE.get(), ModBlocks.GOLD_STATUE.get(),
-                ModBlocks.GLOWSTONE_STATUE.get(), ModBlocks.WUNGUS_EGG.get(), ModBlocks.WUNGUS_HEDGE.get());
+                ModBlocks.GLOWSTONE_STATUE.get(), ModBlocks.WUNGUS_EGG.get(), ModBlocks.WUNGUS_HEDGE.get(),
+                // Wungus Game 2
+                ModBlocks.QUARTZ_LANDMINE.get(), ModBlocks.SAND_LANDMINE.get(), ModBlocks.SANDSTONE_LAMP.get(), ModBlocks.QUARTZ_LAMP.get(),
+                ModBlocks.TERRACOTTA_LAMP.get(), ModBlocks.Y_WOOL_LAMP.get(), ModBlocks.B_WOOL_LAMP.get(), ModBlocks.LB_CONCRETE_LAMP.get(),
+                ModBlocks.L_CONCRETE_LAMP.get(), ModBlocks.P_CONCRETE_LAMP.get(), ModBlocks.FRAME_CORNER_R.get(), ModBlocks.FRAME_CORNER_L.get(),
+                ModBlocks.FRAME_MIDDLE.get(), ModBlocks.FRAME_SIDE.get(), ModBlocks.BOARD_1.get(), ModBlocks.BOARD_2.get(),
+                ModBlocks.BOARD_3.get(), ModBlocks.BOARD_4.get(), ModBlocks.BOARD_5.get(), ModBlocks.BOARD_6.get(),
+                ModBlocks.BOARD_7.get(), ModBlocks.BOARD_8.get(), ModBlocks.BOARD_9.get());
     }
 
     @Override

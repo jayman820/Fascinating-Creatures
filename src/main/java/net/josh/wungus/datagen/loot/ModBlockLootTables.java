@@ -48,6 +48,31 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         this.dropWhenSilkTouch(ModBlocks.WUNGUS_EGG.get());
 
+        // Wungus Game 2: the number boards drop themselves, the landmines, lamps and frames drop nothing (like they did there)
+        this.dropSelf(ModBlocks.BOARD_1.get());
+        this.dropSelf(ModBlocks.BOARD_2.get());
+        this.dropSelf(ModBlocks.BOARD_3.get());
+        this.dropSelf(ModBlocks.BOARD_4.get());
+        this.dropSelf(ModBlocks.BOARD_5.get());
+        this.dropSelf(ModBlocks.BOARD_6.get());
+        this.dropSelf(ModBlocks.BOARD_7.get());
+        this.dropSelf(ModBlocks.BOARD_8.get());
+        this.dropSelf(ModBlocks.BOARD_9.get());
+        this.add(ModBlocks.QUARTZ_LANDMINE.get(), noDrop());
+        this.add(ModBlocks.SAND_LANDMINE.get(), noDrop());
+        this.add(ModBlocks.SANDSTONE_LAMP.get(), noDrop());
+        this.add(ModBlocks.QUARTZ_LAMP.get(), noDrop());
+        this.add(ModBlocks.TERRACOTTA_LAMP.get(), noDrop());
+        this.add(ModBlocks.Y_WOOL_LAMP.get(), noDrop());
+        this.add(ModBlocks.B_WOOL_LAMP.get(), noDrop());
+        this.add(ModBlocks.LB_CONCRETE_LAMP.get(), noDrop());
+        this.add(ModBlocks.L_CONCRETE_LAMP.get(), noDrop());
+        this.add(ModBlocks.P_CONCRETE_LAMP.get(), noDrop());
+        this.add(ModBlocks.FRAME_CORNER_R.get(), noDrop());
+        this.add(ModBlocks.FRAME_CORNER_L.get(), noDrop());
+        this.add(ModBlocks.FRAME_MIDDLE.get(), noDrop());
+        this.add(ModBlocks.FRAME_SIDE.get(), noDrop());
+
         // Leaves themselves with shears or silk touch, otherwise a chance for a sapling (and sticks), like vanilla leaves
         this.add(ModBlocks.AILANTHUS_LEAVES.get(), block ->
                 createLeavesDrops(block, ModBlocks.AILANTHUS_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));

@@ -1,0 +1,8 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.wungus.jump_rope"
+  },
+  "length_in_seconds": 83.0,
+  "sound_event": "wungus:jump-rope-disc"
+}

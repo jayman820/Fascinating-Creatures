@@ -1,0 +1,13 @@
+-proc:none
+-d
+/tmp/claude-0/-home-user-Fascinating-Creatures/74e4f612-6c96-5eb9-ad17-d399f6b3abeb/scratchpad/javac
+src/main/java/net/josh/wungus/block/ModBlocks.java
+src/main/java/net/josh/wungus/datagen/ModModelProvider.java
+src/main/java/net/josh/wungus/datagen/loot/ModBlockLootTables.java
+src/main/java/net/josh/wungus/item/ModCreativeModeTabs.java
+src/main/java/net/josh/wungus/item/ModItems.java
+src/main/java/net/josh/wungus/sound/ModSounds.java
+src/main/java/net/josh/wungus/block/custom/BlockLandmine.java
+src/main/java/net/josh/wungus/block/custom/Frame.java
+src/main/java/net/josh/wungus/block/custom/NumberBoard.java
+src/main/java/net/josh/wungus/sound/ModJukeboxSongs.java
