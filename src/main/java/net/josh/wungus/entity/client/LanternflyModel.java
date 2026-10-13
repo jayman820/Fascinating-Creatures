@@ -14,6 +14,10 @@ public class LanternflyModel extends EntityModel<LanternflyRenderState> {
 	// While climbing the body is moved this far (in pixels) forward, so it sits on the trunk instead of
 	// in the middle of the hitbox (half the hitbox width is 2.4 pixels)
 	private static final float CLIMB_FORWARD_OFFSET = 2.2F;
+	// In the Blockbench model the wings lie exactly on the top of the body, which made them flicker through it,
+	// and the flap tilts their outer edges up to 0.074 pixels down into it. Lifted a little (less than one
+	// texel of the 128x texture) so they always stay above it.
+	private static final float WING_LIFT = 0.1F;
 
 	private final ModelPart lanternfly;
 	private final KeyframeAnimation flyAnimation;
@@ -36,7 +40,7 @@ public class LanternflyModel extends EntityModel<LanternflyRenderState> {
 				.texOffs(0, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, (float) Math.PI, 0.0F));
 
-		PartDefinition wings = lanternfly.addOrReplaceChild("Wings", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition wings = lanternfly.addOrReplaceChild("Wings", CubeListBuilder.create(), PartPose.offset(0.0F, -WING_LIFT, 0.0F));
 
 		wings.addOrReplaceChild("WingR", CubeListBuilder.create()
 				.texOffs(0, 4).addBox(-0.5F, 0.0F, -2.0F, 1.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.5F, -1.0F, 1.0F));
