@@ -6,7 +6,6 @@ import net.josh.wungus.item.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
@@ -14,7 +13,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Set;
@@ -67,9 +65,8 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.WUNGUS_HIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_AMBROSIA.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_BOOTS.get(), ModelTemplates.FLAT_ITEM);
-        // The mask and the bbl have no item texture of their own yet and use the boots texture
-        flatItemWithTexture(itemModels, ModItems.WUNGUS_MASK.get(), ModItems.WUNGUS_BOOTS.get());
-        flatItemWithTexture(itemModels, ModItems.BBL.get(), ModItems.WUNGUS_BOOTS.get());
+        itemModels.generateFlatItem(ModItems.WUNGUS_MASK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.BBL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.RAW_WUNGUS_FLESH.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.COOKED_WUNGUS_FLESH.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_SHAWARMA.get(), ModelTemplates.FLAT_ITEM);
@@ -95,11 +92,6 @@ public class ModModelProvider extends ModelProvider {
         Identifier horizontal = ModelTemplates.CUBE_COLUMN_HORIZONTAL.create(block, textures, blockModels.modelOutput);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createRotatedPillarWithHorizontalVariant(block,
                 BlockModelGenerators.plainVariant(vertical), BlockModelGenerators.plainVariant(horizontal)));
-    }
-
-    private static void flatItemWithTexture(ItemModelGenerators itemModels, Item item, Item textureItem) {
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(
-                ModelTemplates.FLAT_ITEM.create(item, TextureMapping.layer0(textureItem), itemModels.modelOutput)));
     }
 
     // Blocks whose block states and models are hand made, see src/main/resources/assets/wungus/blockstates
