@@ -1,6 +1,7 @@
 package net.josh.wungus.entity;
 
 import net.josh.wungus.WungusMod;
+import net.josh.wungus.entity.custom.LanternflyEntity;
 import net.josh.wungus.entity.custom.WungusEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -24,6 +25,15 @@ public class ModEntities {
             // Babies are half this size automatically.
             ENTITY_TYPES.register("wungus", () -> EntityType.Builder.of(WungusEntity::new, MobCategory.CREATURE)
                     .sized(0.9f, 1.65f).build(WUNGUS_KEY));
+
+    public static final ResourceKey<EntityType<?>> LANTERNFLY_KEY = ResourceKey.create(Registries.ENTITY_TYPE,
+            Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "lanternfly"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<LanternflyEntity>> LANTERNFLY =
+            // A bit bigger than the tiny model, so it can still be hit. It doesn't spawn naturally, it comes out of
+            // infested ailanthus logs.
+            ENTITY_TYPES.register("lanternfly", () -> EntityType.Builder.of(LanternflyEntity::new, MobCategory.CREATURE)
+                    .sized(0.3f, 0.2f).build(LANTERNFLY_KEY));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

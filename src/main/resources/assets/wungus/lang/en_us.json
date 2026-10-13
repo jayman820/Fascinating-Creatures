@@ -1,5 +1,6 @@
 {
   "item.wungus.wungus_spawn_egg": "Wungus Spawn Egg",
+  "item.wungus.lanternfly_spawn_egg": "Lanternfly Spawn Egg",
   "item.wungus.wungus_milk": "Wungus Milk",
   "item.wungus.wungus_hide": "Wungus Hide",
   "item.wungus.wungus_boots": "Wungus Shoes",
@@ -28,6 +29,7 @@
   "block.wungus.stripped_ailanthus_log": "Stripped Ailanthus Log",
   "block.wungus.ailanthus_wood": "Ailanthus Wood",
   "block.wungus.stripped_ailanthus_wood": "Stripped Ailanthus Wood",
+  "block.wungus.infested_ailanthus_log": "Infested Ailanthus Log",
   "block.wungus.ailanthus_planks": "Ailanthus Planks",
   "block.wungus.ailanthus_leaves": "Flowering Ailanthus Leaves",
   "block.wungus.ailanthus_leaves_2": "Ailanthus Leaves",
@@ -47,6 +49,7 @@
   "block.wungus.andaran_grass_block": "Andaran Grass Block",
 
   "entity.wungus.wungus": "Wungus",
+  "entity.wungus.lanternfly": "Lanternfly",
   "entity.wungus.villager.bbl_doctor": "BBL Doctor",
 
   "creativetab.wungus_tab": "Fascinating Creatures",

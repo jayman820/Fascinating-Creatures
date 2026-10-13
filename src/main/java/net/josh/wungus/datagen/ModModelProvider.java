@@ -6,14 +6,13 @@ import net.josh.wungus.item.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Set;
@@ -36,6 +35,7 @@ public class ModModelProvider extends ModelProvider {
                 .wood(ModBlocks.AILANTHUS_WOOD.get());
         blockModels.woodProvider(ModBlocks.STRIPPED_AILANTHUS_LOG.get()).logWithHorizontal(ModBlocks.STRIPPED_AILANTHUS_LOG.get())
                 .wood(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
+        infestedLog(blockModels, ModBlocks.INFESTED_AILANTHUS_LOG.get(), ModBlocks.AILANTHUS_LOG.get());
 
         BlockFamily ailanthusFamily = new BlockFamily.Builder(ModBlocks.AILANTHUS_PLANKS.get())
                 .button(ModBlocks.AILANTHUS_BUTTON.get())
@@ -60,13 +60,13 @@ public class ModModelProvider extends ModelProvider {
 
         /* ITEMS */
         itemModels.generateFlatItem(ModItems.WUNGUS_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.LANTERNFLY_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_MILK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_HIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_AMBROSIA.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_BOOTS.get(), ModelTemplates.FLAT_ITEM);
-        // The mask and the bbl have no item texture of their own yet and use the boots texture
-        flatItemWithTexture(itemModels, ModItems.WUNGUS_MASK.get(), ModItems.WUNGUS_BOOTS.get());
-        flatItemWithTexture(itemModels, ModItems.BBL.get(), ModItems.WUNGUS_BOOTS.get());
+        itemModels.generateFlatItem(ModItems.WUNGUS_MASK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.BBL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.RAW_WUNGUS_FLESH.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.COOKED_WUNGUS_FLESH.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_SHAWARMA.get(), ModelTemplates.FLAT_ITEM);
@@ -84,9 +84,14 @@ public class ModModelProvider extends ModelProvider {
         // a client item pointing at their block model, see ModelProvider.ItemInfoCollector#finalizeAndValidate
     }
 
-    private static void flatItemWithTexture(ItemModelGenerators itemModels, Item item, Item textureItem) {
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(
-                ModelTemplates.FLAT_ITEM.create(item, TextureMapping.layer0(textureItem), itemModels.modelOutput)));
+    // A log with its own side texture and the top texture of the normal log. All lanternfly counts look the same.
+    private static void infestedLog(BlockModelGenerators blockModels, Block block, Block normalLog) {
+        TextureMapping textures = TextureMapping.column(TextureMapping.getBlockTexture(block),
+                TextureMapping.getBlockTexture(normalLog, "_top"));
+        Identifier vertical = ModelTemplates.CUBE_COLUMN.create(block, textures, blockModels.modelOutput);
+        Identifier horizontal = ModelTemplates.CUBE_COLUMN_HORIZONTAL.create(block, textures, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createRotatedPillarWithHorizontalVariant(block,
+                BlockModelGenerators.plainVariant(vertical), BlockModelGenerators.plainVariant(horizontal)));
     }
 
     // Blocks whose block states and models are hand made, see src/main/resources/assets/wungus/blockstates
