@@ -35,7 +35,9 @@ import java.util.Optional;
 /**
  * The spotted lanternfly. Moves like a real one: it crawls slowly, climbs straight up trunks and sits on them,
  * and gets around by jumping and gliding (the wings only flap while it is in the air).
- * - When a player comes closer it jumps and glides away. Sneaking players don't scare it.
+ * - When a player comes closer it jumps and glides away. Sneaking and creative players don't scare it.
+ *   Every jump away tires it out: the next one is shorter and it needs longer before it can jump again,
+ *   so after about 3 jumps it can hardly get away any more. It recovers when it is left alone for a while.
  * - Sometimes it lands on the shoulder of a player who stands still (or sneaks) and rides along for a while.
  * - It lives in infested ailanthus logs (see InfestedAilanthusLogBlock): it goes in at night and when it rains,
  *   and the log lets it out again in the morning. Without a log it looks for one, and now and then it moves
@@ -60,6 +62,12 @@ public class LanternflyEntity extends PathfinderMob {
     // A player walking towards it within this range makes it jump away, within CLOSE_RANGE any movement does
     private static final double APPROACH_RANGE = 6.0D;
     private static final double CLOSE_RANGE = 1.5D;
+    // Every jump away from a player goes this much (times) as far as the one before: about 8, 4, 2, 1 blocks
+    private static final float FLEE_TIRING = 0.65F;
+    private static final float MIN_FLEE_POWER = 0.1F;
+    private static final int MAX_FLEE_FATIGUE = 8;
+    // It recovers one jump's worth of tiredness after being left alone for this long
+    private static final int FATIGUE_RECOVERY_TICKS = 200;
 
     private static final double SHOULDER_SIDE_OFFSET = 0.32D;
     private static final double SHOULDER_HEIGHT = 1.4D;
@@ -79,6 +87,11 @@ public class LanternflyEntity extends PathfinderMob {
     private boolean climbingUp;
 
     private int hopCooldown;
+    // Time it has to wait after landing before it can jump again, set by the jump
+    private int cooldownAfterLanding;
+    // How many times it jumped away from a player recently
+    private int fleeFatigue;
+    private int fatigueRecoveryTicks;
     // Time it stays outside after leaving a log (during the day)
     private int stayOutCooldown;
     private int findHomeCooldown;
@@ -179,6 +192,10 @@ public class LanternflyEntity extends PathfinderMob {
         if (this.findHomeCooldown > 0) this.findHomeCooldown--;
         if (this.shoulderCooldown > 0) this.shoulderCooldown--;
         if (this.scaredTicks > 0 && --this.scaredTicks == 0) this.scaredOfPlayerId = -1;
+        if (this.fleeFatigue > 0 && !this.isFlying() && ++this.fatigueRecoveryTicks >= FATIGUE_RECOVERY_TICKS) {
+            this.fleeFatigue--;
+            this.fatigueRecoveryTicks = 0;
+        }
     }
 
     /** Remembers where the nearest player was, to notice when it walks towards the lanternfly. */
@@ -196,7 +213,7 @@ public class LanternflyEntity extends PathfinderMob {
             this.watchedPlayerMoved = playerPos.distanceTo(this.watchedPlayerPos);
             boolean moving = this.watchedPlayerMoved > 0.03D;
             boolean comingCloser = distance < this.watchedPlayerDistance - 0.02D;
-            if (!player.isShiftKeyDown() && moving && (comingCloser || distance < CLOSE_RANGE)) {
+            if (!player.isShiftKeyDown() && !player.isCreative() && moving && (comingCloser || distance < CLOSE_RANGE)) {
                 this.approachingPlayer = player;
             }
         } else {
@@ -335,6 +352,8 @@ public class LanternflyEntity extends PathfinderMob {
 
         this.glideVelocity = flat.scale(speed);
         this.setDeltaMovement(this.glideVelocity.x, upward, this.glideVelocity.z);
+        // A short moment after landing before it can jump again (running away sets a longer one)
+        this.cooldownAfterLanding = 10 + this.random.nextInt(30);
         float yaw = (float) (Mth.atan2(flat.z, flat.x) * (180.0F / (float) Math.PI)) - 90.0F;
         this.setYRot(yaw);
         this.yBodyRot = yaw;
@@ -363,8 +382,7 @@ public class LanternflyEntity extends PathfinderMob {
     private void land() {
         this.setFlying(false);
         this.flightTicks = 0;
-        // A short moment before it can jump again (enough to catch up with it)
-        this.hopCooldown = 10 + this.random.nextInt(30);
+        this.hopCooldown = this.cooldownAfterLanding;
         Vec3 motion = this.getDeltaMovement();
         this.setDeltaMovement(motion.x * 0.2D, motion.y, motion.z * 0.2D);
     }
@@ -626,7 +644,7 @@ public class LanternflyEntity extends PathfinderMob {
 
     /* GOALS */
 
-    /** A player walks up to it: jump and glide away from them. */
+    /** A player walks up to it: jump and glide away from them, a bit shorter every time (see fleeFatigue). */
     static class HopAwayFromPlayerGoal extends Goal {
         private final LanternflyEntity lanternfly;
 
@@ -654,8 +672,16 @@ public class LanternflyEntity extends PathfinderMob {
             // Away from the player, not always in a straight line
             Vec3 away = this.lanternfly.position().subtract(player.position())
                     .yRot((this.lanternfly.getRandom().nextFloat() - 0.5F) * (float) Math.PI / 2.0F);
-            this.lanternfly.hop(away, 0.28D + this.lanternfly.getRandom().nextDouble() * 0.08D,
-                    0.4D + this.lanternfly.getRandom().nextDouble() * 0.12D);
+            // The more tired it is, the shorter and lower the jump
+            float power = Math.max(MIN_FLEE_POWER, (float) Math.pow(FLEE_TIRING, this.lanternfly.fleeFatigue));
+            this.lanternfly.hop(away, (0.28D + this.lanternfly.getRandom().nextDouble() * 0.08D) * power,
+                    (0.4D + this.lanternfly.getRandom().nextDouble() * 0.12D) * (0.55F + 0.45F * power));
+
+            // ...and the longer it needs before the next one: about 1.5, 2, 3, 3.5 seconds, at most 4.5
+            this.lanternfly.fleeFatigue = Math.min(MAX_FLEE_FATIGUE, this.lanternfly.fleeFatigue + 1);
+            this.lanternfly.fatigueRecoveryTicks = 0;
+            this.lanternfly.cooldownAfterLanding = Math.min(80, 10 + 15 * this.lanternfly.fleeFatigue)
+                    + this.lanternfly.getRandom().nextInt(10);
             this.lanternfly.scaredBy(player);
             this.lanternfly.approachingPlayer = null;
         }
@@ -814,7 +840,8 @@ public class LanternflyEntity extends PathfinderMob {
 
         @Override
         public boolean canUse() {
-            if (!this.lanternfly.canHop()) {
+            // Too tired from running away to go anywhere
+            if (!this.lanternfly.canHop() || this.lanternfly.fleeFatigue > 0) {
                 return false;
             }
             // Mostly sits on its trunk, but it leaves when it reached the top
