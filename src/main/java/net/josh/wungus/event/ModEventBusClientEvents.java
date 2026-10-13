@@ -5,6 +5,8 @@ import net.josh.wungus.effect.HeartPalpitationsEffect;
 import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
 import net.josh.wungus.entity.client.BabyWungusModel;
+import net.josh.wungus.entity.client.LanternflyModel;
+import net.josh.wungus.entity.client.LanternflyRenderer;
 import net.josh.wungus.entity.client.ModModelLayers;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.entity.client.WungusRenderer;
@@ -52,11 +54,13 @@ public class ModEventBusClientEvents {
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.WUNGUS_LAYER, WungusModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.WUNGUS_BABY_LAYER, BabyWungusModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.LANTERNFLY_LAYER, LanternflyModel::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.WUNGUS.get(), WungusRenderer::new);
+        event.registerEntityRenderer(ModEntities.LANTERNFLY.get(), LanternflyRenderer::new);
         // The ailanthus signs use the vanilla sign block entities, which already have their renderers
     }
 

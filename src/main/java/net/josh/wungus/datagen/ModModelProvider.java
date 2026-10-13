@@ -13,6 +13,7 @@ import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -36,6 +37,7 @@ public class ModModelProvider extends ModelProvider {
                 .wood(ModBlocks.AILANTHUS_WOOD.get());
         blockModels.woodProvider(ModBlocks.STRIPPED_AILANTHUS_LOG.get()).logWithHorizontal(ModBlocks.STRIPPED_AILANTHUS_LOG.get())
                 .wood(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
+        infestedLog(blockModels, ModBlocks.INFESTED_AILANTHUS_LOG.get(), ModBlocks.AILANTHUS_LOG.get());
 
         BlockFamily ailanthusFamily = new BlockFamily.Builder(ModBlocks.AILANTHUS_PLANKS.get())
                 .button(ModBlocks.AILANTHUS_BUTTON.get())
@@ -60,6 +62,7 @@ public class ModModelProvider extends ModelProvider {
 
         /* ITEMS */
         itemModels.generateFlatItem(ModItems.WUNGUS_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.LANTERNFLY_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_MILK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_HIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_AMBROSIA.get(), ModelTemplates.FLAT_ITEM);
@@ -82,6 +85,16 @@ public class ModModelProvider extends ModelProvider {
 
         // The remaining block items (statues, hedge, bbl table, andaran dirt, ...) automatically get
         // a client item pointing at their block model, see ModelProvider.ItemInfoCollector#finalizeAndValidate
+    }
+
+    // A log with its own side texture and the top texture of the normal log. All lanternfly counts look the same.
+    private static void infestedLog(BlockModelGenerators blockModels, Block block, Block normalLog) {
+        TextureMapping textures = TextureMapping.column(TextureMapping.getBlockTexture(block),
+                TextureMapping.getBlockTexture(normalLog, "_top"));
+        Identifier vertical = ModelTemplates.CUBE_COLUMN.create(block, textures, blockModels.modelOutput);
+        Identifier horizontal = ModelTemplates.CUBE_COLUMN_HORIZONTAL.create(block, textures, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createRotatedPillarWithHorizontalVariant(block,
+                BlockModelGenerators.plainVariant(vertical), BlockModelGenerators.plainVariant(horizontal)));
     }
 
     private static void flatItemWithTexture(ItemModelGenerators itemModels, Item item, Item textureItem) {

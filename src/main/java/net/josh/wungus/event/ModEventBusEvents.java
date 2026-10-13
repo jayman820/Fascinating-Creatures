@@ -3,6 +3,7 @@ package net.josh.wungus.event;
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.entity.custom.LanternflyEntity;
 import net.josh.wungus.entity.custom.WungusEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
@@ -19,6 +20,7 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.WUNGUS.get(), WungusEntity.createAttributes().build());
+        event.put(ModEntities.LANTERNFLY.get(), LanternflyEntity.createAttributes().build());
     }
 
     @SubscribeEvent

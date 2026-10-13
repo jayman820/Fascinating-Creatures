@@ -22,7 +22,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ModBlocks.AILANTHUS_LOG.get().asItem())
                 .add(ModBlocks.AILANTHUS_WOOD.get().asItem())
                 .add(ModBlocks.STRIPPED_AILANTHUS_LOG.get().asItem())
-                .add(ModBlocks.STRIPPED_AILANTHUS_WOOD.get().asItem());
+                .add(ModBlocks.STRIPPED_AILANTHUS_WOOD.get().asItem())
+                .add(ModBlocks.INFESTED_AILANTHUS_LOG.get().asItem());
 
         this.tag(ItemTags.PLANKS)
                 .add(ModBlocks.AILANTHUS_PLANKS.get().asItem());

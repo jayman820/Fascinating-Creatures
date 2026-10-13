@@ -13,6 +13,7 @@ import net.josh.wungus.particle.ModParticles;
 import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.villager.ModVillagers;
 import net.josh.wungus.worldgen.tree.ModFoliagePlacerTypes;
+import net.josh.wungus.worldgen.tree.ModTreeDecoratorTypes;
 import net.josh.wungus.worldgen.tree.ModTrunkPlacerTypes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -59,6 +60,7 @@ public class WungusMod
 
         ModTrunkPlacerTypes.register(modEventBus);
         ModFoliagePlacerTypes.register(modEventBus);
+        ModTreeDecoratorTypes.register(modEventBus);
 
         ModVillagers.register(modEventBus);
 

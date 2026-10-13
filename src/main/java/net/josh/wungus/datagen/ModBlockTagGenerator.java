@@ -20,7 +20,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.AILANTHUS_LOG.get())
                 .add(ModBlocks.AILANTHUS_WOOD.get())
                 .add(ModBlocks.STRIPPED_AILANTHUS_LOG.get())
-                .add(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
+                .add(ModBlocks.STRIPPED_AILANTHUS_WOOD.get())
+                .add(ModBlocks.INFESTED_AILANTHUS_LOG.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(ModBlocks.AILANTHUS_PLANKS.get());
