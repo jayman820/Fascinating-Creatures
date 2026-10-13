@@ -17,6 +17,10 @@ public class ModItems {
     public static final DeferredItem<Item> WUNGUS_SPAWN_EGG = ITEMS.register("wungus_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.WUNGUS, 0xa6a079, 0xeee0d9, new Item.Properties()));
 
+    // Grey with red spots, the colors of its front and hind wings
+    public static final DeferredItem<Item> LANTERNFLY_SPAWN_EGG = ITEMS.register("lanternfly_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.LANTERNFLY, 0xa19393, 0xc41c1c, new Item.Properties()));
+
     public static final DeferredItem<Item> WUNGUS_MILK = ITEMS.register("wungus_milk",
             () -> new WungusMilk(new Item.Properties().food(ModFoods.WUNGUS_MILK).stacksTo(1)));
 

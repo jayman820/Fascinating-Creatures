@@ -4,6 +4,7 @@ import net.josh.wungus.WungusMod;
 import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.worldgen.tree.custom.AilanthusFoliagePlacer;
 import net.josh.wungus.worldgen.tree.custom.AilanthusTrunkPlacer;
+import net.josh.wungus.worldgen.tree.custom.InfestedLogDecorator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -19,11 +20,23 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
+import java.util.List;
+
 public class ModConfiguredFeatures {
+    // Grown from saplings
     public static final ResourceKey<ConfiguredFeature<?, ?>> AILANTHUS_KEY = registerKey("ailanthus");
+    // Generated with the world, 1 in 9 of them has an infested log with lanternflies
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NATURAL_AILANTHUS_KEY = registerKey("natural_ailanthus");
+    private static final float INFESTED_TREE_CHANCE = 1.0F / 9.0F;
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-        register(context, AILANTHUS_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+        register(context, AILANTHUS_KEY, Feature.TREE, ailanthusTree().build());
+        register(context, NATURAL_AILANTHUS_KEY, Feature.TREE, ailanthusTree()
+                .decorators(List.of(new InfestedLogDecorator(INFESTED_TREE_CHANCE))).build());
+    }
+
+    private static TreeConfiguration.TreeConfigurationBuilder ailanthusTree() {
+        return new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.AILANTHUS_LOG.get()),
                 // Trunk of 5 to 7 blocks
                 new AilanthusTrunkPlacer(5, 2, 0),
@@ -32,8 +45,7 @@ public class ModConfiguredFeatures {
                         .add(ModBlocks.AILANTHUS_LEAVES_2.get().defaultBlockState(), 4)
                         .add(ModBlocks.AILANTHUS_LEAVES.get().defaultBlockState(), 1)),
                 new AilanthusFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 3),
-                new TwoLayersFeatureSize(1, 0, 1)).build()
-        );
+                new TwoLayersFeatureSize(1, 0, 1));
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

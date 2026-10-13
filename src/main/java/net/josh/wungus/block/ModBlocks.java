@@ -54,6 +54,9 @@ public class ModBlocks {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_LOG).strength(3f)));
     public static final DeferredBlock<Block> STRIPPED_AILANTHUS_WOOD = registerBlock("stripped_ailanthus_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
+    // An ailanthus log with lanternflies living in it, it lets them in and out on random ticks
+    public static final DeferredBlock<Block> INFESTED_AILANTHUS_LOG = registerBlock("infested_ailanthus_log",
+            () -> new InfestedAilanthusLogBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG).strength(3f).randomTicks()));
 
     public static final DeferredBlock<Block> AILANTHUS_PLANKS = registerBlock("ailanthus_planks",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)){
