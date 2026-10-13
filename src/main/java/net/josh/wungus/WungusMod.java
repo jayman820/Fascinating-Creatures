@@ -5,6 +5,7 @@ import net.josh.wungus.block.ModBlocks;
 import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.effect.ModEffects;
 import net.josh.wungus.entity.ModEntities;
+import net.josh.wungus.entity.client.LanternflyRenderer;
 import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModCreativeModeTabs;
 import net.josh.wungus.item.ModItems;
@@ -15,6 +16,7 @@ import net.josh.wungus.sound.ModSounds;
 import net.josh.wungus.util.ModWoodTypes;
 import net.josh.wungus.villager.ModVillagers;
 import net.josh.wungus.worldgen.tree.ModFoliagePlacerTypes;
+import net.josh.wungus.worldgen.tree.ModTreeDecoratorTypes;
 import net.josh.wungus.worldgen.tree.ModTrunkPlacerTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -66,6 +68,7 @@ public class WungusMod
 
         ModTrunkPlacerTypes.register(modEventBus);
         ModFoliagePlacerTypes.register(modEventBus);
+        ModTreeDecoratorTypes.register(modEventBus);
 
         ModVillagers.register(modEventBus);
 
@@ -101,6 +104,7 @@ public class WungusMod
             Sheets.addWoodType(ModWoodTypes.AILANTHUS);
 
             EntityRenderers.register(ModEntities.WUNGUS.get(), WungusRenderer::new);
+            EntityRenderers.register(ModEntities.LANTERNFLY.get(), LanternflyRenderer::new);
         }
     }
 }

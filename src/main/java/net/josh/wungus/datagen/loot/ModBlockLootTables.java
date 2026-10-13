@@ -4,7 +4,13 @@ import net.josh.wungus.item.ModItems;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.josh.wungus.block.ModBlocks;
+import net.josh.wungus.block.custom.InfestedAilanthusLogBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Set;
@@ -20,6 +26,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.AILANTHUS_WOOD.get());
         this.dropSelf(ModBlocks.STRIPPED_AILANTHUS_LOG.get());
         this.dropSelf(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
+        // With silk touch the infested log itself, keeping the lanternflies inside. Otherwise a normal log
+        // (and 1 or 2 lanternflies jump out, see InfestedAilanthusLogBlock#spawnAfterBreak).
+        this.add(ModBlocks.INFESTED_AILANTHUS_LOG.get(), block -> LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .add(LootItem.lootTableItem(block).when(HAS_SILK_TOUCH)
+                        .apply(CopyBlockState.copyState(block).copy(InfestedAilanthusLogBlock.LANTERNFLIES))
+                        .otherwise(this.applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.AILANTHUS_LOG.get()))))));
         this.dropSelf(ModBlocks.AILANTHUS_PLANKS.get());
         this.dropSelf(ModBlocks.AILANTHUS_SAPLING.get());
         this.dropSelf(ModBlocks.BBL_TABLE.get());

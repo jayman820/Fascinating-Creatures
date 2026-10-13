@@ -62,6 +62,9 @@ public class ModBlocks {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(3f)));
     public static final RegistryObject<Block> STRIPPED_AILANTHUS_WOOD = registerBlock("stripped_ailanthus_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3f)));
+    // An ailanthus log with lanternflies living in it, it lets them in and out on random ticks
+    public static final RegistryObject<Block> INFESTED_AILANTHUS_LOG = registerBlock("infested_ailanthus_log",
+            () -> new InfestedAilanthusLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(3f).randomTicks()));
 
     public static final RegistryObject<Block> AILANTHUS_PLANKS = registerBlock("ailanthus_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)){

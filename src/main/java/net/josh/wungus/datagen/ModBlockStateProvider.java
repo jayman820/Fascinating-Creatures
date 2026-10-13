@@ -26,7 +26,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         axisBlock(((RotatedPillarBlock) ModBlocks.STRIPPED_AILANTHUS_WOOD.get()), blockTexture(ModBlocks.STRIPPED_AILANTHUS_LOG.get()),
                 blockTexture(ModBlocks.STRIPPED_AILANTHUS_LOG.get()));
 
+        // Its own side texture with the top of the normal log. All lanternfly counts look the same.
+        axisBlock(((RotatedPillarBlock) ModBlocks.INFESTED_AILANTHUS_LOG.get()), blockTexture(ModBlocks.INFESTED_AILANTHUS_LOG.get()),
+                new ResourceLocation(WungusMod.MOD_ID, "block/ailanthus_log_top"));
+
         blockItem(ModBlocks.AILANTHUS_LOG);
+        blockItem(ModBlocks.INFESTED_AILANTHUS_LOG);
         blockItem(ModBlocks.AILANTHUS_WOOD);
         blockItem(ModBlocks.STRIPPED_AILANTHUS_LOG);
         blockItem(ModBlocks.STRIPPED_AILANTHUS_WOOD);

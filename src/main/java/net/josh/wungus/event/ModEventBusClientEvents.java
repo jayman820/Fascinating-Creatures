@@ -4,6 +4,7 @@ import net.josh.wungus.block.entity.ModBlockEntities;
 import net.josh.wungus.block.entity.WungusStatueBlockEntity;
 import net.josh.wungus.block.entity.renderer.WungusStatueBlockEntityRender;
 import net.josh.wungus.entity.client.BabyWungusModel;
+import net.josh.wungus.entity.client.LanternflyModel;
 import net.josh.wungus.entity.client.ModModelLayers;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.particle.DiarrheaParticle;
@@ -26,6 +27,7 @@ public class ModEventBusClientEvents {
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.WUNGUS_LAYER, WungusModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.WUNGUS_BABY_LAYER, BabyWungusModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.LANTERNFLY_LAYER, LanternflyModel::createBodyLayer);
     }
 
     @SubscribeEvent

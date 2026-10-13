@@ -30,13 +30,13 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        // Rare: one tree in about every 10th chunk of the allowed biomes (raise the number to make them rarer).
+        // Rare: one tree in about every 7th chunk of the allowed biomes (raise the number to make them rarer).
         // Like vanilla trees it is only placed on ground with open sky above (the heightmap stops at leaves, and
         // a sapling can't survive on leaves), and only if no other tree trunk is close by.
         List<PlacementModifier> modifiers = new ArrayList<>(VegetationPlacements.treePlacement(
-                RarityFilter.onAverageOnceEvery(10), ModBlocks.AILANTHUS_SAPLING.get()));
+                RarityFilter.onAverageOnceEvery(7), ModBlocks.AILANTHUS_SAPLING.get()));
         modifiers.add(BlockPredicateFilter.forPredicate(noLogsNearby()));
-        register(context, AILANTHUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.AILANTHUS_KEY), modifiers);
+        register(context, AILANTHUS_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.NATURAL_AILANTHUS_KEY), modifiers);
     }
 
     // Distance (in blocks) to other trees' trunks. The ailanthus branches and leaves reach about this far.

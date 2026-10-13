@@ -19,6 +19,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.wungus_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.WUNGUS_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.LANTERNFLY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.WUNGUS_MILK.get());
                         pOutput.accept(ModItems.WUNGUS_HIDE.get());
                         pOutput.accept(ModBlocks.WUNGUS_EGG.get());
@@ -46,6 +47,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.STRIPPED_AILANTHUS_LOG.get());
                         pOutput.accept(ModBlocks.AILANTHUS_WOOD.get());
                         pOutput.accept(ModBlocks.STRIPPED_AILANTHUS_WOOD.get());
+                        pOutput.accept(ModBlocks.INFESTED_AILANTHUS_LOG.get());
                         pOutput.accept(ModBlocks.AILANTHUS_LEAVES.get());
                         pOutput.accept(ModBlocks.AILANTHUS_LEAVES_2.get());
                         pOutput.accept(ModBlocks.AILANTHUS_PLANKS.get());
