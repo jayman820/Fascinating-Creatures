@@ -59,8 +59,10 @@ public class LanternflyEntity extends PathfinderMob {
     private static final int MAX_FLIGHT_TICKS = 200;
     private static final double CLIMB_SPEED = 0.04D;
 
-    // A player walking towards it within this range makes it jump away, within CLOSE_RANGE any movement does
+    // A player walking towards it within this range (sideways) makes it jump away, within CLOSE_RANGE any movement does.
+    // Players up to NOTICE_HEIGHT above or below count too, so it still notices you from high up on a trunk.
     private static final double APPROACH_RANGE = 6.0D;
+    private static final double NOTICE_HEIGHT = 6.0D;
     private static final double CLOSE_RANGE = 1.5D;
     // Every jump away from a player goes this much (times) as far as the one before: about 8, 4, 2, 1 blocks
     private static final float FLEE_TIRING = 0.65F;
@@ -178,10 +180,16 @@ public class LanternflyEntity extends PathfinderMob {
 
     @Override
     public void aiStep() {
-        if (!this.level().isClientSide() && !this.isPassenger()) {
-            this.tickCooldowns();
-            this.watchNearestPlayer();
-            this.updateMovement();
+        if (!this.level().isClientSide()) {
+            if (this.isDeadOrDying()) {
+                // Dead: lets go of its trunk and stops flapping, the body just drops
+                this.setWallFace(null);
+                this.setFlying(false);
+            } else if (!this.isPassenger()) {
+                this.tickCooldowns();
+                this.watchNearestPlayer();
+                this.updateMovement();
+            }
         }
         super.aiStep();
     }
@@ -201,19 +209,21 @@ public class LanternflyEntity extends PathfinderMob {
     /** Remembers where the nearest player was, to notice when it walks towards the lanternfly. */
     private void watchNearestPlayer() {
         this.approachingPlayer = null;
-        Player player = this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), APPROACH_RANGE, EntitySelector.NO_SPECTATORS);
-        if (player == null) {
+        Player player = this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), APPROACH_RANGE + NOTICE_HEIGHT,
+                EntitySelector.NO_SPECTATORS);
+        double distance = player == null ? 0.0D : Math.sqrt(Mth.square(player.getX() - this.getX()) + Mth.square(player.getZ() - this.getZ()));
+        if (player == null || distance > APPROACH_RANGE || Math.abs(player.getY() - this.getY()) > NOTICE_HEIGHT) {
             this.watchedPlayerId = -1;
             return;
         }
 
         Vec3 playerPos = player.position();
-        double distance = this.distanceTo(player);
         if (player.getId() == this.watchedPlayerId) {
             this.watchedPlayerMoved = playerPos.distanceTo(this.watchedPlayerPos);
             boolean moving = this.watchedPlayerMoved > 0.03D;
             boolean comingCloser = distance < this.watchedPlayerDistance - 0.02D;
-            if (!player.isShiftKeyDown() && !player.isCreative() && moving && (comingCloser || distance < CLOSE_RANGE)) {
+            boolean close = this.distanceTo(player) < CLOSE_RANGE;
+            if (!player.isShiftKeyDown() && !player.isCreative() && moving && (comingCloser || close)) {
                 this.approachingPlayer = player;
             }
         } else {
@@ -669,9 +679,14 @@ public class LanternflyEntity extends PathfinderMob {
             if (player == null) {
                 return;
             }
-            // Away from the player, not always in a straight line
-            Vec3 away = this.lanternfly.position().subtract(player.position())
-                    .yRot((this.lanternfly.getRandom().nextFloat() - 0.5F) * (float) Math.PI / 2.0F);
+            Vec3 away = this.lanternfly.position().subtract(player.position());
+            Direction wall = this.lanternfly.getWallFace();
+            if (wall != null) {
+                away = this.wallEscapeDirection(wall, away);
+            } else {
+                // Away from the player, not always in a straight line
+                away = away.yRot((this.lanternfly.getRandom().nextFloat() - 0.5F) * (float) Math.PI / 2.0F);
+            }
             // The more tired it is, the shorter and lower the jump
             float power = Math.max(MIN_FLEE_POWER, (float) Math.pow(FLEE_TIRING, this.lanternfly.fleeFatigue));
             this.lanternfly.hop(away, (0.28D + this.lanternfly.getRandom().nextDouble() * 0.08D) * power,
@@ -684,6 +699,21 @@ public class LanternflyEntity extends PathfinderMob {
                     + this.lanternfly.getRandom().nextInt(10);
             this.lanternfly.scaredBy(player);
             this.lanternfly.approachingPlayer = null;
+        }
+
+        /**
+         * On a trunk or wall the player can only be on the open side, so straight away from them is into the wall
+         * (and pushing off it would send it right back at them). It jumps off sideways instead, to the side away
+         * from the player (a random side when the player is right in front of it), and a bit outwards to get clear.
+         */
+        private Vec3 wallEscapeDirection(Direction wall, Vec3 away) {
+            Vec3 outward = new Vec3(-wall.getStepX(), 0.0D, -wall.getStepZ());
+            Vec3 along = new Vec3(-wall.getStepZ(), 0.0D, wall.getStepX());
+            double side = away.dot(along);
+            if (Math.abs(side) < 0.3D) {
+                side = this.lanternfly.getRandom().nextBoolean() ? 1.0D : -1.0D;
+            }
+            return along.scale(Math.signum(side)).add(outward.scale(0.4D + this.lanternfly.getRandom().nextDouble() * 0.3D));
         }
     }
 

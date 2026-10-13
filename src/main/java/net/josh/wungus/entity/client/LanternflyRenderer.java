@@ -28,11 +28,18 @@ public class LanternflyRenderer extends MobRenderer<LanternflyEntity, Lanternfly
         pState.flyingAnimationState.copyFrom(pEntity.flyingAnimationState);
 
         Direction wall = pEntity.getWallFace();
-        pState.climbing = wall != null;
-        if (wall != null) {
+        pState.climbing = wall != null && pState.deathTime <= 0.0F;
+        if (pState.climbing) {
             // Face the trunk it is sitting on, whichever way it was looking
             pState.bodyRot = wall.toYRot();
         }
+    }
+
+    // No sideways death roll: on a flat insect that looks just like it is climbing a wall.
+    // The model flips it onto its back instead (see LanternflyModel#setupAnim).
+    @Override
+    protected float getFlipDegrees() {
+        return 0.0F;
     }
 
     // Like a parrot, a lanternfly on your shoulder isn't drawn in first person (it would sit right next to the camera)

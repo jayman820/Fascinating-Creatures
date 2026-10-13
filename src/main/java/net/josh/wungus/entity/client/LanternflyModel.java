@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.util.Mth;
 
 public class LanternflyModel extends EntityModel<LanternflyRenderState> {
 	// While climbing the body is moved this far (in pixels) forward, so it sits on the trunk instead of
@@ -18,6 +19,9 @@ public class LanternflyModel extends EntityModel<LanternflyRenderState> {
 	// and the flap tilts their outer edges up to 0.074 pixels down into it. Lifted a little (less than one
 	// texel of the 128x texture) so they always stay above it.
 	private static final float WING_LIFT = 0.1F;
+	// Size of the body with the wings on top (in pixels), to keep it above the ground when it rolls over
+	private static final float HALF_WIDTH = 1.0F;
+	private static final float HEIGHT = 1.0F + WING_LIFT;
 
 	private final ModelPart lanternfly;
 	private final KeyframeAnimation flyAnimation;
@@ -61,6 +65,15 @@ public class LanternflyModel extends EntityModel<LanternflyRenderState> {
 			this.lanternfly.xRot = (float) Math.PI / 2F;
 			this.lanternfly.z -= CLIMB_FORWARD_OFFSET;
 			this.lanternfly.y -= 1.0F;
+		}
+
+		if (state.deathTime > 0.0F) {
+			// Dying: rolls over onto its back like a dead bug (the vanilla timing, but 180 degrees), lifted so it
+			// doesn't sink into the ground while it turns
+			float progress = Math.min(1.0F, Mth.sqrt(Math.max(0.0F, (state.deathTime - 1.0F) / 20.0F * 1.6F)));
+			float angle = progress * (float) Math.PI;
+			this.lanternfly.zRot += angle;
+			this.lanternfly.y -= Mth.sin(angle) * HALF_WIDTH + Math.max(0.0F, -Mth.cos(angle) * HEIGHT);
 		}
 
 		this.flyAnimation.apply(state.flyingAnimationState, state.ageInTicks, 1f);
