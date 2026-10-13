@@ -28,6 +28,14 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ItemTags.PLANKS)
                 .add(ModBlocks.AILANTHUS_PLANKS.get().asItem());
 
+        // Everything that crafts into ailanthus planks (see data/wungus/recipe/ailanthus_planks.json)
+        this.tag(ModTags.Items.AILANTHUS_LOGS)
+                .add(ModBlocks.AILANTHUS_LOG.get().asItem())
+                .add(ModBlocks.AILANTHUS_WOOD.get().asItem())
+                .add(ModBlocks.STRIPPED_AILANTHUS_LOG.get().asItem())
+                .add(ModBlocks.STRIPPED_AILANTHUS_WOOD.get().asItem())
+                .add(ModBlocks.INFESTED_AILANTHUS_LOG.get().asItem());
+
         this.tag(ModTags.Items.REPAIRS_WUNGUS_HIDE_ARMOR)
                 .add(ModItems.WUNGUS_HIDE.get());
         // Add the repair items for the mask and the bbl here (empty tags mean they can't be repaired)

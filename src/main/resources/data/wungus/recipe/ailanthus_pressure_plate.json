@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "wooden_pressure_plate",
+  "key": {
+    "#": "wungus:ailanthus_planks"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "wungus:ailanthus_pressure_plate"
+  },
+  "show_notification": true
+}
