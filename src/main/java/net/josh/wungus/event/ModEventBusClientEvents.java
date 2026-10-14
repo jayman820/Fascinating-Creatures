@@ -8,6 +8,8 @@ import net.josh.wungus.entity.client.BabyWungusModel;
 import net.josh.wungus.entity.client.LanternflyModel;
 import net.josh.wungus.entity.client.LanternflyRenderer;
 import net.josh.wungus.entity.client.ModModelLayers;
+import net.josh.wungus.entity.client.WungingGiantModel;
+import net.josh.wungus.entity.client.WungingGiantRenderer;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.entity.client.WungusRenderer;
 import net.josh.wungus.item.ModItems;
@@ -55,12 +57,14 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.WUNGUS_LAYER, WungusModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.WUNGUS_BABY_LAYER, BabyWungusModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.LANTERNFLY_LAYER, LanternflyModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.WUNGING_GIANT_LAYER, WungingGiantModel::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.WUNGUS.get(), WungusRenderer::new);
         event.registerEntityRenderer(ModEntities.LANTERNFLY.get(), LanternflyRenderer::new);
+        event.registerEntityRenderer(ModEntities.WUNGING_GIANT.get(), WungingGiantRenderer::new);
         // The ailanthus signs use the vanilla sign block entities, which already have their renderers
     }
 

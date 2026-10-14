@@ -21,6 +21,9 @@ public class ModItems {
     public static final DeferredItem<Item> LANTERNFLY_SPAWN_EGG = ITEMS.registerItem("lanternfly_spawn_egg",
             properties -> new SpawnEggItem(properties.spawnEgg(ModEntities.LANTERNFLY.get())));
 
+    public static final DeferredItem<Item> WUNGING_GIANT_SPAWN_EGG = ITEMS.registerItem("wunging_giant_spawn_egg",
+            properties -> new SpawnEggItem(properties.spawnEgg(ModEntities.WUNGING_GIANT.get())));
+
     public static final DeferredItem<Item> WUNGUS_MILK = ITEMS.registerItem("wungus_milk",
             properties -> new WungusMilk(properties.stacksTo(1)
                     .component(DataComponents.CONSUMABLE, ModFoods.WUNGUS_MILK)

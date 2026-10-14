@@ -2,6 +2,7 @@ package net.josh.wungus.entity;
 
 import net.josh.wungus.WungusMod;
 import net.josh.wungus.entity.custom.LanternflyEntity;
+import net.josh.wungus.entity.custom.WungingGiantEntity;
 import net.josh.wungus.entity.custom.WungusEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -34,6 +35,15 @@ public class ModEntities {
             // infested ailanthus logs.
             ENTITY_TYPES.register("lanternfly", () -> EntityType.Builder.of(LanternflyEntity::new, MobCategory.CREATURE)
                     .sized(0.3f, 0.2f).build(LANTERNFLY_KEY));
+
+    public static final ResourceKey<EntityType<?>> WUNGING_GIANT_KEY = ResourceKey.create(Registries.ENTITY_TYPE,
+            Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wunging_giant"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<WungingGiantEntity>> WUNGING_GIANT =
+            // As wide as the wheeled base and as tall as the whole model. The arms reach almost 3 blocks out to
+            // each side, with them in the hitbox it wouldn't fit anywhere. The eyes are near the top of the head.
+            ENTITY_TYPES.register("wunging_giant", () -> EntityType.Builder.of(WungingGiantEntity::new, MobCategory.MONSTER)
+                    .sized(1.25f, 4.25f).eyeHeight(3.85f).build(WUNGING_GIANT_KEY));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

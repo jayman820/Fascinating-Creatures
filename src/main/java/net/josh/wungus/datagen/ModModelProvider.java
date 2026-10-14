@@ -61,6 +61,7 @@ public class ModModelProvider extends ModelProvider {
         /* ITEMS */
         itemModels.generateFlatItem(ModItems.WUNGUS_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.LANTERNFLY_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.WUNGING_GIANT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_MILK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_HIDE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WUNGUS_AMBROSIA.get(), ModelTemplates.FLAT_ITEM);

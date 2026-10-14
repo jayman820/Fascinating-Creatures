@@ -13,4 +13,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation LANTERNFLY_LAYER = new ModelLayerLocation(
             Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "lanternfly_layer"), "main");
+
+    public static final ModelLayerLocation WUNGING_GIANT_LAYER = new ModelLayerLocation(
+            Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wunging_giant_layer"), "main");
 }
