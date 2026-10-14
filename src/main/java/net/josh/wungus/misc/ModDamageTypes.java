@@ -18,6 +18,7 @@ public class ModDamageTypes {
     public static final ResourceKey<DamageType> CASHEW = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "cashew"));
     public static final ResourceKey<DamageType> NONEGUS = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "nonegus"));
     public static final ResourceKey<DamageType> LANDMINE = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "landmine"));
+    public static final ResourceKey<DamageType> WUNGING_GIANT = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(WungusMod.MOD_ID, "wunging_giant"));
 
     public static DamageSource causeWungusSteroids(RegistryAccess registryAccess) {
         return new DamageSourceRandomMessages(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(STEROIDS), 1);
@@ -29,6 +30,11 @@ public class ModDamageTypes {
 
     public static DamageSource causeLandMine(RegistryAccess registryAccess) {
         return new DamageSourceRandomMessages(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(LANDMINE), 2);
+    }
+
+    // Kills outright: armor, enchantments, resistance and shields don't help (a totem of undying still does)
+    public static DamageSource causeWungingGiant(RegistryAccess registryAccess, Entity giant) {
+        return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(WUNGING_GIANT), giant);
     }
 
     public static DamageSource causeNonegusBite(RegistryAccess registryAccess, Entity source) {

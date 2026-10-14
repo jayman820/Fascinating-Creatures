@@ -86,5 +86,6 @@
   "death.attack.landmine_0": "%s didn't watch where they were stepping",
   "death.attack.landmine_1": "%s took a wrong turn",
   "death.attack.landmine_0.entity": "%s didn't watch where they were running while escaping %s",
-  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s"
+  "death.attack.landmine_1.entity": "%s took a wrong turn while escaping %s",
+  "death.attack.wunging_giant": "%1$s was shaken to death by %2$s"
 }

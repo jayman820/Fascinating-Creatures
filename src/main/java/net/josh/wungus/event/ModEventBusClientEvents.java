@@ -12,6 +12,7 @@ import net.josh.wungus.entity.client.WungingGiantModel;
 import net.josh.wungus.entity.client.WungingGiantRenderer;
 import net.josh.wungus.entity.client.WungusModel;
 import net.josh.wungus.entity.client.WungusRenderer;
+import net.josh.wungus.entity.custom.WungingGiantEntity;
 import net.josh.wungus.item.ModItems;
 import net.josh.wungus.item.custom.armor.model.BBLModel;
 import net.josh.wungus.item.custom.armor.model.WungusMaskModel;
@@ -106,6 +107,25 @@ public class ModEventBusClientEvents {
         event.setYaw(event.getYaw() + (Mth.sin(time * 1.3F) + 0.5F * Mth.sin(time * 2.9F)) * strength);
         event.setPitch(event.getPitch() + (Mth.cos(time * 1.7F) + 0.5F * Mth.sin(time * 3.1F)) * strength);
         event.setRoll(event.getRoll() + Mth.sin(time * 2.3F) * strength);
+    }
+
+    // How hard the camera shakes (in degrees) while a wunging giant holds you
+    private static final float HELD_SHAKE_DEGREES = 3.0F;
+
+    // A wunging giant holds you and shakes you: the camera shakes hard and fast until it lets go (or kills you).
+    // Also scaled by the "Distortion Effects" accessibility slider.
+    @SubscribeEvent
+    public static void shakeCameraWhenHeld(ViewportEvent.ComputeCameraAngles event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        if (player == null || !WungingGiantEntity.isHeldByGiant(player)) {
+            return;
+        }
+        float strength = HELD_SHAKE_DEGREES * minecraft.options.screenEffectScale().get().floatValue();
+        float time = player.tickCount + (float) event.getPartialTick();
+        event.setYaw(event.getYaw() + (Mth.sin(time * 4.1F) + 0.5F * Mth.sin(time * 9.7F)) * strength);
+        event.setPitch(event.getPitch() + (Mth.cos(time * 3.3F) + 0.5F * Mth.sin(time * 11.3F)) * strength);
+        event.setRoll(event.getRoll() + Mth.sin(time * 5.9F) * strength);
     }
 
     // Near the end of the heart failure the edges of the screen pulse red with the heartbeat
