@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "wungus:glimmering_andaran_bricks",
+  "result": {
+    "id": "wungus:glimmering_andaran_brick_wall"
+  }
+}

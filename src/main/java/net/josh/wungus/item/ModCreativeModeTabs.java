@@ -75,14 +75,18 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get());
                         pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get());
                         pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE_WALL.get());
-                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE.get());
-                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get());
-                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get());
-                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get());
-                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICKS.get());
-                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get());
-                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get());
-                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICK_WALL.get());
+                        pOutput.accept(ModBlocks.POLISHED_ANDARAN_STONE.get());
+                        pOutput.accept(ModBlocks.POLISHED_ANDARAN_STONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.POLISHED_ANDARAN_STONE_SLAB.get());
+                        pOutput.accept(ModBlocks.POLISHED_ANDARAN_STONE_WALL.get());
+                        pOutput.accept(ModBlocks.ANDARAN_BRICKS.get());
+                        pOutput.accept(ModBlocks.ANDARAN_BRICK_STAIRS.get());
+                        pOutput.accept(ModBlocks.ANDARAN_BRICK_SLAB.get());
+                        pOutput.accept(ModBlocks.ANDARAN_BRICK_WALL.get());
+                        pOutput.accept(ModBlocks.GLIMMERING_ANDARAN_BRICKS.get());
+                        pOutput.accept(ModBlocks.GLIMMERING_ANDARAN_BRICK_STAIRS.get());
+                        pOutput.accept(ModBlocks.GLIMMERING_ANDARAN_BRICK_SLAB.get());
+                        pOutput.accept(ModBlocks.GLIMMERING_ANDARAN_BRICK_WALL.get());
                         pOutput.accept(ModBlocks.BBL_TABLE.get());
                     })
                     .build());

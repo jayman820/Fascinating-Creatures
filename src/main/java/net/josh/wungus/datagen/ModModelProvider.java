@@ -85,14 +85,21 @@ public class ModModelProvider extends ModelProvider {
                 .getFamily();
         blockModels.family(andaranCobblestoneFamily.getBaseBlock()).generateFor(andaranCobblestoneFamily);
 
-        BlockFamily smoothAndaranStoneFamily = new BlockFamily.Builder(ModBlocks.SMOOTH_ANDARAN_STONE.get())
-                .stairs(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get())
-                .slab(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get())
-                .wall(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get())
+        BlockFamily polishedAndaranStoneFamily = new BlockFamily.Builder(ModBlocks.POLISHED_ANDARAN_STONE.get())
+                .stairs(ModBlocks.POLISHED_ANDARAN_STONE_STAIRS.get())
+                .slab(ModBlocks.POLISHED_ANDARAN_STONE_SLAB.get())
+                .wall(ModBlocks.POLISHED_ANDARAN_STONE_WALL.get())
                 .getFamily();
-        blockModels.family(smoothAndaranStoneFamily.getBaseBlock()).generateFor(smoothAndaranStoneFamily);
+        blockModels.family(polishedAndaranStoneFamily.getBaseBlock()).generateFor(polishedAndaranStoneFamily);
 
-        andaranStoneBricks(blockModels);
+        BlockFamily andaranBrickFamily = new BlockFamily.Builder(ModBlocks.ANDARAN_BRICKS.get())
+                .stairs(ModBlocks.ANDARAN_BRICK_STAIRS.get())
+                .slab(ModBlocks.ANDARAN_BRICK_SLAB.get())
+                .wall(ModBlocks.ANDARAN_BRICK_WALL.get())
+                .getFamily();
+        blockModels.family(andaranBrickFamily.getBaseBlock()).generateFor(andaranBrickFamily);
+
+        glimmeringAndaranBricks(blockModels);
 
         /* ITEMS */
         itemModels.generateFlatItem(ModItems.WUNGUS_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
@@ -131,24 +138,25 @@ public class ModModelProvider extends ModelProvider {
                 BlockModelGenerators.plainVariant(vertical), BlockModelGenerators.plainVariant(horizontal)));
     }
 
-    // The andaran stone bricks (and their stairs, slab and wall) have the alt brick texture
-    // (andaran_stone_bricks_top) on their top faces and the normal brick texture everywhere else
-    private static void andaranStoneBricks(BlockModelGenerators blockModels) {
-        Block bricks = ModBlocks.ANDARAN_STONE_BRICKS.get();
+    // The glimmering andaran bricks (and their stairs, slab and wall) have the alt brick texture
+    // (glimmering_andaran_bricks_top) on their top faces and the normal andaran brick texture everywhere else
+    private static void glimmeringAndaranBricks(BlockModelGenerators blockModels) {
+        Block bricks = ModBlocks.GLIMMERING_ANDARAN_BRICKS.get();
+        Block plainBricks = ModBlocks.ANDARAN_BRICKS.get();
         TextureMapping textures = new TextureMapping()
-                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(bricks))
-                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(bricks))
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(plainBricks))
+                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(plainBricks))
                 .put(TextureSlot.TOP, TextureMapping.getBlockTexture(bricks, "_top"))
-                .put(TextureSlot.WALL, TextureMapping.getBlockTexture(bricks));
+                .put(TextureSlot.WALL, TextureMapping.getBlockTexture(plainBricks));
 
         BlockFamily family = new BlockFamily.Builder(bricks)
-                .stairs(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get())
-                .slab(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get())
+                .stairs(ModBlocks.GLIMMERING_ANDARAN_BRICK_STAIRS.get())
+                .slab(ModBlocks.GLIMMERING_ANDARAN_BRICK_SLAB.get())
                 .getFamily();
         blockModels.new BlockFamilyProvider(textures).fullBlock(bricks, ModelTemplates.CUBE_BOTTOM_TOP).generateFor(family);
 
         // The vanilla wall templates only have one texture, so the wall uses copies of them with a top texture
-        Block wall = ModBlocks.ANDARAN_STONE_BRICK_WALL.get();
+        Block wall = ModBlocks.GLIMMERING_ANDARAN_BRICK_WALL.get();
         blockModels.blockStateOutput.accept(BlockModelGenerators.createWall(wall,
                 BlockModelGenerators.plainVariant(WALL_POST_WITH_TOP.create(wall, textures, blockModels.modelOutput)),
                 BlockModelGenerators.plainVariant(WALL_LOW_SIDE_WITH_TOP.create(wall, textures, blockModels.modelOutput)),

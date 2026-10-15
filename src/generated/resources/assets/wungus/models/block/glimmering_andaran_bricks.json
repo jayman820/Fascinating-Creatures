@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "wungus:block/andaran_bricks",
+    "side": "wungus:block/andaran_bricks",
+    "top": "wungus:block/glimmering_andaran_bricks_top"
+  }
+}

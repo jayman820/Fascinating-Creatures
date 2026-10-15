@@ -1,0 +1,7 @@
+{
+  "parent": "wungus:block/template_wall_post_with_top",
+  "textures": {
+    "top": "wungus:block/glimmering_andaran_bricks_top",
+    "wall": "wungus:block/andaran_bricks"
+  }
+}

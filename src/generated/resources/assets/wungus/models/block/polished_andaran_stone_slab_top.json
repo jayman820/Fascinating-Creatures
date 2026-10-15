@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "wungus:block/polished_andaran_stone",
+    "side": "wungus:block/polished_andaran_stone",
+    "top": "wungus:block/polished_andaran_stone"
+  }
+}

@@ -2,7 +2,8 @@
   "values": [
     "wungus:andaran_stone_wall",
     "wungus:andaran_cobblestone_wall",
-    "wungus:smooth_andaran_stone_wall",
-    "wungus:andaran_stone_brick_wall"
+    "wungus:polished_andaran_stone_wall",
+    "wungus:andaran_brick_wall",
+    "wungus:glimmering_andaran_brick_wall"
   ]
 }

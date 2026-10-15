@@ -58,14 +58,18 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get());
         this.add(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get(), this::createSlabItemTable);
         this.dropSelf(ModBlocks.ANDARAN_COBBLESTONE_WALL.get());
-        this.dropSelf(ModBlocks.SMOOTH_ANDARAN_STONE.get());
-        this.dropSelf(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get());
-        this.add(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get(), this::createSlabItemTable);
-        this.dropSelf(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get());
-        this.dropSelf(ModBlocks.ANDARAN_STONE_BRICKS.get());
-        this.dropSelf(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get());
-        this.add(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get(), this::createSlabItemTable);
-        this.dropSelf(ModBlocks.ANDARAN_STONE_BRICK_WALL.get());
+        this.dropSelf(ModBlocks.POLISHED_ANDARAN_STONE.get());
+        this.dropSelf(ModBlocks.POLISHED_ANDARAN_STONE_STAIRS.get());
+        this.add(ModBlocks.POLISHED_ANDARAN_STONE_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.POLISHED_ANDARAN_STONE_WALL.get());
+        this.dropSelf(ModBlocks.ANDARAN_BRICKS.get());
+        this.dropSelf(ModBlocks.ANDARAN_BRICK_STAIRS.get());
+        this.add(ModBlocks.ANDARAN_BRICK_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.ANDARAN_BRICK_WALL.get());
+        this.dropSelf(ModBlocks.GLIMMERING_ANDARAN_BRICKS.get());
+        this.dropSelf(ModBlocks.GLIMMERING_ANDARAN_BRICK_STAIRS.get());
+        this.add(ModBlocks.GLIMMERING_ANDARAN_BRICK_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.GLIMMERING_ANDARAN_BRICK_WALL.get());
 
         this.dropWhenSilkTouch(ModBlocks.WUNGUS_EGG.get());
 

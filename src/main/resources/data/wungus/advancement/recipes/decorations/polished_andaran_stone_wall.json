@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_andaran_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wungus:polished_andaran_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "wungus:polished_andaran_stone_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_polished_andaran_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "wungus:polished_andaran_stone_wall"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_andaran_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wungus:andaran_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "wungus:glimmering_andaran_brick_slab_from_andaran_stone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_andaran_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "wungus:glimmering_andaran_brick_slab_from_andaran_stone_stonecutting"
+    ]
+  }
+}

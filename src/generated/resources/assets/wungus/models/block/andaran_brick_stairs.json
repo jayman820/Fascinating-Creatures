@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "wungus:block/andaran_bricks",
+    "side": "wungus:block/andaran_bricks",
+    "top": "wungus:block/andaran_bricks"
+  }
+}

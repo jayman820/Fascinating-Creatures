@@ -209,24 +209,35 @@ public class ModBlocks {
     public static final DeferredBlock<Block> ANDARAN_COBBLESTONE_WALL = registerBlock("andaran_cobblestone_wall",
             WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE).forceSolidOn());
 
-    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE = registerBlock("smooth_andaran_stone",
-            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE));
-    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE_STAIRS = registerBlock("smooth_andaran_stone_stairs",
-            properties -> new StairBlock(ModBlocks.SMOOTH_ANDARAN_STONE.get().defaultBlockState(), properties),
-            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE));
-    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE_SLAB = registerBlock("smooth_andaran_stone_slab",
-            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE));
-    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE_WALL = registerBlock("smooth_andaran_stone_wall",
-            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).forceSolidOn());
+    public static final DeferredBlock<Block> POLISHED_ANDARAN_STONE = registerBlock("polished_andaran_stone",
+            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.POLISHED_ANDESITE));
+    public static final DeferredBlock<Block> POLISHED_ANDARAN_STONE_STAIRS = registerBlock("polished_andaran_stone_stairs",
+            properties -> new StairBlock(ModBlocks.POLISHED_ANDARAN_STONE.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.POLISHED_ANDESITE));
+    public static final DeferredBlock<Block> POLISHED_ANDARAN_STONE_SLAB = registerBlock("polished_andaran_stone_slab",
+            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.POLISHED_ANDESITE));
+    public static final DeferredBlock<Block> POLISHED_ANDARAN_STONE_WALL = registerBlock("polished_andaran_stone_wall",
+            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.POLISHED_ANDESITE).forceSolidOn());
 
-    public static final DeferredBlock<Block> ANDARAN_STONE_BRICKS = registerBlock("andaran_stone_bricks",
+    public static final DeferredBlock<Block> ANDARAN_BRICKS = registerBlock("andaran_bricks",
             Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
-    public static final DeferredBlock<Block> ANDARAN_STONE_BRICK_STAIRS = registerBlock("andaran_stone_brick_stairs",
-            properties -> new StairBlock(ModBlocks.ANDARAN_STONE_BRICKS.get().defaultBlockState(), properties),
+    public static final DeferredBlock<Block> ANDARAN_BRICK_STAIRS = registerBlock("andaran_brick_stairs",
+            properties -> new StairBlock(ModBlocks.ANDARAN_BRICKS.get().defaultBlockState(), properties),
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
-    public static final DeferredBlock<Block> ANDARAN_STONE_BRICK_SLAB = registerBlock("andaran_stone_brick_slab",
+    public static final DeferredBlock<Block> ANDARAN_BRICK_SLAB = registerBlock("andaran_brick_slab",
             SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
-    public static final DeferredBlock<Block> ANDARAN_STONE_BRICK_WALL = registerBlock("andaran_stone_brick_wall",
+    public static final DeferredBlock<Block> ANDARAN_BRICK_WALL = registerBlock("andaran_brick_wall",
+            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS).forceSolidOn());
+
+    // The glimmering bricks have the alt brick texture on top
+    public static final DeferredBlock<Block> GLIMMERING_ANDARAN_BRICKS = registerBlock("glimmering_andaran_bricks",
+            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> GLIMMERING_ANDARAN_BRICK_STAIRS = registerBlock("glimmering_andaran_brick_stairs",
+            properties -> new StairBlock(ModBlocks.GLIMMERING_ANDARAN_BRICKS.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> GLIMMERING_ANDARAN_BRICK_SLAB = registerBlock("glimmering_andaran_brick_slab",
+            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> GLIMMERING_ANDARAN_BRICK_WALL = registerBlock("glimmering_andaran_brick_wall",
             WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS).forceSolidOn());
 
     private static BlockBehaviour.Properties wallVariant(Block standingBlock, Block vanillaWallBlock) {

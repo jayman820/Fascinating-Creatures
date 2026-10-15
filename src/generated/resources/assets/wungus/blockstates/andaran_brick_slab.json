@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wungus:block/andaran_brick_slab"
+    },
+    "type=double": {
+      "model": "wungus:block/andaran_bricks"
+    },
+    "type=top": {
+      "model": "wungus:block/andaran_brick_slab_top"
+    }
+  }
+}

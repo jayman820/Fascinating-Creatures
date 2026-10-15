@@ -31,18 +31,21 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ItemTags.STAIRS)
                 .add(ModBlocks.ANDARAN_STONE_STAIRS.get().asItem())
                 .add(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get().asItem())
-                .add(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get().asItem())
-                .add(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get().asItem());
+                .add(ModBlocks.POLISHED_ANDARAN_STONE_STAIRS.get().asItem())
+                .add(ModBlocks.ANDARAN_BRICK_STAIRS.get().asItem())
+                .add(ModBlocks.GLIMMERING_ANDARAN_BRICK_STAIRS.get().asItem());
         this.tag(ItemTags.SLABS)
                 .add(ModBlocks.ANDARAN_STONE_SLAB.get().asItem())
                 .add(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get().asItem())
-                .add(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get().asItem())
-                .add(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get().asItem());
+                .add(ModBlocks.POLISHED_ANDARAN_STONE_SLAB.get().asItem())
+                .add(ModBlocks.ANDARAN_BRICK_SLAB.get().asItem())
+                .add(ModBlocks.GLIMMERING_ANDARAN_BRICK_SLAB.get().asItem());
         this.tag(ItemTags.WALLS)
                 .add(ModBlocks.ANDARAN_STONE_WALL.get().asItem())
                 .add(ModBlocks.ANDARAN_COBBLESTONE_WALL.get().asItem())
-                .add(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get().asItem())
-                .add(ModBlocks.ANDARAN_STONE_BRICK_WALL.get().asItem());
+                .add(ModBlocks.POLISHED_ANDARAN_STONE_WALL.get().asItem())
+                .add(ModBlocks.ANDARAN_BRICK_WALL.get().asItem())
+                .add(ModBlocks.GLIMMERING_ANDARAN_BRICK_WALL.get().asItem());
         this.tag(ItemTags.STONE_BUTTONS)
                 .add(ModBlocks.ANDARAN_STONE_BUTTON.get().asItem());
 
