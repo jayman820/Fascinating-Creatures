@@ -35,5 +35,47 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.FENCE_GATES)
                 .add(ModBlocks.AILANTHUS_FENCE_GATE.get());
 
+        // Like vanilla stone, the andaran stone blocks need a pickaxe to drop anything
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.ANDARAN_STONE.get())
+                .add(ModBlocks.ANDARAN_STONE_STAIRS.get())
+                .add(ModBlocks.ANDARAN_STONE_SLAB.get())
+                .add(ModBlocks.ANDARAN_STONE_WALL.get())
+                .add(ModBlocks.ANDARAN_STONE_BUTTON.get())
+                .add(ModBlocks.ANDARAN_STONE_PRESSURE_PLATE.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE_WALL.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICKS.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICK_WALL.get());
+
+        this.tag(BlockTags.STAIRS)
+                .add(ModBlocks.ANDARAN_STONE_STAIRS.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get());
+        this.tag(BlockTags.SLABS)
+                .add(ModBlocks.ANDARAN_STONE_SLAB.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get());
+        // Walls only connect to each other when they are in this tag
+        this.tag(BlockTags.WALLS)
+                .add(ModBlocks.ANDARAN_STONE_WALL.get())
+                .add(ModBlocks.ANDARAN_COBBLESTONE_WALL.get())
+                .add(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get())
+                .add(ModBlocks.ANDARAN_STONE_BRICK_WALL.get());
+        // These are part of minecraft:buttons and minecraft:pressure_plates
+        this.tag(BlockTags.STONE_BUTTONS)
+                .add(ModBlocks.ANDARAN_STONE_BUTTON.get());
+        this.tag(BlockTags.STONE_PRESSURE_PLATES)
+                .add(ModBlocks.ANDARAN_STONE_PRESSURE_PLATE.get());
     }
 }

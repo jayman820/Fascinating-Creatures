@@ -1,0 +1,22 @@
+{
+  "values": [
+    "wungus:andaran_stone",
+    "wungus:andaran_stone_stairs",
+    "wungus:andaran_stone_slab",
+    "wungus:andaran_stone_wall",
+    "wungus:andaran_stone_button",
+    "wungus:andaran_stone_pressure_plate",
+    "wungus:andaran_cobblestone",
+    "wungus:andaran_cobblestone_stairs",
+    "wungus:andaran_cobblestone_slab",
+    "wungus:andaran_cobblestone_wall",
+    "wungus:smooth_andaran_stone",
+    "wungus:smooth_andaran_stone_stairs",
+    "wungus:smooth_andaran_stone_slab",
+    "wungus:smooth_andaran_stone_wall",
+    "wungus:andaran_stone_bricks",
+    "wungus:andaran_stone_brick_stairs",
+    "wungus:andaran_stone_brick_slab",
+    "wungus:andaran_stone_brick_wall"
+  ]
+}

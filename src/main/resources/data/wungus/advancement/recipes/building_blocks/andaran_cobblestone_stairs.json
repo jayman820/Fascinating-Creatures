@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_andaran_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "wungus:andaran_cobblestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "wungus:andaran_cobblestone_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_andaran_cobblestone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "wungus:andaran_cobblestone_stairs"
+    ]
+  }
+}

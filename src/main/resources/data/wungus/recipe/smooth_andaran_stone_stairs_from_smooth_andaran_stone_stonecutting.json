@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "wungus:smooth_andaran_stone",
+  "result": {
+    "id": "wungus:smooth_andaran_stone_stairs"
+  }
+}

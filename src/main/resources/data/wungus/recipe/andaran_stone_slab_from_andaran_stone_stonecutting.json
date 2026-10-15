@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "wungus:andaran_stone",
+  "result": {
+    "count": 2,
+    "id": "wungus:andaran_stone_slab"
+  }
+}

@@ -46,6 +46,27 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.ANDARAN_DIRT.get());
         this.dropWhenSilkTouch(ModBlocks.ANDARAN_GRASS_BLOCK.get());
 
+        // Like vanilla stone, andaran stone drops andaran cobblestone without silk touch
+        this.add(ModBlocks.ANDARAN_STONE.get(), block ->
+                createSingleItemTableWithSilkTouch(block, ModBlocks.ANDARAN_COBBLESTONE.get()));
+        this.dropSelf(ModBlocks.ANDARAN_STONE_STAIRS.get());
+        this.add(ModBlocks.ANDARAN_STONE_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.ANDARAN_STONE_WALL.get());
+        this.dropSelf(ModBlocks.ANDARAN_STONE_BUTTON.get());
+        this.dropSelf(ModBlocks.ANDARAN_STONE_PRESSURE_PLATE.get());
+        this.dropSelf(ModBlocks.ANDARAN_COBBLESTONE.get());
+        this.dropSelf(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get());
+        this.add(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.ANDARAN_COBBLESTONE_WALL.get());
+        this.dropSelf(ModBlocks.SMOOTH_ANDARAN_STONE.get());
+        this.dropSelf(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get());
+        this.add(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get());
+        this.dropSelf(ModBlocks.ANDARAN_STONE_BRICKS.get());
+        this.dropSelf(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get());
+        this.add(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get(), this::createSlabItemTable);
+        this.dropSelf(ModBlocks.ANDARAN_STONE_BRICK_WALL.get());
+
         this.dropWhenSilkTouch(ModBlocks.WUNGUS_EGG.get());
 
         // Leaves themselves with shears or silk touch, otherwise a chance for a sapling (and sticks), like vanilla leaves

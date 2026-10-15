@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "wungus:block/andaran_cobblestone",
+    "side": "wungus:block/andaran_cobblestone",
+    "top": "wungus:block/andaran_cobblestone"
+  }
+}

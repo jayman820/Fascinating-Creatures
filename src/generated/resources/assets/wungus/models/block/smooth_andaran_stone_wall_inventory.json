@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "wungus:block/smooth_andaran_stone"
+  }
+}

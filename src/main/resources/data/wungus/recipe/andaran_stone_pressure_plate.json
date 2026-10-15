@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": "wungus:andaran_stone"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "wungus:andaran_stone_pressure_plate"
+  }
+}

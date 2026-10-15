@@ -65,6 +65,24 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.AILANTHUS_SAPLING.get());
                         pOutput.accept(ModBlocks.ANDARAN_GRASS_BLOCK.get());
                         pOutput.accept(ModBlocks.ANDARAN_DIRT.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_SLAB.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_WALL.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_PRESSURE_PLATE.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_BUTTON.get());
+                        pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE.get());
+                        pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE_SLAB.get());
+                        pOutput.accept(ModBlocks.ANDARAN_COBBLESTONE_WALL.get());
+                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE.get());
+                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE_STAIRS.get());
+                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE_SLAB.get());
+                        pOutput.accept(ModBlocks.SMOOTH_ANDARAN_STONE_WALL.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICKS.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICK_STAIRS.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICK_SLAB.get());
+                        pOutput.accept(ModBlocks.ANDARAN_STONE_BRICK_WALL.get());
                         pOutput.accept(ModBlocks.BBL_TABLE.get());
                     })
                     .build());

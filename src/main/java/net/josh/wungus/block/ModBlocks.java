@@ -181,6 +181,54 @@ public class ModBlocks {
             properties -> new Block(properties.sound(SoundType.GRASS)),
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT));
 
+    // Andaran stone and its variants, made like their vanilla stone counterparts.
+    // The stone drops andaran cobblestone unless it is mined with silk touch.
+    public static final DeferredBlock<Block> ANDARAN_STONE = registerBlock("andaran_stone",
+            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> ANDARAN_STONE_STAIRS = registerBlock("andaran_stone_stairs",
+            properties -> new StairBlock(ModBlocks.ANDARAN_STONE.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> ANDARAN_STONE_SLAB = registerBlock("andaran_stone_slab",
+            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
+    public static final DeferredBlock<Block> ANDARAN_STONE_WALL = registerBlock("andaran_stone_wall",
+            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).forceSolidOn());
+    public static final DeferredBlock<Block> ANDARAN_STONE_BUTTON = registerBlock("andaran_stone_button",
+            properties -> new ButtonBlock(BlockSetType.STONE, 20, properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BUTTON));
+    public static final DeferredBlock<Block> ANDARAN_STONE_PRESSURE_PLATE = registerBlock("andaran_stone_pressure_plate",
+            properties -> new PressurePlateBlock(BlockSetType.STONE, properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_PRESSURE_PLATE));
+
+    public static final DeferredBlock<Block> ANDARAN_COBBLESTONE = registerBlock("andaran_cobblestone",
+            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE));
+    public static final DeferredBlock<Block> ANDARAN_COBBLESTONE_STAIRS = registerBlock("andaran_cobblestone_stairs",
+            properties -> new StairBlock(ModBlocks.ANDARAN_COBBLESTONE.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE));
+    public static final DeferredBlock<Block> ANDARAN_COBBLESTONE_SLAB = registerBlock("andaran_cobblestone_slab",
+            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE));
+    public static final DeferredBlock<Block> ANDARAN_COBBLESTONE_WALL = registerBlock("andaran_cobblestone_wall",
+            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE).forceSolidOn());
+
+    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE = registerBlock("smooth_andaran_stone",
+            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE));
+    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE_STAIRS = registerBlock("smooth_andaran_stone_stairs",
+            properties -> new StairBlock(ModBlocks.SMOOTH_ANDARAN_STONE.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE));
+    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE_SLAB = registerBlock("smooth_andaran_stone_slab",
+            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE));
+    public static final DeferredBlock<Block> SMOOTH_ANDARAN_STONE_WALL = registerBlock("smooth_andaran_stone_wall",
+            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).forceSolidOn());
+
+    public static final DeferredBlock<Block> ANDARAN_STONE_BRICKS = registerBlock("andaran_stone_bricks",
+            Block::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> ANDARAN_STONE_BRICK_STAIRS = registerBlock("andaran_stone_brick_stairs",
+            properties -> new StairBlock(ModBlocks.ANDARAN_STONE_BRICKS.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> ANDARAN_STONE_BRICK_SLAB = registerBlock("andaran_stone_brick_slab",
+            SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS));
+    public static final DeferredBlock<Block> ANDARAN_STONE_BRICK_WALL = registerBlock("andaran_stone_brick_wall",
+            WallBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS).forceSolidOn());
+
     private static BlockBehaviour.Properties wallVariant(Block standingBlock, Block vanillaWallBlock) {
         return BlockBehaviour.Properties.ofFullCopy(vanillaWallBlock)
                 .overrideLootTable(standingBlock.getLootTable())

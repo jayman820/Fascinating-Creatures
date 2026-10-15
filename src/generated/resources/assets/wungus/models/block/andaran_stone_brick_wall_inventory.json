@@ -1,0 +1,7 @@
+{
+  "parent": "wungus:block/wall_inventory_with_top",
+  "textures": {
+    "top": "wungus:block/andaran_stone_bricks_top",
+    "wall": "wungus:block/andaran_stone_bricks"
+  }
+}

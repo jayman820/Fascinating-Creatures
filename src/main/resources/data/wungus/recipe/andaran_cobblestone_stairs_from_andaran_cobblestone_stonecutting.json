@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "wungus:andaran_cobblestone",
+  "result": {
+    "id": "wungus:andaran_cobblestone_stairs"
+  }
+}

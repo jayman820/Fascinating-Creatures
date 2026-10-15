@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wungus:block/andaran_cobblestone_slab"
+    },
+    "type=double": {
+      "model": "wungus:block/andaran_cobblestone"
+    },
+    "type=top": {
+      "model": "wungus:block/andaran_cobblestone_slab_top"
+    }
+  }
+}
